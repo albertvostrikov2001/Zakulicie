@@ -8,9 +8,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { unsplashPhoto } from "@/lib/content/unsplash";
 
-const POSTER =
-  "https://images.unsplash.com/photo-1478147427288-58de1a93e566?auto=format&fit=crop&w=2400&q=80";
+const POSTER = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
 
 const lines = ["Когда на кону репутация,", "считает каждая деталь"];
 

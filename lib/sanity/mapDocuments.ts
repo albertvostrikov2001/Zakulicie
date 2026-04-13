@@ -1,6 +1,10 @@
 import type { BlogPost, CaseStudy, ServiceSlug, Testimonial } from "@/lib/types";
+import { unsplashPhoto } from "@/lib/content/unsplash";
 import { blocksToParagraphs } from "@/lib/sanity/portableText";
 import { urlForSanityImage } from "@/lib/sanity/image";
+
+const FALLBACK_CASE_HERO = unsplashPhoto("1511578314322-379afb476865", 2000);
+const FALLBACK_BLOG_COVER = unsplashPhoto("1511578314322-379afb476865", 1600);
 
 const SERVICE_SLUGS: ServiceSlug[] = [
   "korporativnye-meropriyatiya",
@@ -45,8 +49,7 @@ type SanityCaseDoc = {
 
 export function mapSanityCase(doc: SanityCaseDoc): CaseStudy | null {
   if (!doc.slug || !doc.title) return null;
-  const heroUrl = urlForSanityImage(doc.heroImage);
-  if (!heroUrl) return null;
+  const heroUrl = urlForSanityImage(doc.heroImage) ?? FALLBACK_CASE_HERO;
 
   let solution = blocksToParagraphs(doc.solution as Parameters<typeof blocksToParagraphs>[0]);
   let result = blocksToParagraphs(doc.result as Parameters<typeof blocksToParagraphs>[0]);
@@ -109,8 +112,7 @@ type SanityBlogDoc = {
 
 export function mapSanityBlogPost(doc: SanityBlogDoc): BlogPost | null {
   if (!doc.slug || !doc.title) return null;
-  const cover = urlForSanityImage(doc.coverImage);
-  if (!cover) return null;
+  const cover = urlForSanityImage(doc.coverImage) ?? FALLBACK_BLOG_COVER;
   let content = blocksToParagraphs(doc.content as Parameters<typeof blocksToParagraphs>[0]);
   if (content.length === 0) content = [doc.excerpt ?? doc.title];
   const publishedAt = doc.publishedAt

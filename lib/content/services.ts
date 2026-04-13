@@ -1,7 +1,8 @@
 import type { ServiceLanding, ServiceSlug } from "@/lib/types";
+import { unsplashPhoto } from "@/lib/content/unsplash";
 
 const u = (id: string, alt: string) => ({
-  src: `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=2000&q=80`,
+  src: unsplashPhoto(id, 2000),
   alt,
 });
 
@@ -323,7 +324,7 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     shortDescription:
       "Собственный парк декораций и конструкций — для event‑команд и организаторов, которым нужна предсказуемость.",
     heroImage: u(
-      "1478720568472-203d9b67e0be",
+      "1536440136628-849c177e76a1",
       "Сценический реквизит и оборудование на складе"
     ),
     includes: [
@@ -397,7 +398,7 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     shortDescription:
       "Когда сценарий, кадр и ритм должны совпасть — мы держим постановку как единый механизм.",
     heroImage: u(
-      "1574717025658-8082fda683f9",
+      "1589903308904-1010c2294adc",
       "Телестудия: свет, камеры и сценическое пространство"
     ),
     includes: [

@@ -1,7 +1,8 @@
 import type { BlogPost } from "@/lib/types";
+import { unsplashPhoto } from "@/lib/content/unsplash";
 
 const u = (id: string, alt: string) => ({
-  src: `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=80`,
+  src: unsplashPhoto(id, 1600),
   alt,
 });
 
@@ -13,7 +14,7 @@ export const staticBlogPosts: BlogPost[] = [
       "О признаках зрелого события: тайминг, ответственность, язык коммуникации и почему это видно руководству за пять минут.",
     publishedAt: "2025-11-18",
     coverImage: u(
-      "1540575467063-7a859417d36c",
+      "1511578314322-379afb476865",
       "Деловое мероприятие: зал и сцена"
     ),
     content: [

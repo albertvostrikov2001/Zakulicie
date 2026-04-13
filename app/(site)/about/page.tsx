@@ -1,7 +1,9 @@
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
+import Image from "next/image";
 
 export const metadata: Metadata = {
   title: "О компании — стандарт, опыт и география",
@@ -25,6 +27,16 @@ export default function AboutPage() {
       />
       <PageWrapper>
         <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">О компании</h1>
+        <div className="relative mt-10 aspect-[21/9] max-w-4xl overflow-hidden rounded-card border border-border">
+          <Image
+            src={unsplashPhoto("1560439514-4e9645039924", 2000)}
+            alt="Команда и атмосфера делового мероприятия"
+            fill
+            className="object-cover"
+            sizes="(max-width: 896px) 100vw, 896px"
+            priority
+          />
+        </div>
         <div className="mt-10 max-w-3xl space-y-6 text-text-secondary">
           <p className="text-lg leading-relaxed text-text-primary/90">
             «Закулисье» — агентство событий для компаний, где сбой на площадке воспринимается так же

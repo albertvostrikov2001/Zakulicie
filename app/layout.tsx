@@ -3,6 +3,7 @@ import { ContactModalProvider } from "@/components/providers/ContactModalProvide
 import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
+import { unsplashPhoto } from "@/lib/content/unsplash";
 import { Manrope, Unbounded } from "next/font/google";
 import "./globals.css";
 
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     images: [
       {
-        url: "https://images.unsplash.com/photo-1540575467063-7a859417d36c?auto=format&fit=crop&w=1200&h=630&q=80",
+        url: unsplashPhoto("1511578314322-379afb476865", 1200, 630),
         width: 1200,
         height: 630,
         alt: "Атмосфера делового мероприятия",
