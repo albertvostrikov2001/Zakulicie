@@ -1,5 +1,7 @@
-# Деплой статики на GitHub Pages: https://albertvostrikov2001.github.io/Zakulicie/
-# В репозитории: Settings → Pages → Build and deployment → Source: GitHub Actions
+# Деплой статики на GitHub Pages (basePath = /имя-репозитория).
+# Pages: Settings → Pages → Source: GitHub Actions.
+# Для картинок из Sanity добавьте в Settings → Secrets: NEXT_PUBLIC_SANITY_PROJECT_ID
+# и при необходимости NEXT_PUBLIC_SANITY_DATASET (иначе используется production).
 name: Deploy to GitHub Pages
 
 on:
@@ -39,7 +41,10 @@ jobs:
         run: npm run build
         env:
           GITHUB_PAGES: "true"
-          NEXT_PUBLIC_SITE_URL: https://albertvostrikov2001.github.io/Zakulicie
+          NEXT_PUBLIC_PAGES_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
           NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
 
       - name: Upload artifact

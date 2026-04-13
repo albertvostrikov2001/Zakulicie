@@ -1,12 +1,14 @@
 /** @type {import('next').NextConfig} */
 const isGhPages = process.env.GITHUB_PAGES === "true";
-const repoBase = "/Zakulicie";
+/** Имя репозитория GitHub Pages: задайте NEXT_PUBLIC_PAGES_BASE_PATH=/MyRepo или в CI через workflow. */
+const pagesBase = process.env.NEXT_PUBLIC_PAGES_BASE_PATH || "/Zakulicie";
 
 const nextConfig = {
   ...(isGhPages
     ? {
         output: "export",
-        basePath: repoBase,
+        basePath: pagesBase,
+        assetPrefix: pagesBase,
         trailingSlash: true,
       }
     : {}),
