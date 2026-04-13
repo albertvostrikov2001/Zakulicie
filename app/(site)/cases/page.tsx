@@ -1,16 +1,10 @@
-import { CaseCard } from "@/components/blocks/CaseCard";
+import { CasesListing } from "@/app/(site)/cases/CasesListing";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { getCasesResolved } from "@/lib/data";
-import { serviceNav } from "@/lib/content/services";
-import type { ServiceSlug } from "@/lib/types";
-
-function isServiceSlug(v: string | undefined): v is ServiceSlug {
-  return Boolean(v && serviceNav.some((s) => s.slug === v));
-}
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
-import { CasesFilter } from "./CasesFilter";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Кейсы — проекты event-агентства",
@@ -24,15 +18,18 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function CasesPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ service?: string }>;
-}) {
-  const sp = await searchParams;
+function CasesGridFallback() {
+  return (
+    <ul className="mt-12 grid gap-6 md:grid-cols-2">
+      {Array.from({ length: 4 }).map((_, i) => (
+        <li key={i} className="aspect-[16/10] animate-pulse rounded-card bg-surface" />
+      ))}
+    </ul>
+  );
+}
+
+export default async function CasesPage() {
   const all = await getCasesResolved();
-  const filter: ServiceSlug | "all" = isServiceSlug(sp.service) ? sp.service : "all";
-  const filtered = filter === "all" ? all : all.filter((c) => c.serviceTypeSlug === filter);
 
   return (
     <>
@@ -51,18 +48,9 @@ export default async function CasesPage({
           </p>
         </header>
 
-        <CasesFilter
-          options={[{ slug: "all", title: "Все" }, ...serviceNav.map((s) => ({ slug: s.slug, title: s.title }))]}
-          active={filter}
-        />
-
-        <ul className="mt-12 grid gap-6 md:grid-cols-2">
-          {filtered.map((c, i) => (
-            <li key={c.slug}>
-              <CaseCard item={c} priority={i < 2} />
-            </li>
-          ))}
-        </ul>
+        <Suspense fallback={<CasesGridFallback />}>
+          <CasesListing all={all} />
+        </Suspense>
       </PageWrapper>
     </>
   );

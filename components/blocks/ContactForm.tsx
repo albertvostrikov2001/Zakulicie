@@ -6,6 +6,7 @@ import { Select } from "@/components/ui/Select";
 import { Textarea } from "@/components/ui/Textarea";
 import { trackContactFormSubmit } from "@/lib/analytics/client";
 import { EVENT_TYPE_OPTIONS } from "@/lib/constants";
+import { submitContactPayload } from "@/lib/submitContact";
 import {
   contactFormSchema,
   normalizeRuPhone,
@@ -40,12 +41,8 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
   const onSubmit = async (data: ContactFormValues) => {
     setStatus("idle");
     const payload = { ...data, phone: normalizeRuPhone(data.phone) };
-    const res = await fetch("/api/contact", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    });
-    if (res.ok) {
+    const { ok } = await submitContactPayload(payload);
+    if (ok) {
       setStatus("ok");
       trackContactFormSubmit();
       reset();
