@@ -12,7 +12,7 @@ import { unsplashPhoto } from "@/lib/content/unsplash";
 
 const POSTER = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
 
-const lines = ["Когда на кону репутация,", "считает каждая деталь"];
+const lines = ["Когда на кону репутация,", "важна каждая деталь"];
 
 export function HeroVideo() {
   const videoRef = useRef<HTMLVideoElement>(null);
