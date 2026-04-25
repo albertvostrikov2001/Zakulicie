@@ -1,7 +1,5 @@
 # Деплой статики на GitHub Pages (basePath = /имя-репозитория).
 # Pages: Settings → Pages → Source: GitHub Actions.
-# Для картинок из Sanity добавьте в Settings → Secrets: NEXT_PUBLIC_SANITY_PROJECT_ID
-# и при необходимости NEXT_PUBLIC_SANITY_DATASET (иначе используется production).
 name: Deploy to GitHub Pages
 
 on:
@@ -28,11 +26,11 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: "20"
+          node-version: "22"
           cache: npm
 
       - name: Install
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Remove API and Studio (не поддерживаются в static export)
         run: rm -rf app/api app/studio
@@ -45,7 +43,6 @@ jobs:
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
-          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
