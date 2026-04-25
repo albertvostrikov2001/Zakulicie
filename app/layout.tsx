@@ -1,5 +1,6 @@
 import { Analytics } from "@/components/Analytics";
 import { ContactModalProvider } from "@/components/providers/ContactModalProvider";
+import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
 import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
@@ -59,7 +60,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Перейти к содержимому
         </a>
-        <ContactModalProvider>{children}</ContactModalProvider>
+        <SmoothScrollProvider>
+          <ContactModalProvider>{children}</ContactModalProvider>
+        </SmoothScrollProvider>
         <Analytics />
       </body>
     </html>

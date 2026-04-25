@@ -10,13 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         bg: "var(--color-bg)",
+        "bg-light": "var(--color-bg-light)",
         surface: "var(--color-surface)",
         elevated: "var(--color-surface-elevated)",
         accent: "var(--color-accent)",
+        "accent-hover": "var(--color-accent-hover)",
         "text-primary": "var(--color-text-primary)",
         "text-secondary": "var(--color-text-secondary)",
         "text-muted": "var(--color-text-muted)",
+        "text-dark": "var(--color-text-dark)",
         border: "var(--color-border)",
+        "border-light": "var(--color-border-light)",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],

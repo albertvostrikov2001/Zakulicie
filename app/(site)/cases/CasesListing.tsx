@@ -33,7 +33,7 @@ export function CasesListing({ all }: { all: CaseStudy[] }) {
       <ul className="mt-12 grid gap-6 md:grid-cols-2">
         {filtered.map((c, i) => (
           <li key={c.slug}>
-            <CaseCard item={c} priority={i < 2} />
+            <CaseCard item={c} priority={i < 2} index={i} />
           </li>
         ))}
       </ul>

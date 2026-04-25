@@ -16,7 +16,10 @@ export function Footer() {
         <div className="grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           <div>
             <p className="font-display text-lg font-semibold text-text-primary">Закулисье</p>
-            <p className="mt-3 max-w-xs text-sm text-text-secondary">
+            <p className="mt-1 text-xs font-medium uppercase tracking-widest text-accent">
+              Event-агентство
+            </p>
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-text-secondary">
               Агентство событий для компаний, где важны масштаб, дисциплина и репутация. Новосибирск,
               работа по Сибири и федеральным брифам.
             </p>
