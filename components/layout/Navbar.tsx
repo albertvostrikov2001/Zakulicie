@@ -3,10 +3,23 @@
 import { serviceNav } from "@/lib/content/services";
 import { cn } from "@/lib/cn";
 import { useContactModal } from "@/components/providers/ContactModalProvider";
+import { PhoneLink } from "@/components/ui/PhoneLink";
+import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/constants";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
+import { useGSAP } from "@gsap/react";
+import { gsap } from "gsap";
 import { ChevronDown, Menu, X } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+
+const navItemClass = (light: boolean) =>
+  cn(
+    "relative inline-flex text-[15px] font-medium transition-colors duration-200 ease-out",
+    "after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:ease-out",
+    "hover:after:scale-x-100",
+    light ? "text-text-dark/90 hover:text-text-dark" : "text-text-primary/90 hover:text-accent"
+  );
 
 export function Navbar() {
   const pathname = usePathname();
@@ -15,14 +28,35 @@ export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
   const closeTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const headerRef = useRef<HTMLElement>(null);
+  const innerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = usePrefersReducedMotion();
   const lightHero = pathname === "/" && !scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 32);
+    const onScroll = () => setScrolled(window.scrollY > 80);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  useGSAP(
+    () => {
+      const inner = innerRef.current;
+      if (!inner || reducedMotion) return;
+      const ctx = gsap.context(() => {
+        gsap.from(inner, {
+          opacity: 0,
+          y: -10,
+          duration: 0.6,
+          delay: 0.1,
+          ease: "power3.out",
+        });
+      }, headerRef);
+      return () => ctx.revert();
+    },
+    { scope: headerRef, dependencies: [reducedMotion] }
+  );
 
   useEffect(() => {
     setMobileOpen(false);
@@ -36,26 +70,27 @@ export function Navbar() {
     closeTimer.current = setTimeout(() => setServicesOpen(false), 160);
   };
 
-  const linkClass = cn(
-    "text-sm transition",
-    lightHero ? "text-text-dark/80 hover:text-text-dark" : "text-text-secondary hover:text-text-primary",
-    !lightHero && "text-text-secondary"
-  );
-
   const isActive = (href: string) => pathname === href || pathname.startsWith(href + "/");
-  const activeClass = lightHero ? "text-text-dark" : "text-text-primary";
+  const activeClass = cn(
+    "after:!scale-x-100 after:!bg-current",
+    lightHero ? "text-text-dark" : "text-accent"
+  );
 
   return (
     <>
       <header
+        ref={headerRef}
         className={cn(
-          "fixed left-0 right-0 top-0 z-[100] transition-all duration-500",
+          "fixed left-0 right-0 top-0 z-[100] transition-[background-color,border-color,backdrop-filter] duration-300 ease-out",
           scrolled
-            ? "border-b border-border bg-bg/85 shadow-lg shadow-black/10 backdrop-blur-[12px]"
-            : "bg-transparent"
+            ? "border-b border-white/[0.06] bg-black/85 shadow-lg shadow-black/10 backdrop-blur-[12px]"
+            : "border-b border-transparent bg-transparent"
         )}
       >
-        <div className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-4 md:px-8">
+        <div
+          ref={innerRef}
+          className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-4 md:px-8"
+        >
           <Link
             href="/"
             className={cn(
@@ -66,8 +101,8 @@ export function Navbar() {
             Закулисье
           </Link>
 
-          <nav className="hidden items-center gap-8 lg:flex" aria-label="Основная навигация">
-            <Link href="/cases" className={cn(linkClass, isActive("/cases") && activeClass)}>
+          <nav className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Основная навигация">
+            <Link href="/cases" className={cn(navItemClass(lightHero), isActive("/cases") && activeClass)}>
               Кейсы
             </Link>
 
@@ -79,8 +114,10 @@ export function Navbar() {
               <button
                 type="button"
                 className={cn(
-                  "flex items-center gap-1 text-sm transition",
-                  lightHero ? "text-text-dark/80 hover:text-text-dark" : "text-text-secondary hover:text-text-primary"
+                  navItemClass(lightHero),
+                  "items-center gap-1 border-0 bg-transparent",
+                  servicesOpen && !lightHero && "text-accent",
+                  servicesOpen && lightHero && "text-text-dark"
                 )}
                 aria-expanded={servicesOpen}
                 aria-haspopup="true"
@@ -108,15 +145,18 @@ export function Navbar() {
               )}
             </div>
 
-            <Link href="/about" className={cn(linkClass, isActive("/about") && activeClass)}>
+            <Link href="/about" className={cn(navItemClass(lightHero), isActive("/about") && activeClass)}>
               О нас
             </Link>
+
+            <PhoneLink variant={lightHero ? "on-light" : "on-dark"} className="hidden xl:inline-flex" />
+
             <button
               type="button"
               onClick={openContact}
               className={cn(
-                "border-0 bg-transparent text-sm uppercase tracking-[0.15em] transition",
-                lightHero ? "text-text-dark/90 hover:text-text-dark" : "text-text-secondary hover:text-text-primary"
+                navItemClass(lightHero),
+                "border-0 bg-transparent"
               )}
             >
               Контакт
@@ -177,6 +217,13 @@ export function Navbar() {
             <Link href="/blog" className="py-3 text-lg text-text-secondary" onClick={() => setMobileOpen(false)}>
               Блог
             </Link>
+            <a
+              href={`tel:${CONTACT_PHONE_TEL}`}
+              className="mt-4 py-2 text-text-secondary"
+              onClick={() => setMobileOpen(false)}
+            >
+              {CONTACT_PHONE}
+            </a>
             <button
               type="button"
               className="mt-6 border-0 bg-transparent py-3 text-left text-lg text-text-primary"

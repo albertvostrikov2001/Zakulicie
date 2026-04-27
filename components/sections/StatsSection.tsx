@@ -11,31 +11,35 @@ export function StatsSection() {
 
   return (
     <section
-      className="relative overflow-hidden border-t border-border bg-[#141414] py-24 md:py-36"
+      className="relative overflow-x-hidden border-t border-border bg-[#141414] py-24 md:py-36"
       aria-label="Цифры"
     >
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center overflow-hidden" aria-hidden>
-        <span className="max-w-full select-none whitespace-nowrap text-center font-display text-[20vw] font-bold leading-none tracking-tighter text-white/[0.04]">
+      <div
+        className="pointer-events-none absolute inset-0 z-0 flex max-w-[100vw] items-center justify-center overflow-hidden"
+        aria-hidden
+      >
+        <span className="max-w-[100vw] select-none whitespace-nowrap text-center font-display text-[clamp(3rem,min(18vw,9rem),9rem)] font-bold leading-none tracking-tighter text-white/[0.05]">
           ЗАКУЛИСЬЕ
         </span>
       </div>
 
-      <div className="relative mx-auto max-w-content px-4 md:px-8">
+      <div className="relative z-[1] mx-auto max-w-content px-4 md:px-8">
         <RevealOnScroll>
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">В числах</p>
         </RevealOnScroll>
 
-        <div className="mt-20 grid grid-cols-1 gap-16 md:grid-cols-2 lg:grid-cols-4">
+        <div className="mt-16 grid grid-cols-2 gap-x-6 gap-y-14 md:mt-20 md:gap-x-10 lg:grid-cols-4 lg:gap-x-12 lg:gap-y-0">
           {siteStats.map((s, i) => (
             <motion.div
               key={s.label}
+              className="min-w-0"
               initial={reduced ? false : { opacity: 1, y: 32 }}
               whileInView={!reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
               transition={{ duration: 0.75, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
             >
-              <div className="text-left">
-                <p className="font-display text-[clamp(3.5rem,10vw,7.5rem)] font-semibold leading-none tracking-tight text-text-primary">
+              <div className="flex flex-col items-start text-left">
+                <p className="font-display text-[clamp(2.5rem,8vw,6.5rem)] font-semibold leading-none tracking-tight text-text-primary">
                   {reduced ? (
                     <>
                       {s.value.toLocaleString("ru-RU")}
@@ -44,10 +48,14 @@ export function StatsSection() {
                   ) : (
                     <GsapCounterUp value={s.value} suffix={s.suffix} />
                   )}
-                  {s.unit && <span className="ml-1 text-[0.4em] font-medium text-accent">{s.unit}</span>}
+                  {s.unit ? (
+                    <span className="ml-1 text-[0.4em] font-medium text-accent">{s.unit}</span>
+                  ) : null}
                 </p>
-                <p className="mt-4 text-xs font-medium uppercase tracking-[0.2em] text-text-secondary">{s.label}</p>
-                <p className="mt-2 text-sm text-text-muted">{s.detail}</p>
+                <p className="mt-4 max-w-[14rem] text-xs font-medium uppercase tracking-[0.2em] text-text-secondary">
+                  {s.label}
+                </p>
+                <p className="mt-2 max-w-[14rem] text-sm text-text-muted">{s.detail}</p>
               </div>
             </motion.div>
           ))}

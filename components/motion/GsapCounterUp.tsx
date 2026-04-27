@@ -27,14 +27,14 @@ export function GsapCounterUp({ value, suffix = "", className }: Props) {
       const ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: el,
-          start: "top bottom",
+          start: "top 80%",
           once: true,
           onEnter: () => {
             const v = valRef.current;
             v.n = 0;
             gsap.to(v, {
               n: value,
-              duration: 2,
+              duration: 1.5,
               ease: "power2.out",
               onUpdate: () => setText(Math.round(v.n)),
             });

@@ -58,6 +58,8 @@ export type Testimonial = {
   position: string;
   company: string;
   relatedCaseSlug?: string;
+  /** Опциональный логотип бренда */
+  logoUrl?: string;
 };
 
 export type BlogPost = {
