@@ -5,7 +5,7 @@ import { useContactModal } from "@/components/providers/ContactModalProvider";
 import { cn } from "@/lib/cn";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import { unsplashPhoto } from "@/lib/content/unsplash";

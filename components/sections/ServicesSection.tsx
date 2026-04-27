@@ -4,7 +4,7 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { cn } from "@/lib/cn";
 import { serviceNav, staticServices } from "@/lib/content/services";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useState } from "react";
 
@@ -66,7 +66,7 @@ export function ServicesSection() {
               return (
                 <motion.li
                   key={s.slug}
-                  initial={{ opacity: 0, x: -24 }}
+                  initial={{ opacity: 1, x: -20 }}
                   whileInView={{ opacity: 1, x: 0 }}
                   viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
                   transition={{

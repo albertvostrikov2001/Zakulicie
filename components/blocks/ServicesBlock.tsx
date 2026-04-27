@@ -4,7 +4,7 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { Section } from "@/components/layout/Section";
 import { serviceNav, staticServices } from "@/lib/content/services";
 import { cn } from "@/lib/cn";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useState } from "react";
 

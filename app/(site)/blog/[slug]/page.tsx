@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { getBlogBySlug, getBlogPosts } from "@/lib/data";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ slug: string }> };

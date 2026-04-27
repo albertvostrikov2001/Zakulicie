@@ -4,7 +4,7 @@ import { staticClientWordmarks } from "@/lib/content/clients";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 
 export const metadata: Metadata = {
   title: "Клиенты и отрасли",

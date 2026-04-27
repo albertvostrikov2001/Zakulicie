@@ -4,7 +4,7 @@ import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 import { motion, useScroll, useTransform } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { useRef } from "react";
 
 const IMAGE_URL = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
@@ -40,7 +40,7 @@ export function VideoReveal() {
         {/* Заголовок секции */}
         <motion.p
           className="mb-12 text-xs font-medium uppercase tracking-[0.2em] text-text-muted"
-          initial={reduced ? false : { opacity: 0, y: 12 }}
+          initial={reduced ? false : { opacity: 1, y: 8 }}
           whileInView={!reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
@@ -90,7 +90,7 @@ export function VideoReveal() {
 
             <motion.div
               className="relative aspect-video overflow-hidden"
-              initial={reduced ? false : { opacity: 0, scale: 0.95 }}
+              initial={reduced ? false : { opacity: 1, scale: 0.99 }}
               whileInView={!reduced ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
               viewport={{ once: true, amount: 0.15, margin: "0px 0px 5% 0px" }}
               transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}

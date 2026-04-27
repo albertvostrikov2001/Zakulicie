@@ -35,30 +35,30 @@ export function VideoSplitSection() {
       const vShift = mobile ? 0 : -56;
       const tShift = mobile ? 0 : 44;
 
-      gsap.set(videoEl, { x: vShift, opacity: 0 });
-      gsap.set(textEl, { x: tShift, opacity: 0 });
+      /* Только x: не трогаем opacity — иначе при сбое ScrollTrigger/Lenis на статике/GH Pages
+         блок остаётся с opacity:0 и «пропадает» постер. */
+      gsap.set(videoEl, { x: vShift, opacity: 1 });
+      gsap.set(textEl, { x: tShift, opacity: 1 });
 
       const ctx = gsap.context(() => {
         gsap.to(videoEl, {
           x: 0,
-          opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: el,
-            start: "top 78%",
-            end: "top 38%",
+            start: "top bottom",
+            end: "top 40%",
             scrub: 1,
           },
         });
 
         gsap.to(textEl, {
           x: 0,
-          opacity: 1,
           ease: "none",
           scrollTrigger: {
             trigger: el,
-            start: "top 72%",
-            end: "top 32%",
+            start: "top bottom",
+            end: "top 40%",
             scrub: 1,
           },
         });

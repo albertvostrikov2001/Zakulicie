@@ -29,7 +29,7 @@ export function StatsSection() {
           {siteStats.map((s, i) => (
             <motion.div
               key={s.label}
-              initial={reduced ? false : { opacity: 0, y: 40 }}
+              initial={reduced ? false : { opacity: 1, y: 32 }}
               whileInView={!reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
               viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
               transition={{ duration: 0.75, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}

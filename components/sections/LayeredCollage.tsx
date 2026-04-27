@@ -5,7 +5,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { useRef } from "react";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 

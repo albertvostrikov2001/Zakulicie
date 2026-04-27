@@ -4,7 +4,7 @@ import { getAdjacentCases, getCaseBySlug } from "@/lib/data";
 import { serviceNav } from "@/lib/content/services";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { CaseEndCTA } from "./CaseEndCTA";

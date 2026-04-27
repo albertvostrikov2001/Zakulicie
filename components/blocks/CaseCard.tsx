@@ -5,7 +5,7 @@ import type { CaseStudy } from "@/lib/types";
 import { serviceNav } from "@/lib/content/services";
 import { cn } from "@/lib/cn";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 
 type Props = { item: CaseStudy; className?: string; priority?: boolean; index?: number };
@@ -15,7 +15,7 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 36 }}
+      initial={{ opacity: 1, y: 28 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.12, margin: "0px 0px 5% 0px" }}
       transition={{ duration: 0.7, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}

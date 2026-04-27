@@ -5,7 +5,7 @@ import { cn } from "@/lib/cn";
 import { serviceNav } from "@/lib/content/services";
 import type { CaseStudy } from "@/lib/types";
 import { motion } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 
 type Props = { cases: CaseStudy[] };
@@ -16,7 +16,7 @@ function FlagshipCaseCard({ item, index }: { item: CaseStudy; index: number }) {
 
   return (
     <motion.article
-      initial={{ opacity: 0, y: 48 }}
+      initial={{ opacity: 1, y: 36 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, amount: 0.1, margin: "0px 0px 8% 0px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.05 * index }}

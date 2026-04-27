@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { getBlogPosts } from "@/lib/data";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 
 export const metadata: Metadata = {

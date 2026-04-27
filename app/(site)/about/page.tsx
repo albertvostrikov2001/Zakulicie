@@ -3,7 +3,7 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 
 export const metadata: Metadata = {
   title: "О компании — стандарт, опыт и география",

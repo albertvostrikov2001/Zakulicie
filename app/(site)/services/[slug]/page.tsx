@@ -7,7 +7,7 @@ import { getAllServiceSlugs, getCasesByServiceSlug, getService } from "@/lib/dat
 import type { ServiceSlug } from "@/lib/types";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { notFound } from "next/navigation";
 
 type Props = { params: Promise<{ slug: string }> };
