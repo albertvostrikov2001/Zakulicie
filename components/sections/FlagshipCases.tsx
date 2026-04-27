@@ -4,24 +4,21 @@ import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { cn } from "@/lib/cn";
 import { serviceNav } from "@/lib/content/services";
 import type { CaseStudy } from "@/lib/types";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 
 type Props = { cases: CaseStudy[] };
 
 function FlagshipCaseCard({ item, index }: { item: CaseStudy; index: number }) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-8% 0px" });
   const tag = serviceNav.find((s) => s.slug === item.serviceTypeSlug)?.title ?? "";
   const isOdd = index % 2 === 1;
 
   return (
     <motion.article
-      ref={ref}
       initial={{ opacity: 0, y: 48 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.1, margin: "0px 0px 8% 0px" }}
       transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay: 0.05 * index }}
       className={cn(
         "group relative grid grid-cols-1 gap-0 overflow-hidden border border-border",

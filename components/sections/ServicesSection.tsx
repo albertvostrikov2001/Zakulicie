@@ -3,15 +3,13 @@
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { cn } from "@/lib/cn";
 import { serviceNav, staticServices } from "@/lib/content/services";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 export function ServicesSection() {
   const [hovered, setHovered] = useState<string | null>(serviceNav[0]?.slug ?? null);
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
   const activeSlug = hovered ?? serviceNav[0]?.slug ?? "";
   const activeBg = staticServices[activeSlug as keyof typeof staticServices]?.heroImage;
@@ -36,7 +34,7 @@ export function ServicesSection() {
           </RevealOnScroll>
         </div>
 
-        <div ref={ref} className="relative">
+        <div className="relative">
           <div
             className="pointer-events-none absolute right-0 top-0 hidden h-full w-[40%] overflow-hidden md:block"
             aria-hidden
@@ -45,9 +43,9 @@ export function ServicesSection() {
               <motion.div
                 key={activeSlug}
                 className="relative h-full min-h-[320px] w-full"
-                initial={{ clipPath: "inset(0 0 0 100%)" }}
-                animate={{ clipPath: "inset(0 0 0 0%)" }}
-                transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5, ease: [0.4, 0, 0.2, 1] }}
               >
                 <Image
                   src={activeBg.src}
@@ -69,7 +67,8 @@ export function ServicesSection() {
                 <motion.li
                   key={s.slug}
                   initial={{ opacity: 0, x: -24 }}
-                  animate={inView ? { opacity: 1, x: 0 } : {}}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
                   transition={{
                     duration: 0.6,
                     delay: 0.05 * i,

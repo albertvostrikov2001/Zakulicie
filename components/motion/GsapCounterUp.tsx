@@ -27,7 +27,7 @@ export function GsapCounterUp({ value, suffix = "", className }: Props) {
       const ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: el,
-          start: "top 88%",
+          start: "top bottom",
           once: true,
           onEnter: () => {
             const v = valRef.current;

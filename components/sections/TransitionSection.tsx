@@ -1,5 +1,6 @@
 "use client";
 
+import { useContactModal } from "@/components/providers/ContactModalProvider";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { interpolateHex } from "@/hooks/useColorInterpolation";
 import { useGSAP } from "@gsap/react";
@@ -24,7 +25,9 @@ export function TransitionSection() {
   const bgRef = useRef<HTMLDivElement>(null);
   const wordRef = useRef<HTMLHeadingElement>(null);
   const tagWrapRef = useRef<HTMLDivElement>(null);
+  const ctaRef = useRef<HTMLButtonElement>(null);
   const mobile = useIsMobile();
+  const { openContact } = useContactModal();
 
   useGSAP(
     () => {
@@ -53,6 +56,7 @@ export function TransitionSection() {
             lines?.forEach((el) => {
               el.style.color = tw;
             });
+            if (ctaRef.current) ctaRef.current.style.color = tw;
 
             const fadeOutStart = 0.78;
             const wordOp =
@@ -105,6 +109,19 @@ export function TransitionSection() {
                   {line}
                 </p>
               ))}
+              <div className="mt-8 md:mt-10">
+                <button
+                  ref={ctaRef}
+                  type="button"
+                  onClick={openContact}
+                  className="group border-0 bg-transparent text-xs font-semibold uppercase tracking-[0.22em] transition-colors duration-300 hover:text-accent focus-visible:outline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--scene-bg)]"
+                  style={{ color: TAG_ON_LIGHT }}
+                >
+                  <span className="relative inline-block pb-1 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-100 after:bg-current/35 after:transition after:duration-300 after:ease-out group-hover:after:bg-accent">
+                    Обсудить проект
+                  </span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

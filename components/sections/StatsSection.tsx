@@ -4,17 +4,13 @@ import { GsapCounterUp } from "@/components/motion/GsapCounterUp";
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { siteStats } from "@/data/stats";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { motion, useInView } from "framer-motion";
-import { useRef } from "react";
+import { motion } from "framer-motion";
 
 export function StatsSection() {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
   const reduced = usePrefersReducedMotion();
 
   return (
     <section
-      ref={ref}
       className="relative overflow-hidden border-t border-border bg-[#141414] py-24 md:py-36"
       aria-label="Цифры"
     >
@@ -34,7 +30,8 @@ export function StatsSection() {
             <motion.div
               key={s.label}
               initial={reduced ? false : { opacity: 0, y: 40 }}
-              animate={inView || reduced ? { opacity: 1, y: 0 } : {}}
+              whileInView={!reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
               transition={{ duration: 0.75, delay: 0.08 * i, ease: [0.22, 1, 0.36, 1] }}
             >
               <div className="text-left">

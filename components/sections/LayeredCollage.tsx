@@ -44,12 +44,12 @@ export function LayeredCollage() {
         return;
       }
       items.forEach((el, i) => {
-        gsap.set(el, { y: 80, opacity: 0, rotation: (i % 2 === 0 ? 1 : -1) * 3 });
+        gsap.set(el, { y: 48, opacity: 1, rotation: (i % 2 === 0 ? 1 : -1) * 3 });
       });
       const ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: section,
-          start: "top 88%",
+          start: "top bottom",
           once: true,
           onEnter: () => {
             gsap.to(items, {

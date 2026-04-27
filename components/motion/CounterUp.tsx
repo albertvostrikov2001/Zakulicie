@@ -13,7 +13,7 @@ type Props = {
 
 export function CounterUp({ value, suffix = "", duration = 1.6, className }: Props) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
+  const inView = useInView(ref, { once: true, margin: "0px 0px 20% 0px" });
   const reduced = usePrefersReducedMotion();
   const [n, setN] = useState(reduced ? value : 0);
 

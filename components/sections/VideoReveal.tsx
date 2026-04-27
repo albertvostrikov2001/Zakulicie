@@ -3,7 +3,7 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { unsplashPhoto } from "@/lib/content/unsplash";
-import { motion, useInView, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "next/image";
 import { useRef } from "react";
 
@@ -13,7 +13,6 @@ const IMAGE_URL_2 = unsplashPhoto("1492684223066-81342ee5ff30", 2400);
 export function VideoReveal() {
   const ref = useRef<HTMLElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-15% 0px" });
   const mobile = useIsMobile();
   const reduced = usePrefersReducedMotion();
 
@@ -42,7 +41,8 @@ export function VideoReveal() {
         <motion.p
           className="mb-12 text-xs font-medium uppercase tracking-[0.2em] text-text-muted"
           initial={reduced ? false : { opacity: 0, y: 12 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
+          whileInView={!reduced ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+          viewport={{ once: true, amount: 0.2, margin: "0px 0px 5% 0px" }}
           transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
         >
           Наши мероприятия
@@ -91,7 +91,8 @@ export function VideoReveal() {
             <motion.div
               className="relative aspect-video overflow-hidden"
               initial={reduced ? false : { opacity: 0, scale: 0.95 }}
-              animate={inView ? { opacity: 1, scale: 1 } : {}}
+              whileInView={!reduced ? { opacity: 1, scale: 1 } : { opacity: 1, scale: 1 }}
+              viewport={{ once: true, amount: 0.15, margin: "0px 0px 5% 0px" }}
               transition={{ duration: 0.9, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
             >
               <Image

@@ -25,7 +25,7 @@ export function StaggerText({
   splitBy = "word",
 }: Props) {
   const ref = useRef(null);
-  const inView = useInView(ref, { once, margin: "-8% 0px" });
+  const inView = useInView(ref, { once, margin: "0px 0px 20% 0px" });
   const reduced = usePrefersReducedMotion();
 
   const items = splitBy === "word"

@@ -4,23 +4,20 @@ import { Badge } from "@/components/ui/Badge";
 import type { CaseStudy } from "@/lib/types";
 import { serviceNav } from "@/lib/content/services";
 import { cn } from "@/lib/cn";
-import { motion, useInView } from "framer-motion";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
-import { useRef } from "react";
 
 type Props = { item: CaseStudy; className?: string; priority?: boolean; index?: number };
 
 export function CaseCard({ item, className, priority, index = 0 }: Props) {
-  const ref = useRef(null);
-  const inView = useInView(ref, { once: true, margin: "-5% 0px" });
   const tag = serviceNav.find((s) => s.slug === item.serviceTypeSlug)?.title ?? "";
 
   return (
     <motion.div
-      ref={ref}
       initial={{ opacity: 0, y: 36 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, amount: 0.12, margin: "0px 0px 5% 0px" }}
       transition={{ duration: 0.7, delay: 0.05 * index, ease: [0.22, 1, 0.36, 1] }}
       className={className}
     >

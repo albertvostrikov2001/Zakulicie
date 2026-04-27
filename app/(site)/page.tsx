@@ -1,7 +1,6 @@
 import { ClientsSection } from "@/components/sections/ClientsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { FlagshipCases } from "@/components/sections/FlagshipCases";
-import { HeroSection } from "@/components/sections/HeroSection";
 import { LayeredCollage } from "@/components/sections/LayeredCollage";
 import { TransitionSection } from "@/components/sections/TransitionSection";
 import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
@@ -49,7 +48,6 @@ export default async function HomePage() {
   const testimonials = await getTestimonials();
   return (
     <>
-      <HeroSection />
       <TransitionSection />
       <VideoSplitSection />
       <LayeredCollage />
