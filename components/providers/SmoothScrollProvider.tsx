@@ -14,25 +14,22 @@ export function useLenis() {
   return useContext(LenisContext);
 }
 
-/**
- * Lenis + ScrollTrigger: обновление ST на событии scroll Lenis.
- * rAF вызывает lenis.raf(time) с timestamp в мс (как requestAnimationFrame) — без привязки к gsap.ticker,
- * чтобы не конфликтовать с GSAP-анимациями и Framer Motion.
- */
 export function SmoothScrollProvider({ children }: { children: React.ReactNode }) {
   const lenisRef = useRef<Lenis | null>(null);
-  const rafRef = useRef<number>(0);
   const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced) {
+      lenisRef.current = null;
+      return;
+    }
 
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.5,
+      wheelMultiplier: 0.92,
+      touchMultiplier: 1.45,
     });
 
     lenisRef.current = lenis;
@@ -42,11 +39,11 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     };
     lenis.on("scroll", onLenisScroll);
 
-    const raf = (time: number) => {
-      lenis.raf(time);
-      rafRef.current = requestAnimationFrame(raf);
+    const tickerFn = (time: number) => {
+      lenis.raf(time * 1000);
     };
-    rafRef.current = requestAnimationFrame(raf);
+    gsap.ticker.add(tickerFn);
+    gsap.ticker.lagSmoothing(0);
 
     const onResize = () => {
       ScrollTrigger.refresh();
@@ -59,12 +56,10 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
 
     return () => {
       window.removeEventListener("resize", onResize);
-      cancelAnimationFrame(rafRef.current);
+      gsap.ticker.remove(tickerFn);
       lenis.off("scroll", onLenisScroll);
       lenis.destroy();
       lenisRef.current = null;
-      /* Не вызываем ScrollTrigger.getAll().kill() — это ломает все useGSAP в дочерних
-       * компонентах (и при React Strict Mode двойной mount). Очистка — через ctx.revert() в компонентах. */
     };
   }, [reduced]);
 

@@ -3,7 +3,8 @@ import { ContactSection } from "@/components/sections/ContactSection";
 import { FlagshipCases } from "@/components/sections/FlagshipCases";
 import { HeroSection } from "@/components/sections/HeroSection";
 import { LayeredCollage } from "@/components/sections/LayeredCollage";
-import { LightToDarkTransition } from "@/components/sections/LightToDarkTransition";
+import { TransitionSection } from "@/components/sections/TransitionSection";
+import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
@@ -49,7 +50,8 @@ export default async function HomePage() {
   return (
     <>
       <HeroSection />
-      <LightToDarkTransition />
+      <TransitionSection />
+      <VideoSplitSection />
       <LayeredCollage />
       <StatsSection />
       <FlagshipCases cases={featured} />

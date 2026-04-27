@@ -1,6 +1,6 @@
 import { Analytics } from "@/components/Analytics";
 import { ContactModalProvider } from "@/components/providers/ContactModalProvider";
-import { SmoothScrollProvider } from "@/components/layout/SmoothScrollProvider";
+import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
@@ -11,7 +11,7 @@ import "./globals.css";
 const display = Unbounded({
   subsets: ["latin", "cyrillic"],
   variable: "--font-display",
-  weight: ["400", "600", "700"],
+  weight: ["400", "600", "700", "900"],
 });
 
 const body = Manrope({
