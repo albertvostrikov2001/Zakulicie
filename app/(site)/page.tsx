@@ -1,44 +1,62 @@
-import { CTASectionNew } from "@/components/sections/CTASectionNew";
 import { ClientsSection } from "@/components/sections/ClientsSection";
+import { ContactSection } from "@/components/sections/ContactSection";
 import { FlagshipCases } from "@/components/sections/FlagshipCases";
 import { HeroSection } from "@/components/sections/HeroSection";
+import { LayeredCollage } from "@/components/sections/LayeredCollage";
 import { LightToDarkTransition } from "@/components/sections/LightToDarkTransition";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
-import { VideoReveal } from "@/components/sections/VideoReveal";
 import { getFeaturedCases, getTestimonials } from "@/lib/data";
-import { getSiteUrl, SITE_NAME } from "@/lib/site";
+import { unsplashPhoto } from "@/lib/content/unsplash";
+import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 
+const homeUrl = getSiteUrl() + "/";
+
 export const metadata: Metadata = {
-  title: `${SITE_NAME} — мероприятия для компаний, где важна репутация`,
+  title: "Закулисье — Event-агентство премиум класса в Новосибирске",
   description:
-    "Event-агентство в Новосибирске: корпоративные мероприятия, деловые форумы, тимбилдинг, активации, аренда реквизита. 20 лет опыта, 3000+ мероприятий, федеральные бренды.",
-  alternates: { canonical: getSiteUrl() + "/" },
+    "Организация корпоративных мероприятий, деловых событий, тимбилдинга и брендовых активностей в Новосибирске и Сибири. 20 лет опыта. 3000+ мероприятий.",
+  keywords: [
+    "event агентство Новосибирск",
+    "организация мероприятий Новосибирск",
+    "корпоративные мероприятия Сибирь",
+  ],
+  alternates: { canonical: homeUrl },
   openGraph: {
-    title: `${SITE_NAME} — премиальные события в Сибири`,
+    title: "Закулисье — Event-агентство",
     description:
-      "Агентство полного цикла для компаний, которые не идут на компромисс по качеству исполнения. Новосибирск и вся Сибирь.",
-    url: getSiteUrl(),
+      "Премиальные события для компаний, которые не идут на компромисс. Новосибирск, Сибирь, федеральные брифы.",
+    locale: "ru_RU",
+    type: "website",
+    url: homeUrl,
+    images: [
+      {
+        url: unsplashPhoto("1511578314322-379afb476865", 1200, 630),
+        width: 1200,
+        height: 630,
+        alt: "Атмосфера делового мероприятия",
+      },
+    ],
   },
+  robots: { index: true, follow: true },
 };
 
 export default async function HomePage() {
   const featured = await getFeaturedCases();
   const testimonials = await getTestimonials();
-
   return (
     <>
       <HeroSection />
       <LightToDarkTransition />
-      <VideoReveal />
+      <LayeredCollage />
       <StatsSection />
       <FlagshipCases cases={featured} />
       <ServicesSection />
       <ClientsSection />
       <TestimonialsSection items={testimonials} />
-      <CTASectionNew />
+      <ContactSection />
     </>
   );
 }

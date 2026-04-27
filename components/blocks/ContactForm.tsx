@@ -3,9 +3,9 @@
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
-import { Textarea } from "@/components/ui/Textarea";
 import { trackContactFormSubmit } from "@/lib/analytics/client";
 import { EVENT_TYPE_OPTIONS } from "@/lib/constants";
+import { formatRuPhoneInput } from "@/lib/utils/phoneMask";
 import { submitContactPayload } from "@/lib/submitContact";
 import {
   contactFormSchema,
@@ -15,7 +15,7 @@ import {
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 
 type Props = {
   idPrefix?: string;
@@ -26,6 +26,7 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
   const [status, setStatus] = useState<"idle" | "ok" | "err">("idle");
   const {
     register,
+    control,
     handleSubmit,
     formState: { errors, isSubmitting },
     reset,
@@ -34,7 +35,10 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
     defaultValues: {
       eventType: "corporate",
       consent: false,
-      comment: "",
+      dates: "",
+      name: "",
+      phone: "",
+      email: "",
     },
   });
 
@@ -66,26 +70,23 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
           )}
         </div>
         <div>
-          <label htmlFor={`${idPrefix}-company`} className="mb-1 block text-xs text-text-secondary">
-            Компания
-          </label>
-          <Input id={`${idPrefix}-company`} autoComplete="organization" {...register("company")} />
-          {errors.company && (
-            <p className="mt-1 text-xs text-red-400" role="alert">
-              {errors.company.message}
-            </p>
-          )}
-        </div>
-        <div>
           <label htmlFor={`${idPrefix}-phone`} className="mb-1 block text-xs text-text-secondary">
             Телефон
           </label>
-          <Input
-            id={`${idPrefix}-phone`}
-            type="tel"
-            placeholder="+7 (___) ___-__-__"
-            autoComplete="tel"
-            {...register("phone")}
+          <Controller
+            name="phone"
+            control={control}
+            render={({ field }) => (
+              <Input
+                id={`${idPrefix}-phone`}
+                type="tel"
+                placeholder="+7 (___) ___-__-__"
+                autoComplete="tel"
+                value={field.value}
+                onChange={(e) => field.onChange(formatRuPhoneInput(e.target.value))}
+                onBlur={field.onBlur}
+              />
+            )}
           />
           {errors.phone && (
             <p className="mt-1 text-xs text-red-400" role="alert">
@@ -93,7 +94,7 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
             </p>
           )}
         </div>
-        <div>
+        <div className="sm:col-span-2">
           <label htmlFor={`${idPrefix}-email`} className="mb-1 block text-xs text-text-secondary">
             Email
           </label>
@@ -117,22 +118,15 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
           </Select>
         </div>
         <div className="sm:col-span-2">
-          <label htmlFor={`${idPrefix}-time`} className="mb-1 block text-xs text-text-secondary">
+          <label htmlFor={`${idPrefix}-dates`} className="mb-1 block text-xs text-text-secondary">
             Ориентировочные сроки
           </label>
-          <Input id={`${idPrefix}-time`} placeholder="Например: май 2026" {...register("timeline")} />
-          {errors.timeline && (
+          <Input id={`${idPrefix}-dates`} placeholder="Например: май 2026" {...register("dates")} />
+          {errors.dates && (
             <p className="mt-1 text-xs text-red-400" role="alert">
-              {errors.timeline.message}
+              {errors.dates.message}
             </p>
           )}
-        </div>
-        <div className="sm:col-span-2">
-          <label htmlFor={`${idPrefix}-msg`} className="mb-1 block text-xs text-text-secondary">
-            Комментарий{" "}
-            <span className="text-text-muted">— по желанию</span>
-          </label>
-          <Textarea id={`${idPrefix}-msg`} {...register("comment")} />
         </div>
       </div>
 

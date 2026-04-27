@@ -1,6 +1,5 @@
 import type { ContactFormValues } from "@/lib/validators/contact";
 
-/** Статический хостинг (GitHub Pages): Web3Forms. Иначе — свой API (Vercel / Node). */
 export async function submitContactPayload(
   data: ContactFormValues & { phone: string }
 ): Promise<{ ok: boolean }> {
@@ -11,14 +10,12 @@ export async function submitContactPayload(
       headers: { "Content-Type": "application/json", Accept: "application/json" },
       body: JSON.stringify({
         access_key: web3,
-        subject: `Заявка Закулисье: ${data.company}`,
+        subject: `Заявка Закулисье: ${data.name}`,
         from_name: data.name,
         email: data.email,
         phone: data.phone,
-        company: data.company,
         event_type: data.eventType,
-        timeline: data.timeline,
-        message: data.comment ?? "",
+        timeline: data.dates,
       }),
     });
     const json = (await res.json()) as { success?: boolean };
@@ -30,5 +27,9 @@ export async function submitContactPayload(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  return { ok: res.ok };
+  if (!res.ok) {
+    return { ok: false };
+  }
+  const json = (await res.json()) as { success?: boolean };
+  return { ok: Boolean(json.success) };
 }

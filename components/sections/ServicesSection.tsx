@@ -9,7 +9,7 @@ import Link from "next/link";
 import { useRef, useState } from "react";
 
 export function ServicesSection() {
-  const [hovered, setHovered] = useState<string | null>(null);
+  const [hovered, setHovered] = useState<string | null>(serviceNav[0]?.slug ?? null);
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-10% 0px" });
 
@@ -17,7 +17,11 @@ export function ServicesSection() {
   const activeBg = staticServices[activeSlug as keyof typeof staticServices]?.heroImage;
 
   return (
-    <section className="relative bg-bg py-24 md:py-36" aria-label="Услуги" id="services">
+    <section
+      className="group/services relative bg-bg py-24 md:py-36"
+      aria-label="Услуги"
+      id="services"
+    >
       <div className="mx-auto max-w-content px-4 md:px-8">
         <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <RevealOnScroll>
@@ -33,20 +37,27 @@ export function ServicesSection() {
         </div>
 
         <div ref={ref} className="relative">
-          {/* Фоновое изображение по ховеру */}
-          <div className="pointer-events-none absolute right-0 top-0 h-full w-1/3 overflow-hidden opacity-0 transition-opacity duration-500 md:opacity-100 lg:w-2/5" aria-hidden>
+          <div
+            className="pointer-events-none absolute right-0 top-0 hidden h-full w-[40%] overflow-hidden md:block"
+            aria-hidden
+          >
             {activeBg && (
-              <div className="relative h-full w-full">
+              <motion.div
+                key={activeSlug}
+                className="relative h-full min-h-[320px] w-full"
+                initial={{ clipPath: "inset(0 0 0 100%)" }}
+                animate={{ clipPath: "inset(0 0 0 0%)" }}
+                transition={{ duration: 0.65, ease: [0.4, 0, 0.2, 1] }}
+              >
                 <Image
-                  key={activeSlug}
                   src={activeBg.src}
                   alt=""
                   fill
-                  className="object-cover opacity-20"
+                  className="object-cover"
                   sizes="40vw"
                 />
-                <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/60 to-bg/30" />
-              </div>
+                <div className="absolute inset-0 bg-gradient-to-l from-bg via-bg/40 to-transparent" />
+              </motion.div>
             )}
           </div>
 
@@ -70,8 +81,8 @@ export function ServicesSection() {
                     className="group flex items-center justify-between gap-4 py-7 md:py-8"
                     onMouseEnter={() => setHovered(s.slug)}
                     onFocus={() => setHovered(s.slug)}
-                    onMouseLeave={() => setHovered(null)}
-                    onBlur={() => setHovered(null)}
+                    onMouseLeave={() => setHovered(serviceNav[0]?.slug ?? null)}
+                    onBlur={() => setHovered(serviceNav[0]?.slug ?? null)}
                   >
                     <div className="flex items-baseline gap-6 md:gap-10">
                       <span className="w-6 font-display text-sm font-medium text-text-muted tabular-nums">

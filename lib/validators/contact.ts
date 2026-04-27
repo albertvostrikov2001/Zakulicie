@@ -4,24 +4,23 @@ const eventTypes = ["corporate", "business", "team", "promo", "opening", "other"
 
 export const contactFormSchema = z.object({
   name: z.string().trim().min(2, "Укажите имя"),
-  company: z.string().trim().min(2, "Укажите компанию"),
   phone: z
     .string()
     .trim()
     .min(5)
-    .refine((v) => {
-      const d = v.replace(/\D/g, "");
-      if (d.length === 11 && (d.startsWith("7") || d.startsWith("8"))) return true;
-      if (d.length === 10) return true;
-      return false;
-    }, "Телефон в формате +7"),
+    .refine(
+      (v) => {
+        const d = v.replace(/\D/g, "");
+        if (d.length === 11 && (d.startsWith("7") || d.startsWith("8"))) return true;
+        if (d.length === 10) return true;
+        return false;
+      },
+      { message: "Телефон в формате +7" }
+    ),
   email: z.string().trim().email("Некорректный email"),
   eventType: z.enum(eventTypes),
-  timeline: z.string().trim().min(1, "Укажите ориентировочные сроки"),
-  comment: z.string().optional(),
-  consent: z
-    .boolean()
-    .refine((v) => v === true, { message: "Нужно согласие с политикой" }),
+  dates: z.string().trim().min(1, "Укажите ориентировочные сроки"),
+  consent: z.boolean().refine((v) => v === true, { message: "Нужно согласие с политикой" }),
 });
 
 export type ContactFormValues = z.infer<typeof contactFormSchema>;

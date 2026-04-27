@@ -3,10 +3,18 @@
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { AnimatePresence, motion } from "framer-motion";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export function PageTransition({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const reduced = usePrefersReducedMotion();
+
+  useEffect(() => {
+    requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+  }, [pathname]);
 
   if (reduced) return <>{children}</>;
 

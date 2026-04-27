@@ -1,96 +1,84 @@
 "use client";
 
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import type { Testimonial } from "@/lib/types";
-import { AnimatePresence, motion } from "framer-motion";
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
+import { motion } from "framer-motion";
+import { useRef } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { EffectFade } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/effect-fade";
 
 type Props = { items: Testimonial[] };
 
 export function TestimonialsSection({ items }: Props) {
-  const [idx, setIdx] = useState(0);
-  const t = items[idx];
-  if (!t) return null;
-
-  const next = () => setIdx((v) => (v + 1) % items.length);
-  const prev = () => setIdx((v) => (v - 1 + items.length) % items.length);
+  const mobile = useIsMobile();
+  const rootRef = useRef<HTMLDivElement>(null);
+  if (items.length === 0) return null;
 
   return (
-    <section className="bg-bg py-24 md:py-36" aria-label="Отзывы клиентов">
+    <section
+      className="border-t border-border bg-[#141414] py-24 md:py-36"
+      aria-label="Отзывы клиентов"
+    >
       <div className="mx-auto max-w-content px-4 md:px-8">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Левая колонка */}
-          <RevealOnScroll>
-            <div>
-              <p className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">
-                Репутация и доверие
-              </p>
-              <h2 className="mt-4 font-display text-3xl font-semibold text-text-primary md:text-4xl">
-                Что говорят заказчики
-              </h2>
-              <p className="mt-6 text-sm leading-relaxed text-text-secondary">
-                Отраслевые отметки и благодарственные письма доступны по запросу.
-                Публикуем только то, что согласовано с брендами заказчиков.
-              </p>
+        <RevealOnScroll>
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-text-muted">Репутация</p>
+          <h2 className="mt-3 font-display text-3xl font-semibold text-text-primary md:text-4xl">Отзывы</h2>
+          <p className="mt-4 max-w-2xl text-sm text-text-secondary">
+            Публикуем только согласованные с брендами формулировки. Подтверждения и письма — по запросу.
+          </p>
+        </RevealOnScroll>
 
-              {/* Навигация */}
-              <div className="mt-10 flex items-center gap-4">
-                <button
-                  type="button"
-                  onClick={prev}
-                  className="flex h-12 w-12 items-center justify-center border border-border text-text-secondary transition hover:border-accent hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
-                  aria-label="Предыдущий отзыв"
-                >
-                  <ChevronLeft className="h-5 w-5" />
-                </button>
-                <button
-                  type="button"
-                  onClick={next}
-                  className="flex h-12 w-12 items-center justify-center border border-border text-text-secondary transition hover:border-accent hover:text-accent focus-visible:ring-2 focus-visible:ring-accent"
-                  aria-label="Следующий отзыв"
-                >
-                  <ChevronRight className="h-5 w-5" />
-                </button>
-                <span className="ml-2 font-display text-sm text-text-muted">
-                  {String(idx + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
-                </span>
-              </div>
-            </div>
-          </RevealOnScroll>
-
-          {/* Правая колонка — цитата */}
-          <div className="relative min-h-[280px]">
-            {/* Декоративная кавычка */}
-            <span className="absolute -top-4 left-0 font-display text-[120px] leading-none text-accent/10 select-none" aria-hidden>
-              &ldquo;
-            </span>
-
-            <AnimatePresence mode="wait">
+        {mobile ? (
+          <div ref={rootRef} className="mt-12">
+            <Swiper
+              modules={[EffectFade]}
+              effect="fade"
+              loop
+              spaceBetween={0}
+              className="!overflow-visible"
+            >
+              {items.map((t) => (
+                <SwiperSlide key={t.id}>
+                  <figure className="pt-2">
+                    <blockquote className="font-display text-2xl font-normal leading-snug text-text-primary md:text-3xl">
+                      &laquo;{t.text}&raquo;
+                    </blockquote>
+                    <figcaption className="mt-8 text-sm text-text-secondary">
+                      <span className="text-text-primary">{t.author}</span>
+                      {t.position ? <span> · {t.position}</span> : null}
+                      {t.company ? <span className="mt-1 block text-xs text-text-muted">{t.company}</span> : null}
+                    </figcaption>
+                  </figure>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
+        ) : (
+          <div className="mt-16">
+            {items.map((t, i) => (
               <motion.figure
                 key={t.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -12 }}
-                transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                className="relative z-10 pt-10"
+                initial={{ opacity: 0, y: 32 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10%" }}
+                transition={{ delay: 0.08 * i, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+                className={i > 0 ? "mt-20 border-t border-border pt-16" : ""}
               >
-              <blockquote className="font-display text-xl font-normal leading-snug text-text-primary md:text-2xl lg:text-3xl">
-                &laquo;{t.text}&raquo;
-              </blockquote>
-                <figcaption className="mt-8 border-l-2 border-accent pl-4">
-                  <p className="text-sm font-medium text-text-primary">{t.author}</p>
-                  {t.position && (
-                    <p className="mt-1 text-sm text-text-secondary">{t.position}</p>
-                  )}
-                  {t.company && (
-                    <p className="text-xs text-text-muted">{t.company}</p>
-                  )}
+                <blockquote className="max-w-4xl font-display text-2xl font-normal leading-snug text-text-primary md:text-3xl lg:text-4xl">
+                  &laquo;{t.text}&raquo;
+                </blockquote>
+                <figcaption className="mt-8 text-sm text-text-secondary">
+                  <span className="text-text-primary">{t.author}</span>
+                  {t.position ? <span> · {t.position}</span> : null}
+                  {t.company ? <span className="mt-1 block text-xs text-text-muted">{t.company}</span> : null}
                 </figcaption>
               </motion.figure>
-            </AnimatePresence>
+            ))}
           </div>
-        </div>
+        )}
       </div>
     </section>
   );

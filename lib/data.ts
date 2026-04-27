@@ -26,7 +26,8 @@ export async function getCaseBySlug(slug: string): Promise<CaseStudy | undefined
 export async function getFeaturedCases(): Promise<CaseStudy[]> {
   const all = await getCasesResolved();
   const featured = all.filter((c) => c.isFeatured);
-  return featured.length > 0 ? featured : all.slice(0, 4);
+  const list = featured.length > 0 ? featured : all.slice(0, 4);
+  return [...list].sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
 }
 
 export async function getService(slug: string): Promise<ServiceLanding | undefined> {

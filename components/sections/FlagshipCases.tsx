@@ -102,6 +102,7 @@ function FlagshipCaseCard({ item, index }: { item: CaseStudy; index: number }) {
 }
 
 export function FlagshipCases({ cases }: Props) {
+  const list = cases.slice(0, 8);
   return (
     <section className="bg-bg py-24 md:py-36" aria-label="Флагманские кейсы" id="cases-preview">
       <div className="mx-auto max-w-content px-4 md:px-8">
@@ -132,7 +133,7 @@ export function FlagshipCases({ cases }: Props) {
         </div>
 
         <div className="flex flex-col gap-6">
-          {cases.map((c, i) => (
+          {list.map((c, i) => (
             <FlagshipCaseCard key={c.slug} item={c} index={i} />
           ))}
         </div>

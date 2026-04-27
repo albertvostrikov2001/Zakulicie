@@ -1,6 +1,5 @@
 import { contactFormSchema, normalizeRuPhone } from "@/lib/validators/contact";
-import { NextResponse } from "next/server";
-import { Resend } from "resend";
+import { NextRequest, NextResponse } from "next/server";
 
 const EVENT_TYPE_LABELS: Record<string, string> = {
   corporate: "Корпоративное мероприятие",
@@ -11,28 +10,14 @@ const EVENT_TYPE_LABELS: Record<string, string> = {
   other: "Другое",
 };
 
-async function sendToTelegram(text: string): Promise<void> {
-  const token = process.env.TELEGRAM_BOT_TOKEN;
-  const chatId = process.env.TELEGRAM_CHAT_ID;
-  if (!token || !chatId) return;
-
-  const url = `https://api.telegram.org/bot${token}/sendMessage`;
-  const res = await fetch(url, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({
-      chat_id: chatId,
-      text,
-      parse_mode: "HTML",
-    }),
-  });
-
-  if (!res.ok) {
-    console.error("Telegram send failed:", await res.text());
-  }
+function escapeHtml(s: string): string {
+  return s
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;");
 }
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   let body: unknown;
   try {
     body = await req.json();
@@ -42,54 +27,72 @@ export async function POST(req: Request) {
 
   const parsed = contactFormSchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ error: parsed.error.flatten() }, { status: 400 });
+    return NextResponse.json({ error: "Validation failed" }, { status: 400 });
   }
 
-  const data = { ...parsed.data, phone: normalizeRuPhone(parsed.data.phone) };
-  const eventLabel = EVENT_TYPE_LABELS[data.eventType] ?? data.eventType;
+  const { name, phone, email, eventType, dates } = parsed.data;
+  const normalized = normalizeRuPhone(phone);
+  const eventLabel = EVENT_TYPE_LABELS[eventType] ?? eventType;
 
-  const telegramText = [
-    `🎯 <b>Новая заявка с сайта Закулисье</b>`,
-    ``,
-    `<b>Имя:</b> ${data.name}`,
-    `<b>Компания:</b> ${data.company}`,
-    `<b>Телефон:</b> ${data.phone}`,
-    `<b>Email:</b> ${data.email}`,
-    `<b>Тип мероприятия:</b> ${eventLabel}`,
-    `<b>Сроки:</b> ${data.timeline}`,
-    data.comment ? `<b>Комментарий:</b> ${data.comment}` : "",
-  ]
-    .filter(Boolean)
-    .join("\n");
-
-  const emailText = [
-    `Имя: ${data.name}`,
-    `Компания: ${data.company}`,
-    `Телефон: ${data.phone}`,
-    `Email: ${data.email}`,
+  const plainLines = [
+    "Новая заявка — Закулисье",
+    "",
+    `Имя: ${name}`,
+    `Телефон: ${normalized}`,
+    `Email: ${email}`,
     `Тип: ${eventLabel}`,
-    `Сроки: ${data.timeline}`,
-    data.comment ? `Комментарий: ${data.comment}` : "",
-  ]
-    .filter(Boolean)
-    .join("\n");
+    `Сроки: ${dates}`,
+  ];
+  const plain = plainLines.join("\n");
 
-  // Отправка в Telegram (приоритет)
-  await sendToTelegram(telegramText);
+  const text = `🎯 <b>Новая заявка — Закулисье</b>
 
-  // Отправка Email через Resend (опционально)
+<b>Имя:</b> ${escapeHtml(name)}
+<b>Телефон:</b> ${escapeHtml(normalized)}
+<b>Email:</b> ${escapeHtml(email)}
+<b>Тип:</b> ${escapeHtml(eventLabel)}
+<b>Сроки:</b> ${escapeHtml(dates)}`;
+
+  const token = process.env.TELEGRAM_BOT_TOKEN;
+  const chatId = process.env.TELEGRAM_CHAT_ID;
+  let delivered = false;
+
+  if (token && chatId) {
+    const url = `https://api.telegram.org/bot${token}/sendMessage`;
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        chat_id: chatId,
+        text,
+        parse_mode: "HTML",
+      }),
+    });
+    delivered = res.ok;
+  }
+
   const resendKey = process.env.RESEND_API_KEY;
   const toEmail = process.env.CONTACT_TO_EMAIL;
-  if (resendKey && toEmail) {
+  if (!delivered && resendKey && toEmail) {
+    const { Resend } = await import("resend");
     const resend = new Resend(resendKey);
     const from = process.env.CONTACT_FROM_EMAIL ?? "onboarding@resend.dev";
-    await resend.emails.send({
+    const r = await resend.emails.send({
       from,
       to: [toEmail],
-      subject: `Заявка с сайта — ${data.company}`,
-      text: emailText,
+      subject: `Заявка с сайта — ${name}`,
+      text: plain,
     });
+    delivered = !r.error;
   }
 
-  return NextResponse.json({ ok: true });
+  if (!delivered && !token && !resendKey) {
+    return NextResponse.json({ error: "Server not configured" }, { status: 503 });
+  }
+
+  if (!delivered) {
+    return NextResponse.json({ error: "Delivery failed" }, { status: 502 });
+  }
+
+  return NextResponse.json({ success: true });
 }

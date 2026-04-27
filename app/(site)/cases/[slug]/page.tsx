@@ -54,7 +54,7 @@ export default async function CasePage({ params }: Props) {
         ]}
       />
       <article>
-        <header className="relative min-h-[85vh]">
+        <header className="relative min-h-[80vh]">
           <Image
             src={c.heroImage.src}
             alt={c.heroImage.alt}
@@ -116,10 +116,13 @@ export default async function CasePage({ params }: Props) {
 
           {c.gallery.length > 0 ? (
             <section className="mt-20" aria-label="Галерея">
-              <div className="grid gap-4 md:grid-cols-2">
+              <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:max-w-full md:grid-cols-2 md:overflow-visible">
                 {c.gallery.map((img) => (
-                  <div key={img.src} className="relative aspect-[16/10] overflow-hidden rounded-card">
-                    <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="50vw" />
+                  <div
+                    key={img.src}
+                    className="relative aspect-[16/10] w-[min(100%,85vw)] flex-shrink-0 snap-center overflow-hidden rounded-card md:w-auto"
+                  >
+                    <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width:768px) 85vw, 50vw" />
                   </div>
                 ))}
               </div>

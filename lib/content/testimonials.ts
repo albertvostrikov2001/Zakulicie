@@ -7,7 +7,7 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "Директор по маркетингу",
     company: "[Федеральный бренд]",
-    relatedCaseSlug: "dilerskiy-syezd-set-na-vsyu-stranu",
+    relatedCaseSlug: "syezd-dilerov-metall-profil",
   },
   {
     id: "2",
@@ -15,7 +15,7 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "HR‑директор",
     company: "[Промышленный холдинг]",
-    relatedCaseSlug: "yubiley-proizvodstvennogo-holdinga",
+    relatedCaseSlug: "spartakiada",
   },
   {
     id: "3",
@@ -23,7 +23,7 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "Руководитель проектов",
     company: "[Отраслевая ассоциация]",
-    relatedCaseSlug: "regionalnyy-forum-gorod-kak-ploschadka",
+    relatedCaseSlug: "ugol-rossii-mining",
   },
   {
     id: "4",
@@ -31,6 +31,6 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "Руководитель регионального развития",
     company: "[Автомобильная сеть]",
-    relatedCaseSlug: "otkrytie-flagmanskogo-tsentra",
+    relatedCaseSlug: "opening-alfa-bank",
   },
 ];

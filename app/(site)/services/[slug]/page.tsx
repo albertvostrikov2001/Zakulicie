@@ -2,6 +2,7 @@ import { ContactForm } from "@/components/blocks/ContactForm";
 import { CaseCard } from "@/components/blocks/CaseCard";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { serviceSeoH1 } from "@/data/services";
 import { getAllServiceSlugs, getCasesByServiceSlug, getService } from "@/lib/data";
 import type { ServiceSlug } from "@/lib/types";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
@@ -64,7 +65,7 @@ export default async function ServicePage({ params }: Props) {
               {SITE_NAME}
             </p>
             <h1 className="mt-4 max-w-4xl font-display text-4xl font-semibold text-text-primary md:text-5xl">
-              {s.title}
+              {serviceSeoH1[s.slug] ?? s.title}
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-text-secondary">{s.shortDescription}</p>
           </PageWrapper>
