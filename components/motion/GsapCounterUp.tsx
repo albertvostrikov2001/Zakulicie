@@ -34,8 +34,9 @@ export function GsapCounterUp({ value, suffix = "", className }: Props) {
             v.n = 0;
             gsap.to(v, {
               n: value,
-              duration: 1.5,
+              duration: 1.8,
               ease: "power2.out",
+              snap: { n: 1 },
               onUpdate: () => setText(Math.round(v.n)),
             });
           },

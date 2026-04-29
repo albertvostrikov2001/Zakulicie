@@ -118,4 +118,19 @@ body {
   .group:focus-within .case-overlay {
     clip-path: inset(0 0 0 0);
   }
+
+  /* Отзывы: кастомная пагинация Swiper */
+  .reviews-pagination .swiper-pagination-bullet {
+    margin: 0 4px !important;
+    height: 6px;
+    width: 6px;
+    border-radius: 9999px;
+    background: rgba(255, 255, 255, 0.2);
+    opacity: 1 !important;
+    transition: width 0.3s ease, background-color 0.2s ease;
+  }
+  .reviews-pagination .swiper-pagination-bullet-active {
+    width: 20px;
+    background: var(--color-accent);
+  }
 }

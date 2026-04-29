@@ -1,8 +1,8 @@
 "use client";
 
-import { MagneticButton } from "@/components/motion/MagneticButton";
 import { SuccessState } from "@/components/sections/SuccessState";
 import { EVENT_TYPE_OPTIONS } from "@/lib/constants";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { trackContactFormSubmit } from "@/lib/analytics/client";
 import { submitContactPayload } from "@/lib/submitContact";
 import { formatRuPhoneInput } from "@/lib/utils/phoneMask";
@@ -13,12 +13,20 @@ import {
 } from "@/lib/validators/contact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
+import { Check, ChevronDown } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
+const inputClass =
+  "w-full border-0 border-b border-white/[0.15] bg-transparent py-4 pb-3 text-[15px] text-[#F5F5F5] outline-none transition-[border-color,box-shadow] duration-[250ms] ease-out placeholder:text-white/25 focus:border-accent focus:shadow-[0_1px_0_0_var(--color-accent)]";
+const labelClass =
+  "mb-2 block text-[11px] font-medium uppercase tracking-[0.1em] text-white/40";
+
 export function CinematicContactForm() {
   const [done, setDone] = useState(false);
+  const reduced = usePrefersReducedMotion();
+  const stagger = reduced ? 0 : 0.08;
   const {
     register,
     control,
@@ -45,6 +53,13 @@ export function CinematicContactForm() {
     }
   };
 
+  const reveal = (i: number) => ({
+    initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: "-8%" },
+    transition: { delay: i * stagger, duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+  });
+
   return (
     <div className="relative min-h-[480px]">
       <AnimatePresence mode="wait">
@@ -59,38 +74,28 @@ export function CinematicContactForm() {
             exit={{ opacity: 0 }}
             className="space-y-0"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-            >
-              <label htmlFor="c-name" className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-text-muted">
+            <motion.div {...reveal(0)}>
+              <label htmlFor="c-name" className={labelClass}>
                 Имя
               </label>
               <input
                 id="c-name"
                 autoComplete="name"
-                className="w-full border-0 border-b border-border bg-transparent py-3 text-text-primary outline-none transition focus:border-accent focus:shadow-[0_1px_0_0_rgba(201,168,76,0.4)]"
+                className={cnInput(errors.name)}
+                placeholder="Как к вам обращаться"
                 aria-invalid={errors.name ? true : undefined}
                 aria-describedby={errors.name ? "c-e-name" : undefined}
                 {...register("name")}
               />
               {errors.name && (
-                <p id="c-e-name" className="mt-2 text-xs text-red-400" role="alert">
+                <p id="c-e-name" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
                   {errors.name.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ delay: 0.05, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10"
-            >
-              <label htmlFor="c-phone" className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-text-muted">
+            <motion.div {...reveal(1)} className="mt-10">
+              <label htmlFor="c-phone" className={labelClass}>
                 Телефон
               </label>
               <Controller
@@ -102,7 +107,7 @@ export function CinematicContactForm() {
                     type="tel"
                     autoComplete="tel"
                     placeholder="+7 (___) ___-__-__"
-                    className="w-full border-0 border-b border-border bg-transparent py-3 text-text-primary placeholder:text-text-secondary/40 outline-none transition focus:border-accent"
+                    className={cnInput(errors.phone)}
                     value={field.value}
                     onChange={(e) => field.onChange(formatRuPhoneInput(e.target.value))}
                     onBlur={field.onBlur}
@@ -112,99 +117,89 @@ export function CinematicContactForm() {
                 )}
               />
               {errors.phone && (
-                <p id="c-e-phone" className="mt-2 text-xs text-red-400" role="alert">
+                <p id="c-e-phone" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
                   {errors.phone.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ delay: 0.1, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10"
-            >
-              <label htmlFor="c-email" className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-text-muted">
+            <motion.div {...reveal(2)} className="mt-10">
+              <label htmlFor="c-email" className={labelClass}>
                 Email
               </label>
               <input
                 id="c-email"
                 type="email"
                 autoComplete="email"
-                className="w-full border-0 border-b border-border bg-transparent py-3 text-text-primary outline-none transition focus:border-accent"
+                className={cnInput(errors.email)}
+                placeholder="Рабочая почта"
                 aria-invalid={errors.email ? true : undefined}
                 aria-describedby={errors.email ? "c-e-email" : undefined}
                 {...register("email")}
               />
               {errors.email && (
-                <p id="c-e-email" className="mt-2 text-xs text-red-400" role="alert">
+                <p id="c-e-email" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
                   {errors.email.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ delay: 0.14, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10"
-            >
-              <label htmlFor="c-type" className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-text-muted">
+            <motion.div {...reveal(3)} className="mt-10">
+              <label htmlFor="c-type" className={labelClass}>
                 Тип мероприятия
               </label>
-              <select
-                id="c-type"
-                className="w-full border-0 border-b border-border bg-transparent py-3 text-text-primary outline-none transition focus:border-accent"
-                {...register("eventType")}
-              >
-                {EVENT_TYPE_OPTIONS.map((o) => (
-                  <option key={o.value} value={o.value} className="bg-bg text-text-primary">
-                    {o.label}
-                  </option>
-                ))}
-              </select>
+              <div className="relative">
+                <select
+                  id="c-type"
+                  className={`${inputClass} appearance-none pr-10`}
+                  {...register("eventType")}
+                >
+                  {EVENT_TYPE_OPTIONS.map((o) => (
+                    <option key={o.value} value={o.value} className="bg-[#141414] text-text-primary">
+                      {o.label}
+                    </option>
+                  ))}
+                </select>
+                <ChevronDown
+                  className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-accent"
+                  aria-hidden
+                />
+              </div>
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ delay: 0.18, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10"
-            >
-              <label htmlFor="c-dates" className="mb-2 block text-[10px] uppercase tracking-[0.2em] text-text-muted">
+            <motion.div {...reveal(4)} className="mt-10">
+              <label htmlFor="c-dates" className={labelClass}>
                 Ориентировочные сроки
               </label>
               <input
                 id="c-dates"
-                className="w-full border-0 border-b border-border bg-transparent py-3 text-text-primary placeholder:text-text-secondary/40 outline-none transition focus:border-accent"
+                className={cnInput(errors.dates)}
                 placeholder="Например: май 2026"
                 aria-invalid={errors.dates ? true : undefined}
                 aria-describedby={errors.dates ? "c-e-dates" : undefined}
                 {...register("dates")}
               />
               {errors.dates && (
-                <p id="c-e-dates" className="mt-2 text-xs text-red-400" role="alert">
+                <p id="c-e-dates" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
                   {errors.dates.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-5%" }}
-              transition={{ delay: 0.22, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-              className="mt-10"
-            >
-              <label className="flex cursor-pointer gap-3 text-xs text-text-secondary">
-                <input
-                  type="checkbox"
-                  className="mt-0.5 h-4 w-4 rounded border-border bg-transparent text-accent focus:ring-accent"
-                  {...register("consent")}
-                />
+            <motion.div {...reveal(5)} className="mt-10">
+              <label className="flex cursor-pointer gap-3 text-xs text-white/50">
+                <span className="relative mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[2px] border border-white/20 bg-transparent transition-colors duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent">
+                  <input
+                    type="checkbox"
+                    className="peer sr-only"
+                    {...register("consent")}
+                  />
+                  <Check
+                    className="h-3.5 w-3.5 text-accent opacity-0 transition-opacity peer-checked:opacity-100"
+                    strokeWidth={2.5}
+                    aria-hidden
+                  />
+                </span>
                 <span>
                   Согласен с{" "}
                   <Link href="/privacy-policy" className="text-accent underline-offset-2 hover:underline">
@@ -213,32 +208,30 @@ export function CinematicContactForm() {
                 </span>
               </label>
               {errors.consent && (
-                <p className="mt-2 text-xs text-red-400" role="alert">
+                <p className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
                   {errors.consent.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.28, duration: 0.5 }}
-              className="mt-12"
-            >
-              <MagneticButton>
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="border border-accent bg-transparent px-10 py-5 text-xs font-medium uppercase tracking-[0.25em] text-text-primary transition hover:bg-accent/10 focus-visible:ring-2 focus-visible:ring-accent disabled:opacity-50"
-                >
-                  {isSubmitting ? "Отправка…" : "Обсудить проект"}
-                </button>
-              </MagneticButton>
+            <motion.div {...reveal(6)} className="mt-12">
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="inline-flex items-center justify-center border-[1.5px] border-accent bg-transparent px-10 py-4 text-xs font-semibold uppercase tracking-[0.1em] text-[#F5F5F5] transition-[background-color,color,opacity] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent disabled:opacity-40"
+              >
+                {isSubmitting ? "Отправка…" : "Обсудить проект"}
+              </button>
             </motion.div>
           </motion.form>
         )}
       </AnimatePresence>
     </div>
   );
+}
+
+function cnInput(err: unknown) {
+  return err
+    ? `${inputClass} border-[#E53E3E] focus:border-[#E53E3E] focus:shadow-[0_1px_0_0_#E53E3E]`
+    : inputClass;
 }

@@ -27,10 +27,7 @@ export function TestimonialsSection({ items }: Props) {
 
   return (
     <section
-      className={cn(
-        "border-t border-border bg-[#0a0a0a] py-24 md:py-36",
-        "[&_.swiper-pagination-bullet]:mx-1 [&_.swiper-pagination-bullet]:h-2 [&_.swiper-pagination-bullet]:w-2 [&_.swiper-pagination-bullet]:rounded-full [&_.swiper-pagination-bullet]:bg-white/25 [&_.swiper-pagination-bullet]:opacity-100 [&_.swiper-pagination-bullet-active]:bg-accent [&_.swiper-pagination-bullet-active]:opacity-100"
-      )}
+      className="reviews-section border-t border-border bg-[#0a0a0a] py-24 md:py-36"
       aria-label="Отзывы клиентов"
     >
       <div className="mx-auto max-w-content px-4 md:px-8">
@@ -49,7 +46,7 @@ export function TestimonialsSection({ items }: Props) {
                 type="button"
                 className={cn(
                   prevClass,
-                  "flex h-11 w-11 items-center justify-center rounded-[2px] border border-white/15 text-text-primary transition-[border-color,color,transform] duration-200 ease-out hover:border-accent hover:text-accent"
+                  "reviews-nav-prev flex h-12 w-12 items-center justify-center rounded-[2px] border border-white/[0.12] text-text-primary transition-[border-color,color] duration-200 ease-out hover:border-accent hover:text-accent"
                 )}
                 aria-label="Предыдущий отзыв"
               >
@@ -59,7 +56,7 @@ export function TestimonialsSection({ items }: Props) {
                 type="button"
                 className={cn(
                   nextClass,
-                  "flex h-11 w-11 items-center justify-center rounded-[2px] border border-white/15 text-text-primary transition-[border-color,color,transform] duration-200 ease-out hover:border-accent hover:text-accent"
+                  "reviews-nav-next flex h-12 w-12 items-center justify-center rounded-[2px] border border-white/[0.12] text-text-primary transition-[border-color,color] duration-200 ease-out hover:border-accent hover:text-accent"
                 )}
                 aria-label="Следующий отзыв"
               >
@@ -73,7 +70,7 @@ export function TestimonialsSection({ items }: Props) {
           <Swiper
             modules={[Navigation, Pagination, Keyboard]}
             loop={canLoop}
-            spaceBetween={24}
+            spaceBetween={16}
             slidesPerView={1}
             keyboard={{ enabled: true }}
             navigation={{
@@ -85,18 +82,18 @@ export function TestimonialsSection({ items }: Props) {
               clickable: true,
             }}
             breakpoints={{
-              768: { slidesPerView: 2 },
+              768: { slidesPerView: 2, spaceBetween: 24 },
             }}
-            className="!overflow-visible"
+            className="reviews-swiper !overflow-visible"
             watchOverflow
           >
             {items.map((t) => (
-              <SwiperSlide key={t.id} className="!h-auto">
-                <TestimonialCard item={t} className="h-full" />
+              <SwiperSlide key={t.id} className="!h-auto !flex">
+                <TestimonialCard item={t} className="h-full w-full" />
               </SwiperSlide>
             ))}
           </Swiper>
-          <div className={cn(paginationClass, "mt-10 flex flex-wrap justify-center gap-1")} />
+          <div className={cn(paginationClass, "reviews-pagination mt-10 flex flex-wrap justify-center gap-1")} />
         </div>
       </div>
     </section>

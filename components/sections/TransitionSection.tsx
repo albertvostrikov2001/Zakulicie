@@ -99,9 +99,9 @@ export function TransitionSection() {
           return;
         }
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.from(word, { opacity: 0, y: 24, duration: 0.6 }, 0.2)
-          .from(tagEls, { opacity: 0, y: 16, duration: 0.5, stagger: 0.1 }, 0.35)
-          .from(cta, { opacity: 0, y: 12, duration: 0.45 }, 0.5);
+        tl.from(word, { opacity: 0, y: 20, duration: 0.6 }, 0.3)
+          .from(tagEls, { opacity: 0, y: 16, duration: 0.5, stagger: 0.1 }, 0.5)
+          .from(cta, { opacity: 0, y: 12, duration: 0.45 }, 0.6);
       }, section);
 
       return () => ctx.revert();
@@ -114,7 +114,7 @@ export function TransitionSection() {
       ref={sectionRef}
       data-transition
       data-transition-section
-      className="relative z-10 min-h-[165vh] scroll-mt-0"
+      className="relative z-10 min-h-[116vh] scroll-mt-0"
       aria-label="Переход сцены"
     >
       <div className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden">
@@ -138,7 +138,7 @@ export function TransitionSection() {
                 <p
                   key={line}
                   data-trans-tag
-                  className="font-body text-[13px] font-medium uppercase leading-relaxed tracking-[0.08em] md:text-[17px] md:leading-relaxed"
+                  className="font-body font-normal uppercase leading-relaxed tracking-[0.1em] [font-size:clamp(11px,1.1vw,14px)] md:leading-relaxed"
                   style={{ color: TAG_ON_LIGHT }}
                 >
                   {line}
@@ -147,8 +147,8 @@ export function TransitionSection() {
               <div className="mt-8 md:mt-10">
                 <Link
                   ref={ctaRef}
-                  href="#contact"
-                  className="inline-flex border border-accent bg-transparent px-7 py-3 text-xs font-semibold uppercase tracking-[0.12em] transition-[background-color,color] duration-300 ease-out hover:bg-accent hover:!text-text-dark focus-visible:outline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--scene-bg)] max-md:px-8 max-md:py-3.5 max-md:text-sm"
+                  href="#contact-form"
+                  className="inline-flex items-center border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] transition-[background-color,color,border-color] duration-[250ms] ease-out hover:bg-accent hover:!text-text-dark focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent max-md:px-9 max-md:py-4 max-md:text-[14px]"
                   style={{ color: TAG_ON_LIGHT }}
                 >
                   Обсудить проект

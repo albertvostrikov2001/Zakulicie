@@ -2,52 +2,65 @@
 
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { cn } from "@/lib/cn";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { serviceNav, staticServices } from "@/lib/content/services";
-import { motion } from "framer-motion";
+import type { ServiceSlug } from "@/lib/types";
+import { AnimatePresence, motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useState } from "react";
 
 export function ServicesSection() {
-  const defaultSlug = serviceNav[0]?.slug ?? "";
-  const [hovered, setHovered] = useState<string | null>(defaultSlug);
+  const defaultSlug = (serviceNav[0]?.slug ?? "korporativnye-meropriyatiya") as ServiceSlug;
+  const [hovered, setHovered] = useState<ServiceSlug | null>(null);
   const reducedMotion = usePrefersReducedMotion();
-
+  const mobile = useIsMobile();
   const activeSlug = hovered ?? defaultSlug;
+  const activeRow = staticServices[activeSlug];
+  const hero = activeRow?.heroImage;
 
   return (
     <section
-      className="group/services relative min-h-0 overflow-hidden bg-bg py-24 md:min-h-[640px] md:py-36"
+      className="group/services relative min-h-[min(100dvh,720px)] overflow-hidden bg-bg py-24 md:min-h-[640px] md:py-36"
       aria-label="Услуги"
       id="services"
-      onMouseLeave={() => setHovered(defaultSlug)}
+      onMouseLeave={() => {
+        if (!mobile) setHovered(null);
+      }}
     >
-      <div className="pointer-events-none absolute inset-0 z-0" aria-hidden>
-        {serviceNav.map((s) => {
-          const img = staticServices[s.slug]?.heroImage;
-          if (!img) return null;
-          const isOn = activeSlug === s.slug;
-          return (
+      <div className="absolute inset-0 z-0 bg-bg" aria-hidden />
+
+      <div className="absolute inset-0 z-0">
+        <AnimatePresence initial={false} mode="sync">
+          {hero ? (
             <motion.div
-              key={s.slug}
+              key={activeSlug}
               className="absolute inset-0"
-              initial={false}
+              initial={reducedMotion ? false : { opacity: 0, scale: 1.04 }}
               animate={{
-                opacity: isOn ? 1 : 0,
-                scale: isOn ? 1 : 1.05,
-                filter: isOn || reducedMotion ? "blur(0px)" : "blur(2px)",
+                opacity: hovered === null ? 0.32 : 1,
+                scale: 1,
               }}
+              exit={{ opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.4, 0, 0.2, 1] }}
             >
-              <Image src={img.src} alt="" fill className="object-cover" sizes="100vw" priority={s.slug === defaultSlug} />
+              <Image
+                src={hero.src}
+                alt={hero.alt}
+                fill
+                className="object-cover"
+                sizes="100vw"
+                priority={activeSlug === defaultSlug}
+              />
             </motion.div>
-          );
-        })}
+          ) : null}
+        </AnimatePresence>
       </div>
 
+      <div className="pointer-events-none absolute inset-0 z-[1] bg-black/50" aria-hidden />
       <div
-        className="pointer-events-none absolute inset-0 z-[1] bg-gradient-to-r from-black/75 via-black/55 to-black/35"
+        className="pointer-events-none absolute inset-0 z-[1] bg-[linear-gradient(90deg,rgba(0,0,0,0.82)_40%,rgba(0,0,0,0.45)_100%)]"
         aria-hidden
       />
 
@@ -82,11 +95,19 @@ export function ServicesSection() {
                 <Link
                   href={`/services/${s.slug}`}
                   className={cn(
-                    "group flex flex-col gap-4 py-7 transition-[opacity,color] duration-300 ease-out md:flex-row md:items-center md:justify-between md:gap-6 md:py-8",
-                    isActive ? "opacity-100" : "opacity-50 hover:opacity-80"
+                    "group flex min-h-[48px] flex-col gap-4 py-7 transition-[opacity,color] duration-[250ms] ease-out md:flex-row md:items-center md:justify-between md:gap-6 md:py-8",
+                    isActive ? "opacity-100" : "opacity-45 hover:opacity-70"
                   )}
-                  onMouseEnter={() => setHovered(s.slug)}
+                  onMouseEnter={() => {
+                    if (!mobile) setHovered(s.slug);
+                  }}
                   onFocus={() => setHovered(s.slug)}
+                  onClick={(e) => {
+                    if (mobile && hovered !== s.slug) {
+                      e.preventDefault();
+                      setHovered(s.slug);
+                    }
+                  }}
                 >
                   <div className="flex min-w-0 flex-1 items-baseline gap-6 md:gap-10">
                     <span
@@ -100,7 +121,7 @@ export function ServicesSection() {
                     <div className="min-w-0 flex-1">
                       <span
                         className={cn(
-                          "font-display text-xl font-medium transition-colors duration-200 md:text-2xl lg:text-3xl",
+                          "font-display text-xl font-semibold transition-colors duration-200 md:text-2xl lg:text-3xl",
                           isActive ? "text-accent" : "text-text-primary"
                         )}
                       >
@@ -108,8 +129,8 @@ export function ServicesSection() {
                       </span>
                       <p
                         className={cn(
-                          "mt-2 max-w-xl text-base leading-relaxed transition-colors duration-200 md:text-lg",
-                          isActive ? "text-white/90" : "text-text-secondary"
+                          "mt-2 max-w-xl text-base leading-relaxed transition-opacity duration-200 md:text-lg",
+                          isActive ? "text-white/90 opacity-100" : "text-text-secondary opacity-80"
                         )}
                       >
                         {row.shortDescription}
@@ -119,7 +140,7 @@ export function ServicesSection() {
 
                   <motion.div
                     className={cn(
-                      "flex shrink-0 self-end transition-colors duration-200 md:self-center",
+                      "flex h-11 w-11 shrink-0 items-center justify-center self-end transition-colors duration-200 md:h-auto md:w-auto md:self-center",
                       isActive ? "text-accent" : "text-text-muted"
                     )}
                     animate={{ x: isActive ? 4 : 0 }}

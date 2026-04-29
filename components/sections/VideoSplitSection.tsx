@@ -1,13 +1,13 @@
 "use client";
 
 import { VideoPlaceholder } from "@/components/ui/VideoPlaceholder";
-import { useContactModal } from "@/components/providers/ContactModalProvider";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -19,7 +19,6 @@ const OFFER = ["АГЕНТСТВО ПОЛНОГО ЦИКЛА", "ДЛЯ КОМП�
 
 export function VideoSplitSection() {
   const sectionRef = useRef<HTMLElement>(null);
-  const { openContact } = useContactModal();
   const reduced = useReducedMotion();
   const mobile = useIsMobile();
 
@@ -76,7 +75,7 @@ export function VideoSplitSection() {
       style={{ backgroundColor: "var(--scene-bg, #0a0a0a)" }}
       aria-label="Showreel и подход"
     >
-      <div className="mx-auto flex min-h-[min(100dvh,920px)] max-w-content flex-col gap-12 px-4 py-14 md:flex-row md:items-center md:gap-10 md:px-8 md:py-[clamp(3.5rem,8vh,5.5rem)] lg:gap-14">
+      <div className="mx-auto flex min-h-[min(78dvh,780px)] max-w-content flex-col gap-9 px-4 py-11 md:flex-row md:items-center md:gap-10 md:px-8 md:py-[clamp(2.75rem,6vh,4.5rem)] lg:gap-12">
         <div
           data-video-reveal
           className="w-full md:w-[62%] md:max-w-none md:flex-[1.15] md:pr-4"
@@ -98,20 +97,17 @@ export function VideoSplitSection() {
             <span className="mt-1 block text-accent">которые работают</span>
             <span className="mt-1 block">на репутацию</span>
           </h2>
-          <p className="mt-7 text-sm leading-relaxed text-text-secondary md:text-base">
+          <p className="mt-6 text-sm leading-relaxed text-text-secondary md:text-base">
             Двадцать лет в индустрии и свыше трёх тысяч реализованных форматов — от корпоративной повестки до
             федеральных сборов. База в Новосибирске, стандарты и команда — как у столичных лидеров: смета,
             сроки и смысл остаются под контролем на каждом этапе.
           </p>
-          <button
-            type="button"
-            onClick={openContact}
-            className="mt-10 w-fit border-0 bg-transparent text-left text-xs font-semibold uppercase tracking-[0.2em] text-text-primary transition-colors duration-300 hover:text-accent focus-visible:outline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a]"
+          <Link
+            href="#contact-form"
+            className="mt-10 inline-flex w-fit items-center border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
           >
-            <span className="relative inline-block pb-1 after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:bg-text-secondary/50 after:transition after:duration-300 hover:after:bg-accent">
-              Обсудить проект
-            </span>
-          </button>
+            Обсудить проект
+          </Link>
 
           <div className="mt-12 hidden max-w-[320px] text-right md:mt-16 md:block">
             {OFFER.map((line) => (

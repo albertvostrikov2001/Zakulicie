@@ -15,10 +15,11 @@ import { useEffect, useRef, useState } from "react";
 
 const navItemClass = (light: boolean) =>
   cn(
-    "relative inline-flex text-[15px] font-medium transition-colors duration-200 ease-out",
+    "relative inline-flex text-[13px] font-normal transition-colors duration-200 ease-out md:text-[14px]",
+    "tracking-[0.05em]",
     "after:pointer-events-none after:absolute after:bottom-0 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:ease-out",
     "hover:after:scale-x-100",
-    light ? "text-text-dark/90 hover:text-text-dark" : "text-text-primary/90 hover:text-accent"
+    light ? "text-[#1A1A1A]/90 hover:text-[#1A1A1A]" : "text-white/85 hover:text-accent"
   );
 
 export function Navbar() {
@@ -34,7 +35,7 @@ export function Navbar() {
   const lightHero = pathname === "/" && !scrolled;
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 80);
+    const onScroll = () => setScrolled(window.scrollY > 60);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -47,9 +48,9 @@ export function Navbar() {
       const ctx = gsap.context(() => {
         gsap.from(inner, {
           opacity: 0,
-          y: -10,
+          y: -8,
           duration: 0.6,
-          delay: 0.1,
+          delay: 0.15,
           ease: "power3.out",
         });
       }, headerRef);
@@ -83,7 +84,7 @@ export function Navbar() {
         className={cn(
           "fixed left-0 right-0 top-0 z-[100] transition-[background-color,border-color,backdrop-filter] duration-300 ease-out",
           scrolled
-            ? "border-b border-white/[0.06] bg-black/85 shadow-lg shadow-black/10 backdrop-blur-[12px]"
+            ? "border-b border-white/[0.06] bg-[rgba(10,10,10,0.88)] shadow-lg shadow-black/10 backdrop-blur-[16px] backdrop-saturate-[180%] transition-[background-color,backdrop-filter,border-color] duration-[350ms] ease-out"
             : "border-b border-transparent bg-transparent"
         )}
       >
@@ -149,7 +150,7 @@ export function Navbar() {
               О нас
             </Link>
 
-            <PhoneLink variant={lightHero ? "on-light" : "on-dark"} className="hidden xl:inline-flex" />
+            <PhoneLink variant={lightHero ? "on-light" : "on-dark"} className="hidden md:inline-flex" />
 
             <button
               type="button"
