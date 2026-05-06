@@ -7,6 +7,7 @@ import { TransitionSection } from "@/components/sections/TransitionSection";
 import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
 import { CasesMarquee } from "@/components/ui/CasesMarquee";
 import { CTAStrip } from "@/components/ui/CTAStrip";
+import { EventPhrase } from "@/components/ui/EventPhrase";
 import { getFeaturedCases, getTestimonials } from "@/lib/data";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl } from "@/lib/site";
@@ -49,11 +50,14 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* 1 – HERO: oversized wordmark, trust-строка, description, CTA, scroll indicator */}
+      {/* 1 – HERO: oversized wordmark, description, CTA, image-motion */}
       <TransitionSection />
 
       {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />
+
+      {/* 1.5 – «СОБЫТИЕ БЕЗ КОМПРОМИССОВ» — эмоциональный переход */}
+      <EventPhrase />
 
       {/* 3 – STATS: 4 крупных числа, counter-up */}
       <StatsSection />

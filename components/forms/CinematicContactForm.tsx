@@ -1,6 +1,7 @@
 "use client";
 
 import { SuccessState } from "@/components/sections/SuccessState";
+import { MagneticButton } from "@/components/motion/MagneticButton";
 import { EVENT_TYPE_OPTIONS } from "@/lib/constants";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { trackContactFormSubmit } from "@/lib/analytics/client";
@@ -15,27 +16,76 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
 import { Check, ChevronDown, Loader2 } from "lucide-react";
 import Link from "next/link";
-import { useState } from "react";
+import { type ReactNode, useId, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
-const inputClass =
-  "w-full border-0 border-b border-white/[0.15] bg-transparent pb-3 pt-4 text-[15px] font-medium text-[#F5F5F5] outline-none transition-[border-color,box-shadow] duration-[250ms] ease-out placeholder:text-white/25 focus:border-accent focus:shadow-[0_1px_0_0_var(--color-accent)]";
+/* ─── Field styles ─────────────────────────────────────────── */
+const baseInput =
+  "w-full border-0 border-b border-white/[0.15] bg-transparent pb-3 pt-6 text-[15px] font-medium text-[#F5F5F5] outline-none transition-[border-color,box-shadow] duration-[250ms] ease-out placeholder:text-white/25 focus:border-[var(--color-accent)] focus:shadow-[0_1px_0_0_var(--color-accent)]";
 
-const labelClass =
-  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.1em] text-white/40";
+const baseLabel =
+  "pointer-events-none absolute left-0 top-6 origin-left text-[15px] font-medium text-white/35 transition-[transform,font-size,color,top] duration-[220ms] ease-out";
 
 const errorClass = "mt-2 text-[11px] text-[#E53E3E]";
 
 function cnInput(err: unknown) {
   return err
-    ? `${inputClass} border-[#E53E3E] focus:border-[#E53E3E] focus:shadow-[0_1px_0_0_#E53E3E]`
-    : inputClass;
+    ? `${baseInput} border-[#E53E3E] focus:border-[#E53E3E] focus:shadow-[0_1px_0_0_#E53E3E]`
+    : baseInput;
+}
+
+/* ─── Floating label wrapper ──────────────────────────────── */
+function FloatingField({
+  id,
+  label,
+  error,
+  children,
+  index,
+  reduced,
+}: {
+  id: string;
+  label: string;
+  error?: { message?: string };
+  children: ReactNode;
+  index: number;
+  reduced: boolean;
+}) {
+  return (
+    <motion.div
+      className="relative"
+      initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-8%" }}
+      transition={{
+        delay: index * 0.08,
+        duration: 0.65,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      <label
+        htmlFor={id}
+        className={baseLabel}
+        style={
+          {
+            "--float-y": "-18px",
+            "--float-scale": "0.72",
+          } as React.CSSProperties
+        }
+      >
+        {label}
+      </label>
+      {children}
+      {error?.message && (
+        <p className={errorClass} role="alert">{error.message}</p>
+      )}
+    </motion.div>
+  );
 }
 
 export function CinematicContactForm() {
-  const [isDone, setIsDone] = useState(false);
-  const reduced  = usePrefersReducedMotion();
-  const stagger  = reduced ? 0 : 0.07;
+  const [isDone, setIsDone]   = useState(false);
+  const reduced               = usePrefersReducedMotion();
+  const uid                   = useId();
 
   const {
     register,
@@ -63,19 +113,8 @@ export function CinematicContactForm() {
     }
   };
 
-  const reveal = (i: number) => ({
-    initial:     reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport:    { once: true, margin: "-8%" },
-    transition:  {
-      delay:    i * stagger,
-      duration: 0.65,
-      ease:     [0.22, 1, 0.36, 1] as const,
-    },
-  });
-
   return (
-    <div className="relative min-h-[420px]">
+    <div className="relative min-h-[520px]">
       <AnimatePresence mode="wait">
         {isDone ? (
           <SuccessState key="ok" onReset={() => { setIsDone(false); reset(); }} />
@@ -87,112 +126,119 @@ export function CinematicContactForm() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             noValidate
+            className="space-y-8"
           >
             {/* 1: Name */}
-            <motion.div {...reveal(0)}>
-              <label htmlFor="c-name" className={labelClass}>Имя</label>
+            <FloatingField id={`${uid}-name`} label="Имя" error={errors.name} index={0} reduced={reduced}>
               <input
-                id="c-name"
+                id={`${uid}-name`}
                 autoComplete="name"
                 className={cnInput(errors.name)}
-                placeholder="Как к вам обращаться"
+                placeholder=" "
                 aria-invalid={errors.name ? true : undefined}
-                aria-describedby={errors.name ? "c-e-name" : undefined}
+                aria-describedby={errors.name ? `${uid}-e-name` : undefined}
                 {...register("name")}
+                onFocus={(e) => floatLabel(e.currentTarget)}
+                onBlur={(e) => unFloatLabel(e.currentTarget)}
               />
-              {errors.name && (
-                <p id="c-e-name" className={errorClass} role="alert">
-                  {errors.name.message}
-                </p>
-              )}
-            </motion.div>
+            </FloatingField>
 
             {/* 2: Phone */}
-            <motion.div {...reveal(1)} className="mt-8">
-              <label htmlFor="c-phone" className={labelClass}>Телефон</label>
+            <FloatingField id={`${uid}-phone`} label="Телефон" error={errors.phone} index={1} reduced={reduced}>
               <Controller
                 name="phone"
                 control={control}
                 render={({ field }) => (
                   <input
-                    id="c-phone"
+                    id={`${uid}-phone`}
                     type="tel"
                     autoComplete="tel"
-                    placeholder="+7 (___) ___-__-__"
+                    placeholder=" "
                     className={cnInput(errors.phone)}
                     value={field.value}
                     onChange={(e) => field.onChange(formatRuPhoneInput(e.target.value))}
-                    onBlur={field.onBlur}
+                    onBlur={(e) => { field.onBlur(); unFloatLabel(e.currentTarget); }}
+                    onFocus={(e) => floatLabel(e.currentTarget)}
                     aria-invalid={errors.phone ? true : undefined}
-                    aria-describedby={errors.phone ? "c-e-phone" : undefined}
+                    aria-describedby={errors.phone ? `${uid}-e-phone` : undefined}
                   />
                 )}
               />
-              {errors.phone && (
-                <p id="c-e-phone" className={errorClass} role="alert">
-                  {errors.phone.message}
-                </p>
-              )}
-            </motion.div>
+            </FloatingField>
 
             {/* 3: Event type */}
-            <motion.div {...reveal(2)} className="mt-8">
-              <label htmlFor="c-type" className={labelClass}>Тип мероприятия</label>
+            <motion.div
+              className="relative"
+              initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ delay: 2 * 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <label
+                htmlFor={`${uid}-type`}
+                className="mb-2 block text-[11px] font-semibold uppercase tracking-[0.1em] text-white/40"
+              >
+                Тип мероприятия
+              </label>
               <div className="relative">
                 <select
-                  id="c-type"
-                  className={`${inputClass} appearance-none pr-10`}
+                  id={`${uid}-type`}
+                  className={`${baseInput} appearance-none pr-10 pt-3`}
                   {...register("eventType")}
                 >
                   {EVENT_TYPE_OPTIONS.map((o) => (
-                    <option key={o.value} value={o.value} className="bg-[#111111] text-text-primary">
+                    <option key={o.value} value={o.value} className="bg-[#111111] text-[#F5F5F5]">
                       {o.label}
                     </option>
                   ))}
                 </select>
                 <ChevronDown
-                  className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-accent"
+                  className="pointer-events-none absolute right-0 top-1/2 h-4 w-4 -translate-y-1/2 text-[var(--color-accent)]"
                   aria-hidden
                 />
               </div>
             </motion.div>
 
             {/* 4: Dates */}
-            <motion.div {...reveal(3)} className="mt-8">
-              <label htmlFor="c-dates" className={labelClass}>Ориентировочные сроки</label>
+            <FloatingField id={`${uid}-dates`} label="Ориентировочные сроки" error={errors.dates} index={3} reduced={reduced}>
               <input
-                id="c-dates"
+                id={`${uid}-dates`}
                 className={cnInput(errors.dates)}
-                placeholder="Например: сентябрь 2026"
+                placeholder=" "
                 aria-invalid={errors.dates ? true : undefined}
-                aria-describedby={errors.dates ? "c-e-dates" : undefined}
+                aria-describedby={errors.dates ? `${uid}-e-dates` : undefined}
                 {...register("dates")}
+                onFocus={(e) => floatLabel(e.currentTarget)}
+                onBlur={(e) => unFloatLabel(e.currentTarget)}
               />
-              {errors.dates && (
-                <p id="c-e-dates" className={errorClass} role="alert">
-                  {errors.dates.message}
-                </p>
-              )}
-            </motion.div>
+            </FloatingField>
 
             {/* Consent */}
-            <motion.div {...reveal(4)} className="mt-8">
+            <motion.div
+              initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ delay: 4 * 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            >
               <label className="flex cursor-pointer gap-3 text-[13px] text-white/50">
-                <span className="relative mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-white/20 bg-transparent transition-colors duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent">
+                <span className="relative mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-white/20 bg-transparent transition-colors duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-[var(--color-accent)]">
                   <input
                     type="checkbox"
                     className="peer sr-only"
                     {...register("consent")}
                   />
                   <Check
-                    className="h-3.5 w-3.5 text-accent opacity-0 transition-opacity peer-checked:opacity-100"
+                    className="h-3.5 w-3.5 text-[var(--color-accent)] opacity-0 transition-opacity peer-checked:opacity-100"
                     strokeWidth={2.5}
                     aria-hidden
                   />
                 </span>
                 <span>
                   Согласен с{" "}
-                  <Link href="/privacy-policy" className="text-accent underline-offset-2 hover:underline">
+                  <Link
+                    href="/privacy-policy"
+                    className="text-[var(--color-accent)] underline-offset-2 hover:underline"
+                  >
                     политикой конфиденциальности
                   </Link>
                 </span>
@@ -202,26 +248,55 @@ export function CinematicContactForm() {
               )}
             </motion.div>
 
-            {/* Submit */}
-            <motion.div {...reveal(5)} className="mt-10">
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="inline-flex items-center justify-center gap-2 border-[1.5px] border-accent bg-transparent px-10 py-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#F5F5F5] transition-[background-color,color,opacity] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent disabled:opacity-40"
-              >
-                {isSubmitting ? (
-                  <>
-                    <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
-                    Отправка…
-                  </>
-                ) : (
-                  "Обсудить проект"
-                )}
-              </button>
+            {/* Submit CTA */}
+            <motion.div
+              initial={reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-8%" }}
+              transition={{ delay: 5 * 0.08, duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <MagneticButton strength={0.25}>
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="flex w-full items-center justify-center gap-2 border-[1.5px] border-[var(--color-accent)] bg-transparent px-6 py-[18px] text-[14px] font-medium uppercase tracking-[0.12em] text-[#F5F5F5] transition-[background-color,color,opacity] duration-[250ms] ease-out hover:bg-[var(--color-accent)] hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-[var(--color-accent)] disabled:opacity-40"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+                      Отправка…
+                    </>
+                  ) : (
+                    "Обсудить проект"
+                  )}
+                </button>
+              </MagneticButton>
             </motion.div>
           </motion.form>
         )}
       </AnimatePresence>
     </div>
   );
+}
+
+/* ─── Floating label helpers ──────────────────────────────── */
+function floatLabel(input: HTMLInputElement) {
+  const label = input.previousElementSibling as HTMLElement | null;
+  if (!label) return;
+  label.style.transform = "translateY(-18px) scale(0.72)";
+  label.style.color     = "var(--color-accent)";
+  label.style.top       = "6px";
+}
+
+function unFloatLabel(input: HTMLInputElement) {
+  const label = input.previousElementSibling as HTMLElement | null;
+  if (!label) return;
+  const hasValue = input.value.trim().length > 0;
+  if (!hasValue) {
+    label.style.transform = "";
+    label.style.color     = "rgba(255,255,255,0.35)";
+    label.style.top       = "24px";
+  } else {
+    label.style.color = "rgba(255,255,255,0.35)";
+  }
 }

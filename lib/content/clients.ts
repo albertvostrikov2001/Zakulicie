@@ -21,19 +21,21 @@ export interface ClientEntry {
   /** SVG-путь к логотипу в /public/logos/ — если есть */
   logoPath?: string;
   sector?: string;
+  /** Имиджевая подпись типа мероприятия */
+  eventCaption?: string;
 }
 
 export const staticClients: ClientEntry[] = [
-  { name: "Металл Профиль",       sector: "Производство" },
-  { name: "Леруа Мерлен",         sector: "Ритейл" },
-  { name: "Альфа-Банк",           sector: "Финансы" },
-  { name: "СТС",                  sector: "Медиа" },
-  { name: "Warmex",               sector: "Производство" },
-  { name: "Промэко",              sector: "Промышленность" },
-  { name: "Золотое яблоко",       sector: "Ритейл" },
-  { name: "СУЭК",                 sector: "Энергетика" },
-  { name: "Правительство НСО",    sector: "Государство" },
-  { name: "Болотнинская Гофротара", sector: "Производство" },
-  { name: "Чистая Слобода",       sector: "Девелопмент" },
-  { name: "АртДом",               sector: "Дизайн" },
+  { name: "Металл Профиль",          sector: "Производство",   eventCaption: "Дилерский съезд федерального масштаба" },
+  { name: "Леруа Мерлен",            sector: "Ритейл",         eventCaption: "Корпоративное мероприятие" },
+  { name: "Альфа-Банк",              sector: "Финансы",        eventCaption: "Деловой форум" },
+  { name: "СТС",                     sector: "Медиа",          eventCaption: "Презентация сезонной линейки" },
+  { name: "Warmex",                  sector: "Производство",   eventCaption: "Открытие производственного объекта" },
+  { name: "Промэко",                 sector: "Промышленность", eventCaption: "Корпоратив для 800+ человек" },
+  { name: "Золотое яблоко",          sector: "Ритейл",         eventCaption: "Открытие флагманского магазина" },
+  { name: "СУЭК",                    sector: "Энергетика",     eventCaption: "Конференция топ-менеджмента" },
+  { name: "Правительство НСО",       sector: "Государство",    eventCaption: "Деловой саммит регионального значения" },
+  { name: "Болотнинская Гофротара",  sector: "Производство",   eventCaption: "Юбилей производства" },
+  { name: "Чистая Слобода",          sector: "Девелопмент",    eventCaption: "Тимбилдинг и корпоратив" },
+  { name: "АртДом",                  sector: "Дизайн",         eventCaption: "Презентация проекта" },
 ];
