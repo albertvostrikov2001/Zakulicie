@@ -3,49 +3,80 @@
 @tailwind utilities;
 
 :root {
-  --color-bg: #0a0a0a;
-  --color-bg-light: #f2efe9;
-  --page-bg: #f2efe9;
-  --scene-bg: #f2efe9;
-  --color-surface: #141414;
-  --color-surface-elevated: #1c1c1c;
-  --color-accent: #c9a84c;
-  --color-accent-hover: #d4b86a;
-  --color-text-primary: #f5f5f5;
-  --color-text-secondary: #8a8a8a;
-  --color-text-muted: #4a4a4a;
-  --color-text-dark: #1a1a1a;
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-light: rgba(0, 0, 0, 0.1);
+  /* ─── Controlled dark palette ─────────────────────────── */
+  --color-bg:               #0A0A0A;
+  --color-surface:          #111111;
+  --color-surface-elevated: #181818;
+  --color-border:           rgba(255, 255, 255, 0.07);
+  --color-overlay:          rgba(0, 0, 0, 0.55);
+  --color-accent:           #C9A84C;
+  --color-accent-hover:     #D4B86A;
+  --color-text-primary:     #F5F5F5;
+  --color-text-secondary:   rgba(255, 255, 255, 0.60);
+  --color-text-muted:       rgba(255, 255, 255, 0.35);
+  --color-text-dark:        #1A1A1A;
 
+  /* Legacy aliases for compatibility */
+  --color-bg-light:         #f2efe9;
+  --page-bg:                #f2efe9;
+  --scene-bg:               #f2efe9;
+
+  /* ─── Typography system ────────────────────────────────── */
   --font-display: "Unbounded", system-ui, sans-serif;
-  --font-body: "Manrope", system-ui, sans-serif;
+  --font-body:    "Inter", "Manrope", system-ui, sans-serif;
 
-  --spacing-section: 10rem;
-  --spacing-section-mobile: 4rem;
-  --max-content-width: 1440px;
+  --text-xs:   11px;
+  --text-sm:   13px;
+  --text-base: 16px;
+  --text-md:   18px;
+  --text-lg:   22px;
+  --text-xl:   28px;
+  --text-2xl:  36px;
+  --text-3xl:  48px;
+  --text-hero: clamp(72px, 10vw, 140px);
 
-  --border-radius-card: 2px;
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+
+  --leading-tight:   1.1;
+  --leading-snug:    1.25;
+  --leading-normal:  1.5;
+  --leading-relaxed: 1.65;
+
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.05em;
+  --tracking-wider:   0.1em;
+  --tracking-widest:  0.15em;
+
+  /* ─── Layout ───────────────────────────────────────────── */
+  --spacing-section:        100px;
+  --spacing-section-tablet: 72px;
+  --spacing-section-mobile: 56px;
+  --max-content-width:      1440px;
+  --border-radius-card:     2px;
 
   --transition-duration: 300ms;
-  --transition-ease: cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-ease:     cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow:     0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 1024px) {
+  :root { --spacing-section: 72px; }
 }
 
 @media (max-width: 768px) {
-  :root {
-    --spacing-section: 4rem;
-  }
+  :root { --spacing-section: 56px; }
 }
 
 html {
-  scroll-behavior: auto; /* Lenis берёт на себя */
+  scroll-behavior: auto; /* Lenis handles scroll */
 }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
+  html { scroll-behavior: auto; }
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
@@ -57,7 +88,10 @@ body {
   color: var(--color-text-primary);
   background-color: var(--color-bg);
   font-family: var(--font-body);
+  font-size: var(--text-base);
+  line-height: var(--leading-relaxed);
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
 }
 
 ::selection {
@@ -65,17 +99,17 @@ body {
   color: var(--color-text-primary);
 }
 
-/* Бегущая строка: пауза при наведении */
+/* ─── Marquee pause on hover ─────────────────────────────── */
 .marquee-track:hover .marquee-inner {
   animation-play-state: paused;
 }
 
-/* Кастомный курсор — скрываем системный только там, где есть компонент */
+/* ─── Custom cursor ──────────────────────────────────────── */
 .custom-cursor-active {
   cursor: none;
 }
 
-/* Clip-path анимации */
+/* ─── Clip-path animations ───────────────────────────────── */
 @keyframes clip-reveal-x {
   from { clip-path: inset(0 100% 0 0); }
   to   { clip-path: inset(0 0% 0 0); }
@@ -86,10 +120,36 @@ body {
   to   { clip-path: inset(0 0 0 0); }
 }
 
-/* Стрелка скролла */
+/* ─── Scroll hint ────────────────────────────────────────── */
 @keyframes scroll-hint {
   0%, 100% { transform: translateY(0); opacity: 0.5; }
   50%       { transform: translateY(6px); opacity: 1; }
+}
+
+/* ─── Marquee animation ──────────────────────────────────── */
+@keyframes marquee-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes marquee-rtl {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes shimmer-pulse {
+  0%, 100% { opacity: 0.4; }
+  50%       { opacity: 0.9; }
+}
+
+@keyframes line-grow {
+  from { transform: scaleY(0); opacity: 0; }
+  to   { transform: scaleY(1); opacity: 1; }
+}
+
+@keyframes dot-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50%       { transform: scale(1.6); opacity: 1; }
 }
 
 @layer utilities {
@@ -109,17 +169,31 @@ body {
     clip-path: inset(0 0% 0 0);
   }
 
-  /* Overlay hover на кейсах */
   .case-overlay {
     clip-path: inset(100% 0 0 0);
     transition: clip-path 0.55s cubic-bezier(0.4, 0, 0.2, 1);
   }
+
   .group:hover .case-overlay,
   .group:focus-within .case-overlay {
     clip-path: inset(0 0 0 0);
   }
 
-  /* Отзывы: кастомная пагинация Swiper */
+  /* Animated marquee rows */
+  .marquee-row-ltr {
+    animation: marquee-ltr 42s linear infinite;
+  }
+
+  .marquee-row-rtl {
+    animation: marquee-rtl 38s linear infinite;
+  }
+
+  .marquee-row-ltr:hover,
+  .marquee-row-rtl:hover {
+    animation-play-state: paused;
+  }
+
+  /* Swiper pagination — editorial */
   .reviews-pagination .swiper-pagination-bullet {
     margin: 0 4px !important;
     height: 6px;
@@ -129,8 +203,52 @@ body {
     opacity: 1 !important;
     transition: width 0.3s ease, background-color 0.2s ease;
   }
+
   .reviews-pagination .swiper-pagination-bullet-active {
     width: 20px;
     background: var(--color-accent);
+  }
+
+  /* Section base spacing */
+  .section-py {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  /* Scroll indicator animation */
+  .scroll-line {
+    animation: line-grow 0.8s ease forwards, scroll-hint 2.2s ease-in-out 0.8s infinite;
+    transform-origin: top center;
+  }
+
+  /* Shimmer for accent elements */
+  .shimmer-pulse {
+    animation: shimmer-pulse 3s ease-in-out infinite;
+  }
+
+  /* Body text minimum standards */
+  .body-text {
+    font-size: var(--text-base);
+    font-weight: var(--weight-medium);
+    line-height: var(--leading-relaxed);
+    color: rgba(245, 245, 245, 0.82);
+  }
+
+  /* Caption/label standard */
+  .caption-text {
+    font-size: var(--text-xs);
+    font-weight: var(--weight-medium);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+  }
+
+  /* Section headline standard */
+  .section-headline {
+    font-size: clamp(28px, 3.5vw, 48px);
+    font-weight: var(--weight-bold);
+    line-height: var(--leading-snug);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-text-primary);
   }
 }

@@ -13,58 +13,72 @@ import {
 } from "@/lib/validators/contact";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AnimatePresence, motion } from "framer-motion";
-import { Check, ChevronDown } from "lucide-react";
+import { Check, ChevronDown, Loader2 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 
 const inputClass =
-  "w-full border-0 border-b border-white/[0.15] bg-transparent py-4 pb-3 text-[15px] text-[#F5F5F5] outline-none transition-[border-color,box-shadow] duration-[250ms] ease-out placeholder:text-white/25 focus:border-accent focus:shadow-[0_1px_0_0_var(--color-accent)]";
+  "w-full border-0 border-b border-white/[0.15] bg-transparent pb-3 pt-4 text-[15px] font-medium text-[#F5F5F5] outline-none transition-[border-color,box-shadow] duration-[250ms] ease-out placeholder:text-white/25 focus:border-accent focus:shadow-[0_1px_0_0_var(--color-accent)]";
+
 const labelClass =
-  "mb-2 block text-[11px] font-medium uppercase tracking-[0.1em] text-white/40";
+  "mb-2 block text-[11px] font-semibold uppercase tracking-[0.1em] text-white/40";
+
+const errorClass = "mt-2 text-[11px] text-[#E53E3E]";
+
+function cnInput(err: unknown) {
+  return err
+    ? `${inputClass} border-[#E53E3E] focus:border-[#E53E3E] focus:shadow-[0_1px_0_0_#E53E3E]`
+    : inputClass;
+}
 
 export function CinematicContactForm() {
-  const [done, setDone] = useState(false);
-  const reduced = usePrefersReducedMotion();
-  const stagger = reduced ? 0 : 0.08;
+  const [isDone, setIsDone] = useState(false);
+  const reduced  = usePrefersReducedMotion();
+  const stagger  = reduced ? 0 : 0.07;
+
   const {
     register,
     control,
     handleSubmit,
     formState: { errors, isSubmitting },
+    reset,
   } = useForm<ContactFormValues>({
     resolver: zodResolver(contactFormSchema),
     defaultValues: {
       eventType: "corporate",
-      consent: false,
-      dates: "",
-      name: "",
-      phone: "",
-      email: "",
+      consent:   false,
+      dates:     "",
+      name:      "",
+      phone:     "",
     },
   });
 
   const onSubmit = async (data: ContactFormValues) => {
     const payload = { ...data, phone: normalizeRuPhone(data.phone) };
-    const { ok } = await submitContactPayload(payload);
+    const { ok }  = await submitContactPayload(payload);
     if (ok) {
-      setDone(true);
+      setIsDone(true);
       trackContactFormSubmit();
     }
   };
 
   const reveal = (i: number) => ({
-    initial: reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
+    initial:     reduced ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 },
     whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-8%" },
-    transition: { delay: i * stagger, duration: 0.65, ease: [0.22, 1, 0.36, 1] as const },
+    viewport:    { once: true, margin: "-8%" },
+    transition:  {
+      delay:    i * stagger,
+      duration: 0.65,
+      ease:     [0.22, 1, 0.36, 1] as const,
+    },
   });
 
   return (
-    <div className="relative min-h-[480px]">
+    <div className="relative min-h-[420px]">
       <AnimatePresence mode="wait">
-        {done ? (
-          <SuccessState key="ok" onReset={() => setDone(false)} />
+        {isDone ? (
+          <SuccessState key="ok" onReset={() => { setIsDone(false); reset(); }} />
         ) : (
           <motion.form
             key="form"
@@ -72,12 +86,11 @@ export function CinematicContactForm() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="space-y-0"
+            noValidate
           >
+            {/* 1: Name */}
             <motion.div {...reveal(0)}>
-              <label htmlFor="c-name" className={labelClass}>
-                Имя
-              </label>
+              <label htmlFor="c-name" className={labelClass}>Имя</label>
               <input
                 id="c-name"
                 autoComplete="name"
@@ -88,16 +101,15 @@ export function CinematicContactForm() {
                 {...register("name")}
               />
               {errors.name && (
-                <p id="c-e-name" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
+                <p id="c-e-name" className={errorClass} role="alert">
                   {errors.name.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div {...reveal(1)} className="mt-10">
-              <label htmlFor="c-phone" className={labelClass}>
-                Телефон
-              </label>
+            {/* 2: Phone */}
+            <motion.div {...reveal(1)} className="mt-8">
+              <label htmlFor="c-phone" className={labelClass}>Телефон</label>
               <Controller
                 name="phone"
                 control={control}
@@ -117,37 +129,15 @@ export function CinematicContactForm() {
                 )}
               />
               {errors.phone && (
-                <p id="c-e-phone" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
+                <p id="c-e-phone" className={errorClass} role="alert">
                   {errors.phone.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div {...reveal(2)} className="mt-10">
-              <label htmlFor="c-email" className={labelClass}>
-                Email
-              </label>
-              <input
-                id="c-email"
-                type="email"
-                autoComplete="email"
-                className={cnInput(errors.email)}
-                placeholder="Рабочая почта"
-                aria-invalid={errors.email ? true : undefined}
-                aria-describedby={errors.email ? "c-e-email" : undefined}
-                {...register("email")}
-              />
-              {errors.email && (
-                <p id="c-e-email" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
-                  {errors.email.message}
-                </p>
-              )}
-            </motion.div>
-
-            <motion.div {...reveal(3)} className="mt-10">
-              <label htmlFor="c-type" className={labelClass}>
-                Тип мероприятия
-              </label>
+            {/* 3: Event type */}
+            <motion.div {...reveal(2)} className="mt-8">
+              <label htmlFor="c-type" className={labelClass}>Тип мероприятия</label>
               <div className="relative">
                 <select
                   id="c-type"
@@ -155,7 +145,7 @@ export function CinematicContactForm() {
                   {...register("eventType")}
                 >
                   {EVENT_TYPE_OPTIONS.map((o) => (
-                    <option key={o.value} value={o.value} className="bg-[#141414] text-text-primary">
+                    <option key={o.value} value={o.value} className="bg-[#111111] text-text-primary">
                       {o.label}
                     </option>
                   ))}
@@ -167,28 +157,28 @@ export function CinematicContactForm() {
               </div>
             </motion.div>
 
-            <motion.div {...reveal(4)} className="mt-10">
-              <label htmlFor="c-dates" className={labelClass}>
-                Ориентировочные сроки
-              </label>
+            {/* 4: Dates */}
+            <motion.div {...reveal(3)} className="mt-8">
+              <label htmlFor="c-dates" className={labelClass}>Ориентировочные сроки</label>
               <input
                 id="c-dates"
                 className={cnInput(errors.dates)}
-                placeholder="Например: май 2026"
+                placeholder="Например: сентябрь 2026"
                 aria-invalid={errors.dates ? true : undefined}
                 aria-describedby={errors.dates ? "c-e-dates" : undefined}
                 {...register("dates")}
               />
               {errors.dates && (
-                <p id="c-e-dates" className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
+                <p id="c-e-dates" className={errorClass} role="alert">
                   {errors.dates.message}
                 </p>
               )}
             </motion.div>
 
-            <motion.div {...reveal(5)} className="mt-10">
-              <label className="flex cursor-pointer gap-3 text-xs text-white/50">
-                <span className="relative mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-[2px] border border-white/20 bg-transparent transition-colors duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent">
+            {/* Consent */}
+            <motion.div {...reveal(4)} className="mt-8">
+              <label className="flex cursor-pointer gap-3 text-[13px] text-white/50">
+                <span className="relative mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center border border-white/20 bg-transparent transition-colors duration-200 has-[:focus-visible]:ring-2 has-[:focus-visible]:ring-accent">
                   <input
                     type="checkbox"
                     className="peer sr-only"
@@ -208,19 +198,25 @@ export function CinematicContactForm() {
                 </span>
               </label>
               {errors.consent && (
-                <p className="mt-2 text-[11px] text-[#E53E3E]" role="alert">
-                  {errors.consent.message}
-                </p>
+                <p className={errorClass} role="alert">{errors.consent.message}</p>
               )}
             </motion.div>
 
-            <motion.div {...reveal(6)} className="mt-12">
+            {/* Submit */}
+            <motion.div {...reveal(5)} className="mt-10">
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="inline-flex items-center justify-center border-[1.5px] border-accent bg-transparent px-10 py-4 text-xs font-semibold uppercase tracking-[0.1em] text-[#F5F5F5] transition-[background-color,color,opacity] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent disabled:opacity-40"
+                className="inline-flex items-center justify-center gap-2 border-[1.5px] border-accent bg-transparent px-10 py-4 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#F5F5F5] transition-[background-color,color,opacity] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent disabled:opacity-40"
               >
-                {isSubmitting ? "Отправка…" : "Обсудить проект"}
+                {isSubmitting ? (
+                  <>
+                    <Loader2 className="h-3.5 w-3.5 animate-spin" aria-hidden />
+                    Отправка…
+                  </>
+                ) : (
+                  "Обсудить проект"
+                )}
               </button>
             </motion.div>
           </motion.form>
@@ -228,10 +224,4 @@ export function CinematicContactForm() {
       </AnimatePresence>
     </div>
   );
-}
-
-function cnInput(err: unknown) {
-  return err
-    ? `${inputClass} border-[#E53E3E] focus:border-[#E53E3E] focus:shadow-[0_1px_0_0_#E53E3E]`
-    : inputClass;
 }

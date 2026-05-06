@@ -1,12 +1,12 @@
 import { ClientsSection } from "@/components/sections/ClientsSection";
 import { ContactSection } from "@/components/sections/ContactSection";
-import { FlagshipCases } from "@/components/sections/FlagshipCases";
-import { LayeredCollage } from "@/components/sections/LayeredCollage";
-import { TransitionSection } from "@/components/sections/TransitionSection";
-import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { TransitionSection } from "@/components/sections/TransitionSection";
+import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
+import { CasesMarquee } from "@/components/ui/CasesMarquee";
+import { CTAStrip } from "@/components/ui/CTAStrip";
 import { getFeaturedCases, getTestimonials } from "@/lib/data";
 import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl } from "@/lib/site";
@@ -44,18 +44,39 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const featured = await getFeaturedCases();
+  const featured     = await getFeaturedCases();
   const testimonials = await getTestimonials();
+
   return (
     <>
+      {/* 1 – HERO: oversized wordmark, trust-строка, description, CTA, scroll indicator */}
       <TransitionSection />
+
+      {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />
-      <LayeredCollage />
+
+      {/* 3 – STATS: 4 крупных числа, counter-up */}
       <StatsSection />
-      <FlagshipCases cases={featured} />
+
+      {/* 4 – КЕЙСЫ: две бегущие строки */}
+      <CasesMarquee cases={featured} />
+
+      {/* 5 – CTA-вставка */}
+      <CTAStrip text="Готовы обсудить ваш проект?" />
+
+      {/* 6 – НАПРАВЛЕНИЯ РАБОТЫ: hover reveal услуг */}
       <ServicesSection />
+
+      {/* 7 – CTA-вставка */}
+      <CTAStrip text="Есть задача? Расскажите — предложим решение." />
+
+      {/* 8 – КЛИЕНТЫ: самоперелистывающийся блок */}
       <ClientsSection />
+
+      {/* 9 – ОТЗЫВЫ: editorial Swiper */}
       <TestimonialsSection items={testimonials} />
+
+      {/* 10 – ФОРМА: id=contact-form */}
       <ContactSection />
     </>
   );

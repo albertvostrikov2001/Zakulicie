@@ -9,16 +9,17 @@ export function ContactSection() {
   return (
     <section
       id="contact-form"
-      className="min-h-screen scroll-mt-24 bg-[#0A0A0A] py-section-mobile md:py-28"
+      className="scroll-mt-24 bg-[var(--color-bg)] py-section"
       aria-label="Заявка"
     >
       <div className="mx-auto grid max-w-content gap-16 px-4 md:grid-cols-[minmax(0,2fr),minmax(0,3fr)] md:items-start md:gap-20 md:px-8 lg:grid-cols-[2fr_3fr]">
         <div className="order-2 md:order-1">
           <RevealOnScroll>
-            <h2 className="font-display text-[clamp(24px,2.5vw,36px)] font-bold leading-tight tracking-tight text-text-primary">
+            <p className="caption-text">Обсудить проект</p>
+            <h2 className="mt-3 font-display text-[clamp(26px,3vw,44px)] font-bold leading-snug tracking-tight text-text-primary">
               Расскажите о задаче — мы предложим решение
             </h2>
-            <p className="mt-6 max-w-md text-base leading-relaxed text-text-secondary">
+            <p className="mt-5 max-w-md text-[15px] leading-relaxed text-text-secondary">
               Свяжемся в течение нескольких часов. Без шаблонных предложений — только конкретика.
             </p>
             <div className="mt-10 space-y-2 text-sm text-text-secondary/90">

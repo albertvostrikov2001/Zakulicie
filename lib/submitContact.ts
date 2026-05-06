@@ -12,7 +12,6 @@ export async function submitContactPayload(
         access_key: web3,
         subject: `Заявка Закулисье: ${data.name}`,
         from_name: data.name,
-        email: data.email,
         phone: data.phone,
         event_type: data.eventType,
         timeline: data.dates,

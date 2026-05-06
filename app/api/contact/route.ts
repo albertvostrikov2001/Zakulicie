@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: "Validation failed" }, { status: 400 });
   }
 
-  const { name, phone, email, eventType, dates } = parsed.data;
+  const { name, phone, eventType, dates } = parsed.data;
   const normalized = normalizeRuPhone(phone);
   const eventLabel = EVENT_TYPE_LABELS[eventType] ?? eventType;
 
@@ -39,7 +39,6 @@ export async function POST(req: NextRequest) {
     "",
     `Имя: ${name}`,
     `Телефон: ${normalized}`,
-    `Email: ${email}`,
     `Тип: ${eventLabel}`,
     `Сроки: ${dates}`,
   ];
@@ -49,7 +48,6 @@ export async function POST(req: NextRequest) {
 
 <b>Имя:</b> ${escapeHtml(name)}
 <b>Телефон:</b> ${escapeHtml(normalized)}
-<b>Email:</b> ${escapeHtml(email)}
 <b>Тип:</b> ${escapeHtml(eventLabel)}
 <b>Сроки:</b> ${escapeHtml(dates)}`;
 

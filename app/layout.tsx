@@ -5,19 +5,21 @@ import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import { unsplashPhoto } from "@/lib/content/unsplash";
-import { Manrope, Unbounded } from "next/font/google";
+import { Inter, Unbounded } from "next/font/google";
 import "./globals.css";
 
 const display = Unbounded({
   subsets: ["latin", "cyrillic"],
   variable: "--font-display",
   weight: ["400", "600", "700", "900"],
+  display: "swap",
 });
 
-const body = Manrope({
+const body = Inter({
   subsets: ["latin", "cyrillic"],
   variable: "--font-body",
   weight: ["400", "500", "600"],
+  display: "swap",
 });
 
 const siteUrl = getSiteUrl();

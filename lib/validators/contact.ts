@@ -7,7 +7,7 @@ export const contactFormSchema = z.object({
   phone: z
     .string()
     .trim()
-    .min(5)
+    .min(5, "Укажите телефон")
     .refine(
       (v) => {
         const d = v.replace(/\D/g, "");
@@ -15,9 +15,8 @@ export const contactFormSchema = z.object({
         if (d.length === 10) return true;
         return false;
       },
-      { message: "Телефон в формате +7" }
+      { message: "Телефон в формате +7 (___) ___-__-__" }
     ),
-  email: z.string().trim().email("Некорректный email"),
   eventType: z.enum(eventTypes),
   dates: z.string().trim().min(1, "Укажите ориентировочные сроки"),
   consent: z.boolean().refine((v) => v === true, { message: "Нужно согласие с политикой" }),

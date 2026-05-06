@@ -38,7 +38,6 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
       dates: "",
       name: "",
       phone: "",
-      email: "",
     },
   });
 
@@ -91,17 +90,6 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
           {errors.phone && (
             <p className="mt-1 text-xs text-red-400" role="alert">
               {errors.phone.message}
-            </p>
-          )}
-        </div>
-        <div className="sm:col-span-2">
-          <label htmlFor={`${idPrefix}-email`} className="mb-1 block text-xs text-text-secondary">
-            Email
-          </label>
-          <Input id={`${idPrefix}-email`} type="email" autoComplete="email" {...register("email")} />
-          {errors.email && (
-            <p className="mt-1 text-xs text-red-400" role="alert">
-              {errors.email.message}
             </p>
           )}
         </div>
