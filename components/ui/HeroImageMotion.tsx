@@ -3,7 +3,7 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { motion, useMotionValue, useSpring, useTransform } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { useCallback, useEffect, useRef } from "react";
 
 interface FloatingCard {

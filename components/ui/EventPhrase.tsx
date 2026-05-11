@@ -3,7 +3,7 @@
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import Image from "next/image";
+import Image from "@/components/ui/SiteImage";
 import { useEffect, useRef, useState } from "react";
 
 /* ─── Letter-to-image map ─────────────────────────────────── */
