@@ -2,13 +2,12 @@
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useRef } from "react";
 
-const IMAGE_URL = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
-const IMAGE_URL_2 = unsplashPhoto("1492684223066-81342ee5ff30", 2400);
+const IMAGE_URL = "/cases/family-day-warmex/gallery/05.webp";
+const IMAGE_URL_2 = "/cases/blagotvoritelnyy-bal/gallery/04.webp";
 
 export function VideoReveal() {
   const ref = useRef<HTMLElement>(null);

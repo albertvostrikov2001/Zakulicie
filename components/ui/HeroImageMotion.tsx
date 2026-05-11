@@ -19,24 +19,24 @@ interface FloatingCard {
 
 const CARDS: FloatingCard[] = [
   {
-    src: "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=480&q=80",
-    alt: "Масштабное корпоративное мероприятие",
+    src: "/cases/blagotvoritelnyy-bal/gallery/06.webp",
+    alt: "Масштабное корпоративное мероприятие — event-агентство Закулисье",
     className:
       "absolute top-[8%] right-[4%] w-[clamp(120px,14vw,220px)] aspect-[3/4]",
     depth: 0.035,
     delay: 0.4,
   },
   {
-    src: "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=480&q=80",
-    alt: "Вечернее event-шоу",
+    src: "/cases/25-let-sts/gallery/03.webp",
+    alt: "Вечернее мероприятие — event-агентство Закулисье Новосибирск",
     className:
       "absolute bottom-[18%] right-[18%] w-[clamp(100px,11vw,180px)] aspect-[3/4]",
     depth: 0.055,
     delay: 0.6,
   },
   {
-    src: "https://images.unsplash.com/photo-1511578314322-379afb476865?w=480&q=80",
-    alt: "Деловая конференция",
+    src: "/cases/syezd-dilerov-metall-profil/gallery/04.webp",
+    alt: "Деловое мероприятие — event-агентство Закулисье Новосибирск",
     className:
       "absolute top-[22%] right-[22%] w-[clamp(80px,9vw,150px)] aspect-[3/4]",
     depth: 0.025,

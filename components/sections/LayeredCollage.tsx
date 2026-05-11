@@ -6,8 +6,6 @@ import { cn } from "@/lib/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { unsplashPhoto } from "@/lib/content/unsplash";
-
 const PHRASE = "СОБЫТИЕ БЕЗ КОМПРОМИССОВ";
 
 type Token =
@@ -27,15 +25,15 @@ function buildTokens(phrase: string): Token[] {
 
 const WORD_TOKENS = buildTokens(PHRASE);
 
-/** 7 кадров — циклически по индексу буквы */
+/** 7 кадров из реальных кейсов — циклически по индексу буквы */
 const letterPhotos = [
-  unsplashPhoto("1511578314322-379afb476865", 900),
-  unsplashPhoto("1504384308090-c894fdcc538d", 900),
-  unsplashPhoto("1556761175-5973dc0f32e7", 900),
-  unsplashPhoto("1514525253161-7a46d19cd819", 900),
-  unsplashPhoto("1589903308904-1010c2294adc", 900),
-  unsplashPhoto("1492684223066-81342ee5ebb9", 900),
-  unsplashPhoto("1540575467063-27a9d141e482", 900),
+  "/cases/family-day-warmex/gallery/03.webp",
+  "/cases/blagotvoritelnyy-bal/gallery/02.webp",
+  "/cases/syezd-dilerov-metall-profil/gallery/01.webp",
+  "/cases/dr-zolotogo-yabloka/gallery/03.webp",
+  "/cases/25-let-sts/gallery/01.webp",
+  "/cases/opening-lerua-kemerovo/gallery/02.webp",
+  "/cases/spartakiada/gallery/05.webp",
 ] as const;
 
 /** Safe zones: компактные кадры, позиции укладываются при min-height ~200px без обрезки */
@@ -135,7 +133,7 @@ export function LayeredCollage() {
                   >
                     <Image
                       src={letterPhotos[zoneIdx]}
-                      alt="Атмосфера делового мероприятия"
+                      alt="Кейс event-агентства Закулисье — мероприятие в Новосибирске"
                       width={safeZones[zoneIdx].w * 2}
                       height={safeZones[zoneIdx].h * 2}
                       className="h-full w-full object-cover"

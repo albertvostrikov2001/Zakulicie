@@ -1,10 +1,22 @@
 import type { ServiceLanding, ServiceSlug } from "@/lib/types";
-import { unsplashPhoto } from "@/lib/content/unsplash";
+import blurData from "@/lib/content/blur-data.json";
 
-const u = (id: string, alt: string) => ({
-  src: unsplashPhoto(id, 2000),
-  alt,
-});
+type BlurEntry = {
+  cover: { src: string; blurDataURL: string; width: number; height: number };
+  gallery: { src: string; blurDataURL: string; width: number; height: number }[];
+};
+
+const bd = blurData as Record<string, BlurEntry>;
+
+function realImg(caseSlug: string, alt: string, galleryIndex?: number) {
+  if (galleryIndex !== undefined) {
+    const g = bd[caseSlug]?.gallery?.[galleryIndex];
+    if (g) return { src: g.src, alt, blurDataURL: g.blurDataURL, width: g.width, height: g.height };
+  }
+  const c = bd[caseSlug]?.cover;
+  if (c) return { src: c.src, alt, blurDataURL: c.blurDataURL, width: c.width, height: c.height };
+  return { src: `/cases/${caseSlug}/cover.webp`, alt };
+}
 
 export const serviceNav: { title: string; slug: ServiceSlug }[] = [
   { title: "Корпоративные мероприятия", slug: "korporativnye-meropriyatiya" },
@@ -21,9 +33,9 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Корпоративные мероприятия в Новосибирске",
     shortDescription:
       "События для компаний, где важны культура, репутация и спокойная управляемость процесса.",
-    heroImage: u(
-      "1514525253161-7a46d19cd819",
-      "Корпоративное мероприятие: сцена и гости в полутёмном зале"
+    heroImage: realImg(
+      "family-day-warmex",
+      "Корпоративные мероприятия — event-агентство Закулисье Новосибирск"
     ),
     includes: [
       {
@@ -101,9 +113,9 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Тимбилдинг для компаний в Сибири",
     shortDescription:
       "Форматы, которые укрепляют команду без дешёвых клише и давления на участников.",
-    heroImage: u(
-      "1522071820081-009f0129c71c",
-      "Командное взаимодействие в современном пространстве"
+    heroImage: realImg(
+      "spartakiada",
+      "Тимбилдинг — event-агентство Закулисье Новосибирск"
     ),
     includes: [
       {
@@ -175,9 +187,9 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Деловые мероприятия и конференции в Новосибирске",
     shortDescription:
       "Съезды, форумы, стратегические сессии — где важны тайминг, репутация и отсутствие сбоев.",
-    heroImage: u(
-      "1504384308090-c894fdcc538d",
-      "Конференц-зал с участниками делового мероприятия"
+    heroImage: realImg(
+      "syezd-dilerov-metall-profil",
+      "Деловые мероприятия — event-агентство Закулисье Новосибирск"
     ),
     includes: [
       {
@@ -249,9 +261,9 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Рекламные акции и бренд‑активации",
     shortDescription:
       "Площадки с высоким трафиком, регламенты и дисциплина исполнения на каждой смене.",
-    heroImage: u(
-      "1441986300917-64674bd600d8",
-      "Торговое пространство с брендированной инсталляцией"
+    heroImage: realImg(
+      "opening-lerua-kemerovo",
+      "Рекламные акции и активации — event-агентство Закулисье Новосибирск"
     ),
     includes: [
       {
@@ -323,9 +335,9 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Аренда реквизита для мероприятий в Новосибирске",
     shortDescription:
       "Собственный парк декораций и конструкций — для event‑команд и организаторов, которым нужна предсказуемость.",
-    heroImage: u(
-      "1536440136628-849c177e76a1",
-      "Сценический реквизит и оборудование на складе"
+    heroImage: realImg(
+      "arenda-rekvizita-syomka",
+      "Аренда реквизита — event-агентство Закулисье Новосибирск"
     ),
     includes: [
       {
@@ -397,9 +409,9 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Постановка и режиссура событий",
     shortDescription:
       "Когда сценарий, кадр и ритм должны совпасть — мы держим постановку как единый механизм.",
-    heroImage: u(
-      "1589903308904-1010c2294adc",
-      "Телестудия: свет, камеры и сценическое пространство"
+    heroImage: realImg(
+      "blagotvoritelnyy-bal",
+      "Постановка и режиссура мероприятий — event-агентство Закулисье Новосибирск"
     ),
     includes: [
       {

@@ -57,6 +57,8 @@ export default async function ServicePage({ params }: Props) {
           priority
           className="object-cover"
           sizes="100vw"
+          placeholder={s.heroImage.blurDataURL ? "blur" : undefined}
+          blurDataURL={s.heroImage.blurDataURL}
         />
         <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/85 to-bg/40" aria-hidden />
         <div className="absolute inset-0 flex items-end">
@@ -105,9 +107,9 @@ export default async function ServicePage({ params }: Props) {
               Релевантные кейсы
             </h2>
             <ul className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-              {related.map((c) => (
+              {related.map((c, i) => (
                 <li key={c.slug}>
-                  <CaseCard item={c} />
+                  <CaseCard item={c} priority={i === 0} index={i} />
                 </li>
               ))}
             </ul>

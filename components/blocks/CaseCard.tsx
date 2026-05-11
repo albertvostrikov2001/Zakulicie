@@ -27,20 +27,26 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
         className="group block"
         aria-label={`Кейс: ${item.title}`}
       >
-        <article className="relative aspect-[4/5] overflow-hidden md:aspect-[16/10]">
+        <article className="relative aspect-[4/5] overflow-hidden md:aspect-[3/2]">
           {/* Фото */}
           <Image
             src={item.heroImage.src}
-            alt={item.heroImage.alt}
+            alt={`Кейс: ${item.title} | ${tag}`}
             fill
-            className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+            className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
             sizes="(max-width: 768px) 100vw, 50vw"
             priority={priority}
+            placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
+            blurDataURL={item.heroImage.blurDataURL}
           />
+
+          {/* Тональный оверлей — нивелирует разнородность яркости */}
+          <div className="absolute inset-0 bg-black/15" style={{ mixBlendMode: "multiply" }} aria-hidden />
 
           {/* Тёмный оверлей */}
           <div
-            className="absolute inset-0 bg-gradient-to-t from-bg via-bg/25 to-transparent transition-opacity duration-500 group-hover:opacity-90"
+            className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-90"
+            style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" }}
             aria-hidden
           />
 

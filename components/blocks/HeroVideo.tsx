@@ -8,9 +8,7 @@ import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { unsplashPhoto } from "@/lib/content/unsplash";
-
-const POSTER = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
+const POSTER = "/cases/family-day-warmex/gallery/08.webp";
 
 const lines = ["Когда на кону репутация,", "важна каждая деталь"];
 

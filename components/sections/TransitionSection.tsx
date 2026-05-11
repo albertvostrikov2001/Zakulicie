@@ -60,8 +60,11 @@ export function TransitionSection() {
             const tw     = interpolateHex(TAG_ON_LIGHT, TAG_ON_DARK, p);
             tagEls?.forEach((el) => { el.style.color = tw; });
 
-            const ctaColor = interpolateHex(TAG_ON_LIGHT, WORD_ON_DARK, p);
-            if (ctaRef.current) ctaRef.current.style.color = ctaColor;
+            const ctaFg = interpolateHex(WORD_ON_LIGHT, WORD_ON_DARK, p);
+            if (ctaRef.current) {
+              ctaRef.current.style.setProperty("--hero-cta-fg", ctaFg);
+              ctaRef.current.style.setProperty("--hero-cta-border", ctaFg);
+            }
 
             const fadeStart = 0.80;
             const opacity   = p < fadeStart ? 1 : Math.max(0, 1 - (p - fadeStart) / (1 - fadeStart));
@@ -119,7 +122,10 @@ export function TransitionSection() {
       className="relative z-10 min-h-[116vh] scroll-mt-0"
       aria-label="Закулисье — Агентство событий"
     >
-      <div className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden">
+      <div
+        data-section="hero"
+        className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden"
+      >
         {/* Colour interpolation background */}
         <div
           ref={bgRef}
@@ -176,16 +182,16 @@ export function TransitionSection() {
                 ))}
               </div>
 
-              {/* Text CTA with arrow + underline reveal */}
+              {/* Bordered CTA with arrow */}
               <a
                 ref={ctaRef}
                 href="#contact-form"
-                className="group relative inline-flex w-fit items-center gap-2 bg-transparent pb-[3px] font-medium uppercase focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                className="group inline-flex w-fit cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-7 py-[14px] font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 style={{
-                  fontSize:      "clamp(15px, 1.6vw, 20px)",
+                  fontSize: "clamp(15px, 1.6vw, 20px)",
                   letterSpacing: "0.08em",
-                  color:         TAG_ON_LIGHT,
-                  gap:           "8px",
+                  ["--hero-cta-fg" as string]: WORD_ON_LIGHT,
+                  ["--hero-cta-border" as string]: WORD_ON_LIGHT,
                 }}
               >
                 <span>Обсудить проект</span>
@@ -195,11 +201,6 @@ export function TransitionSection() {
                 >
                   →
                 </span>
-                <span
-                  className="absolute bottom-0 left-0 h-px origin-left scale-x-0 bg-accent transition-transform duration-[250ms] ease-out group-hover:scale-x-100"
-                  style={{ width: "100%" }}
-                  aria-hidden
-                />
               </a>
             </div>
           </div>

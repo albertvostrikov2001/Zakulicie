@@ -4,7 +4,6 @@ import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvide
 import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { Inter, Unbounded } from "next/font/google";
 import "./globals.css";
 
@@ -39,10 +38,10 @@ export const metadata: Metadata = {
     url: siteUrl,
     images: [
       {
-        url: unsplashPhoto("1511578314322-379afb476865", 1200, 630),
-        width: 1200,
-        height: 630,
-        alt: "Атмосфера делового мероприятия",
+        url: "/cases/family-day-warmex/cover.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Event-агентство Закулисье — организация мероприятий в Новосибирске",
       },
     ],
   },

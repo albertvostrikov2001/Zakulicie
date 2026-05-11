@@ -57,12 +57,15 @@ export default async function CasePage({ params }: Props) {
         <header className="relative min-h-[80vh]">
           <Image
             src={c.heroImage.src}
-            alt={c.heroImage.alt}
+            alt={`${c.serviceTypeSlug ? tag : "Мероприятие"} ${c.title} — event-агентство Закулисье Новосибирск`}
             fill
             priority
             className="object-cover"
             sizes="100vw"
+            placeholder={c.heroImage.blurDataURL ? "blur" : undefined}
+            blurDataURL={c.heroImage.blurDataURL}
           />
+          <div className="absolute inset-0 bg-black/45" aria-hidden />
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" aria-hidden />
           <div className="absolute inset-0 flex flex-col justify-end pb-16 pt-32">
             <PageWrapper className="!pb-0">
@@ -116,16 +119,51 @@ export default async function CasePage({ params }: Props) {
 
           {c.gallery.length > 0 ? (
             <section className="mt-20" aria-label="Галерея">
-              <div className="flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:max-w-full md:grid-cols-2 md:overflow-visible">
-                {c.gallery.map((img) => (
-                  <div
-                    key={img.src}
-                    className="relative aspect-[16/10] w-[min(100%,85vw)] flex-shrink-0 snap-center overflow-hidden rounded-card md:w-auto"
-                  >
-                    <Image src={img.src} alt={img.alt} fill className="object-cover" sizes="(max-width:768px) 85vw, 50vw" />
-                  </div>
-                ))}
-              </div>
+              {/* Первые 2 фото — широкий full-width блок */}
+              {c.gallery.slice(0, 2).length > 0 && (
+                <div className="grid gap-4 md:grid-cols-2">
+                  {c.gallery.slice(0, 2).map((img) => (
+                    <div
+                      key={img.src}
+                      className="relative aspect-[16/10] overflow-hidden rounded-card"
+                    >
+                      <Image
+                        src={img.src}
+                        alt={`${c.title} — ${tag.toLowerCase()}, организация мероприятий Закулисье`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 100vw, 50vw"
+                        placeholder={img.blurDataURL ? "blur" : undefined}
+                        blurDataURL={img.blurDataURL}
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Остальные фото — горизонтальный скролл-слайдер */}
+              {c.gallery.length > 2 && (
+                <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+                  {c.gallery.slice(2).map((img) => (
+                    <div
+                      key={img.src}
+                      className="relative aspect-[4/3] w-[min(80vw,480px)] flex-shrink-0 snap-center overflow-hidden rounded-card md:w-auto"
+                    >
+                      <Image
+                        src={img.src}
+                        alt={`${c.title} — ${tag.toLowerCase()}, организация мероприятий Закулисье`}
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 80vw, 33vw"
+                        placeholder={img.blurDataURL ? "blur" : undefined}
+                        blurDataURL={img.blurDataURL}
+                        loading="lazy"
+                      />
+                    </div>
+                  ))}
+                </div>
+              )}
             </section>
           ) : null}
 

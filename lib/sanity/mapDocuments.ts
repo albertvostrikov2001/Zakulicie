@@ -1,10 +1,9 @@
 import type { BlogPost, CaseStudy, ServiceSlug, Testimonial } from "@/lib/types";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { blocksToParagraphs } from "@/lib/sanity/portableText";
 import { urlForSanityImage } from "@/lib/sanity/image";
 
-const FALLBACK_CASE_HERO = unsplashPhoto("1511578314322-379afb476865", 2000);
-const FALLBACK_BLOG_COVER = unsplashPhoto("1511578314322-379afb476865", 1600);
+const FALLBACK_CASE_HERO = "/cases/family-day-warmex/cover.webp";
+const FALLBACK_BLOG_COVER = "/cases/syezd-dilerov-metall-profil/cover.webp";
 
 const SERVICE_SLUGS: ServiceSlug[] = [
   "korporativnye-meropriyatiya",

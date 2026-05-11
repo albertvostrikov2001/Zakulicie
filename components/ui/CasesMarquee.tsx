@@ -29,10 +29,12 @@ function CaseCard({ item }: { item: CaseStudy }) {
       {/* Photo */}
       <Image
         src={item.heroImage.src}
-        alt={item.heroImage.alt}
+        alt={`Кейс: ${item.title} | ${tag}`}
         fill
         className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
         sizes="(max-width: 640px) 300px, (max-width: 768px) 340px, 380px"
+        placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
+        blurDataURL={item.heroImage.blurDataURL}
       />
 
       {/* Gradient overlay — darkened on hover */}

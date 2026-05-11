@@ -1,6 +1,5 @@
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import Image from "@/components/ui/SiteImage";
@@ -29,8 +28,8 @@ export default function AboutPage() {
         <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">О компании</h1>
         <div className="relative mt-10 aspect-[21/9] max-w-4xl overflow-hidden rounded-card border border-border">
           <Image
-            src={unsplashPhoto("1560439514-4e9645039924", 2000)}
-            alt="Команда и атмосфера делового мероприятия"
+            src="/cases/syezd-dilerov-metall-profil/gallery/03.webp"
+            alt="Event-агентство Закулисье — команда и мероприятия в Новосибирске"
             fill
             className="object-cover"
             sizes="(max-width: 896px) 100vw, 896px"

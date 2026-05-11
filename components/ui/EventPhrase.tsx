@@ -16,18 +16,18 @@ interface LetterEntry {
 const PHRASE = "СОБЫТИЕ БЕЗ КОМПРОМИССОВ";
 
 const IMAGE_SOURCES: string[] = [
-  "https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=480&q=80",
-  "https://images.unsplash.com/photo-1519167758481-83f550bb49b3?w=480&q=80",
-  "https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=480&q=80",
-  "https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=480&q=80",
-  "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?w=480&q=80",
-  "https://images.unsplash.com/photo-1511578314322-379afb476865?w=480&q=80",
-  "https://images.unsplash.com/photo-1505236858219-8359eb29e329?w=480&q=80",
-  "https://images.unsplash.com/photo-1464366400600-7168b8af9bc3?w=480&q=80",
-  "https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?w=480&q=80",
-  "https://images.unsplash.com/photo-1478720568477-152d9b164e26?w=480&q=80",
-  "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=480&q=80",
-  "https://images.unsplash.com/photo-1504674900247-0877df9cc836?w=480&q=80",
+  "/cases/blagotvoritelnyy-bal/gallery/01.webp",
+  "/cases/family-day-warmex/gallery/02.webp",
+  "/cases/syezd-dilerov-metall-profil/gallery/05.webp",
+  "/cases/spartakiada/gallery/03.webp",
+  "/cases/dr-zolotogo-yabloka/gallery/04.webp",
+  "/cases/25-let-sts/gallery/02.webp",
+  "/cases/opening-lerua-kemerovo/gallery/01.webp",
+  "/cases/timbilding-promeko/gallery/06.webp",
+  "/cases/opening-alfa-bank/gallery/02.webp",
+  "/cases/den-shahtera/gallery/04.webp",
+  "/cases/artdom/gallery/03.webp",
+  "/cases/lyubimaya-kuhnya-natalnaaya-karta/gallery/05.webp",
 ];
 
 const LETTERS: LetterEntry[] = PHRASE.split("").map((char, i) => ({

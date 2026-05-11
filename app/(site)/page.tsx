@@ -9,7 +9,6 @@ import { CasesMarquee } from "@/components/ui/CasesMarquee";
 import { CTAStrip } from "@/components/ui/CTAStrip";
 import { EventPhrase } from "@/components/ui/EventPhrase";
 import { getFeaturedCases, getTestimonials } from "@/lib/data";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 
@@ -34,10 +33,10 @@ export const metadata: Metadata = {
     url: homeUrl,
     images: [
       {
-        url: unsplashPhoto("1511578314322-379afb476865", 1200, 630),
-        width: 1200,
-        height: 630,
-        alt: "Атмосфера делового мероприятия",
+        url: "/cases/family-day-warmex/cover.webp",
+        width: 1920,
+        height: 1080,
+        alt: "Event-агентство Закулисье — организация мероприятий в Новосибирске",
       },
     ],
   },

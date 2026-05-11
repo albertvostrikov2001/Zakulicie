@@ -2,12 +2,11 @@
 
 import { MagneticButton } from "@/components/motion/MagneticButton";
 import { useContactModal } from "@/components/providers/ContactModalProvider";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useRef, useState } from "react";
 
-const POSTER = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
+const POSTER = "/cases/syezd-dilerov-metall-profil/gallery/06.webp";
 const VIDEO_URL = process.env.NEXT_PUBLIC_SHOWREEL_VIDEO_URL;
 
 export function VideoSplitBlock() {

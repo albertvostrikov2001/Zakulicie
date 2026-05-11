@@ -3,7 +3,6 @@
 import { VideoPlaceholder } from "@/components/ui/VideoPlaceholder";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -12,7 +11,7 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const POSTER = unsplashPhoto("1514525253161-7a46d19cd819", 2400);
+const POSTER = "/cases/syezd-dilerov-metall-profil/gallery/02.webp";
 const VIDEO_URL = process.env.NEXT_PUBLIC_SHOWREEL_VIDEO_URL;
 
 const OFFER = ["АГЕНТСТВО ПОЛНОГО ЦИКЛА", "ДЛЯ КОМПАНИЙ, КОТОРЫЕ", "НЕ ИДУТ НА КОМПРОМИСС"] as const;

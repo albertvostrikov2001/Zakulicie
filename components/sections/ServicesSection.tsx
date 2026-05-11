@@ -49,6 +49,8 @@ export function ServicesSection() {
                 className="object-cover"
                 sizes="100vw"
                 priority={activeSlug === defaultSlug}
+                placeholder={hero.blurDataURL ? "blur" : undefined}
+                blurDataURL={hero.blurDataURL}
               />
             </motion.div>
           ) : null}

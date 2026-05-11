@@ -35,6 +35,8 @@ jobs:
       - name: Remove API and Studio (не поддерживаются в static export)
         run: rm -rf app/api app/studio
 
+      # NEXT_PUBLIC_PAGES_BASE_PATH: задайте пустую строку только если сайт отдаётся с корня домена
+      # (кастомный домен в Pages). Иначе — /repo как ниже, иначе CSS/JS по путям /repo/_next/… не найдутся.
       - name: Build static site
         run: npm run build
         env:

@@ -1,7 +1,6 @@
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { staticClientWordmarks } from "@/lib/content/clients";
-import { unsplashPhoto } from "@/lib/content/unsplash";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import Image from "@/components/ui/SiteImage";
@@ -36,16 +35,16 @@ export default function ClientsPage() {
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {[
             {
-              src: unsplashPhoto("1504384308090-c894fdcc538d", 1200),
-              alt: "Деловая конференция и участники",
+              src: "/cases/syezd-dilerov-metall-profil/gallery/01.webp",
+              alt: "Деловая конференция — event-агентство Закулисье Новосибирск",
             },
             {
-              src: unsplashPhoto("1441986300917-64674bd600d8", 1200),
-              alt: "Публичное мероприятие и бренд в пространстве",
+              src: "/cases/opening-lerua-kemerovo/gallery/03.webp",
+              alt: "Открытие — event-агентство Закулисье Новосибирск",
             },
             {
-              src: unsplashPhoto("1522071820081-009f0129c71c", 1200),
-              alt: "Командная работа и корпоративные форматы",
+              src: "/cases/spartakiada/gallery/08.webp",
+              alt: "Корпоративные форматы — event-агентство Закулисье Новосибирск",
             },
           ].map((ph) => (
             <div key={ph.src} className="relative aspect-[4/3] overflow-hidden rounded-card border border-border">
