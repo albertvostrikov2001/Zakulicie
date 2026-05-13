@@ -1,4 +1,4 @@
-import { ClientsSection } from "@/components/sections/ClientsSection";
+import { ClientsShowcase } from "@/components/sections/ClientsShowcase";
 import { ContactSection } from "@/components/sections/ContactSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StatsSection } from "@/components/sections/StatsSection";
@@ -73,8 +73,8 @@ export default async function HomePage() {
       {/* 7 – CTA-вставка */}
       <CTAStrip text="Есть задача? Расскажите — предложим решение." />
 
-      {/* 8 – КЛИЕНТЫ: самоперелистывающийся блок */}
-      <ClientsSection />
+      {/* 8 – КЛИЕНТЫ: premium flip-card showcase */}
+      <ClientsShowcase />
 
       {/* 9 – ОТЗЫВЫ: editorial Swiper */}
       <TestimonialsSection items={testimonials} />
