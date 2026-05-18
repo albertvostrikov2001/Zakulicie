@@ -7,9 +7,35 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
+
+/** Relative luminance 0–1 (sRGB), для контраста текста к `background-color`. */
+function luminanceFromRgb(r: number, g: number, b: number): number {
+  const lin = [r, g, b].map((c) => {
+    const x = c / 255;
+    return x <= 0.03928 ? x / 12.92 : ((x + 0.055) / 1.055) ** 2.4;
+  });
+  return 0.2126 * lin[0]! + 0.7152 * lin[1]! + 0.0722 * lin[2]!;
+}
+
+function parseSceneBgLuminance(): number | null {
+  const raw = getComputedStyle(document.documentElement).getPropertyValue("--scene-bg").trim();
+  const comma = raw.match(/rgba?\(\s*(\d+)\s*,\s*(\d+)\s*,\s*(\d+)/i);
+  if (comma) {
+    return luminanceFromRgb(Number(comma[1]), Number(comma[2]), Number(comma[3]));
+  }
+  const space = raw.match(/^rgba?\(\s*(\d+)\s+(\d+)\s+(\d+)/i);
+  if (space) {
+    return luminanceFromRgb(Number(space[1]), Number(space[2]), Number(space[3]));
+  }
+  if (/^#([0-9a-f]{6})$/i.test(raw)) {
+    const h = raw.slice(1);
+    return luminanceFromRgb(parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16));
+  }
+  return null;
+}
 
 const POSTER = "/cases/syezd-dilerov-metall-profil/gallery/02.webp";
 const VIDEO_URL = process.env.NEXT_PUBLIC_SHOWREEL_VIDEO_URL;
@@ -20,6 +46,22 @@ export function VideoSplitSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const mobile = useIsMobile();
+  const [lightScene, setLightScene] = useState(false);
+
+  useEffect(() => {
+    const tick = () => {
+      const L = parseSceneBgLuminance();
+      setLightScene(L !== null && L > 0.45);
+    };
+    tick();
+    window.addEventListener("scroll", tick, { passive: true });
+    const mo = new MutationObserver(tick);
+    mo.observe(document.documentElement, { attributes: true, attributeFilter: ["style"] });
+    return () => {
+      window.removeEventListener("scroll", tick);
+      mo.disconnect();
+    };
+  }, []);
 
   useGSAP(
     () => {
@@ -84,31 +126,56 @@ export function VideoSplitSection() {
             posterSrc={POSTER}
             caption="SHOWREEL 2024"
             description="Фрагменты постановок, сцен и продакшна для брендов, которые задают планку на уровне страны."
+            captionsOnLightBg={lightScene}
           />
         </div>
 
         <div
           data-text-reveal
-          className="flex w-full flex-col justify-center md:w-[38%] md:flex-[0.85] md:pl-2 lg:pl-6"
+          className={
+            lightScene
+              ? "flex w-full flex-col justify-center text-[#1a1a1a] md:w-[38%] md:flex-[0.85] md:pl-2 lg:pl-6"
+              : "flex w-full flex-col justify-center md:w-[38%] md:flex-[0.85] md:pl-2 lg:pl-6"
+          }
         >
-          <h2 className="font-display text-[clamp(1.35rem,2.4vw,2.75rem)] font-black leading-[1.12] tracking-tight text-text-primary">
-            <span className="block">Мы делаем события,</span>
-            <span className="mt-1 block text-accent">которые работают</span>
-            <span className="mt-1 block">на репутацию</span>
+          <h2
+            className={
+              lightScene
+                ? "font-display text-[clamp(1.35rem,2.4vw,2.75rem)] font-black leading-[1.12] tracking-tight text-[#1a1a1a]"
+                : "font-display text-[clamp(1.35rem,2.4vw,2.75rem)] font-black leading-[1.12] tracking-tight text-text-primary"
+            }
+          >
+            Организация мероприятий полного цикла
           </h2>
-          <p className="mt-6 text-sm leading-relaxed text-text-secondary md:text-base">
+          <p
+            className={
+              lightScene
+                ? "mt-6 text-sm leading-relaxed text-[rgba(26,26,26,0.72)] md:text-base"
+                : "mt-6 text-sm leading-relaxed text-text-secondary md:text-base"
+            }
+          >
             Двадцать лет в индустрии и свыше трёх тысяч реализованных форматов — от корпоративной повестки до
             федеральных сборов. База в Новосибирске, стандарты и команда — как у столичных лидеров: смета,
             сроки и смысл остаются под контролем на каждом этапе.
           </p>
           <Link
             href="#contact-form"
-            className="mt-10 inline-flex w-fit items-center border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+            className={
+              lightScene
+                ? "mt-10 inline-flex w-fit items-center border-[1.5px] border-[#1a1a1a] bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition-[background-color,color] duration-[250ms] ease-out hover:bg-[#1a1a1a] hover:text-[#f2efe9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+                : "mt-10 inline-flex w-fit items-center border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+            }
           >
             Обсудить проект
           </Link>
 
-          <div className="mt-12 hidden max-w-[320px] text-right md:mt-16 md:block">
+          <div
+            className={
+              lightScene
+                ? "mt-12 hidden max-w-[320px] text-right md:mt-16 md:block [&_p]:text-[rgba(26,26,26,0.45)]"
+                : "mt-12 hidden max-w-[320px] text-right md:mt-16 md:block"
+            }
+          >
             {OFFER.map((line) => (
               <p
                 key={line}

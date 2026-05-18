@@ -3,7 +3,7 @@
 import { cn } from "@/lib/cn";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export type VideoPlaceholderProps = {
   src?: string;
@@ -11,6 +11,8 @@ export type VideoPlaceholderProps = {
   caption?: string;
   description?: string;
   className?: string;
+  /** Светлый фон секции — тёмные подписи под кадром */
+  captionsOnLightBg?: boolean;
 };
 
 export function VideoPlaceholder({
@@ -19,6 +21,7 @@ export function VideoPlaceholder({
   caption,
   description,
   className,
+  captionsOnLightBg = false,
 }: VideoPlaceholderProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
@@ -27,15 +30,21 @@ export function VideoPlaceholder({
 
   const onPlay = () => {
     if (!src) return;
+    setPlaying(true);
+  };
+
+  /* После монтирования video — подключить src и play (раньше: poster + Image давали «двойное» превью). */
+  useEffect(() => {
+    if (!showVideo || !src) return;
     const el = videoRef.current;
     if (!el) return;
     if (!el.src) el.src = src;
-    void el.play().then(() => setPlaying(true));
-  };
+    void el.play().catch(() => setPlaying(false));
+  }, [showVideo, src]);
 
   return (
     <div className={cn("flex w-full flex-col gap-5", className)}>
-      <div className="group relative aspect-video w-full overflow-hidden rounded-sm md:max-h-[min(56vh,520px)] md:aspect-[16/9]">
+      <div className="group relative isolate aspect-video w-full overflow-hidden rounded-sm md:max-h-[min(56vh,520px)] md:aspect-[16/9]">
         <div
           className="absolute inset-0 bg-gradient-to-br from-[#222] via-[#121212] to-[#070707]"
           aria-hidden
@@ -45,25 +54,20 @@ export function VideoPlaceholder({
             src={posterSrc}
             alt=""
             fill
-            className="object-cover opacity-35 mix-blend-soft-light"
+            className="object-cover"
             sizes="(max-width: 768px) 100vw, 62vw"
             priority={false}
           />
         ) : null}
         <div className="pointer-events-none absolute inset-0 grain opacity-[0.22]" aria-hidden />
 
-        {src ? (
+        {showVideo && src ? (
           <video
             ref={videoRef}
-            className={
-              showVideo
-                ? "relative z-10 h-full w-full object-cover"
-                : "pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0"
-            }
-            controls={showVideo}
+            className="relative z-10 h-full w-full object-cover"
+            controls
             playsInline
-            poster={posterSrc}
-            preload="none"
+            preload="metadata"
             aria-label="Showreel агентства Закулисье"
           />
         ) : null}
@@ -108,12 +112,26 @@ export function VideoPlaceholder({
       {caption || description ? (
         <div className="flex flex-col gap-2.5">
           {caption ? (
-            <p className="text-[10px] font-semibold uppercase tracking-[0.32em] text-text-secondary md:text-[11px]">
+            <p
+              className={
+                captionsOnLightBg
+                  ? "text-[10px] font-semibold uppercase tracking-[0.32em] text-[rgba(26,26,26,0.55)] md:text-[11px]"
+                  : "text-[10px] font-semibold uppercase tracking-[0.32em] text-text-secondary md:text-[11px]"
+              }
+            >
               {caption}
             </p>
           ) : null}
           {description ? (
-            <p className="max-w-lg text-sm leading-relaxed text-text-secondary md:text-base">{description}</p>
+            <p
+              className={
+                captionsOnLightBg
+                  ? "max-w-lg text-sm leading-relaxed text-[rgba(26,26,26,0.72)] md:text-base"
+                  : "max-w-lg text-sm leading-relaxed text-text-secondary md:text-base"
+              }
+            >
+              {description}
+            </p>
           ) : null}
         </div>
       ) : null}

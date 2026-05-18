@@ -6,6 +6,14 @@ import { siteStats } from "@/data/stats";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { motion } from "framer-motion";
 
+/** SEO-oriented subheadings under «Почему компании работают с „Закулисьем“» */
+const STAT_HEADINGS = [
+  "20 лет в организации мероприятий для бизнеса",
+  "3000+ реализованных проектов для брендов и компаний Сибири",
+  "Федеральные бренды среди клиентов",
+  "Форматы на тысячи участников",
+] as const;
+
 export function StatsSection() {
   const reduced = usePrefersReducedMotion();
 
@@ -14,19 +22,12 @@ export function StatsSection() {
       className="relative overflow-x-hidden border-t border-[var(--color-border)] bg-[var(--color-surface-elevated)] py-14 md:py-20"
       aria-label="Цифры"
     >
-      {/* Ghost watermark */}
-      <div
-        className="pointer-events-none absolute inset-0 z-0 flex max-w-[100vw] items-center justify-center overflow-hidden"
-        aria-hidden
-      >
-        <span className="select-none whitespace-nowrap text-center font-display text-[clamp(2.5rem,min(14vw,7rem),7rem)] font-bold leading-none tracking-tighter text-white/[0.03]">
-          ЗАКУЛИСЬЕ
-        </span>
-      </div>
-
       <div className="relative z-[1] mx-auto max-w-content px-4 md:px-8">
         <RevealOnScroll>
           <p className="caption-text">В числах</p>
+          <h2 className="mt-3 max-w-[52ch] font-display text-[clamp(28px,3.5vw,48px)] font-bold leading-snug tracking-tight text-text-primary">
+            Почему компании работают с «Закулисьем»
+          </h2>
         </RevealOnScroll>
 
         <div className="mt-8 grid grid-cols-2 items-start gap-x-5 gap-y-10 md:mt-12 md:grid-cols-4 md:gap-x-8 md:gap-y-0 lg:gap-x-12">
@@ -58,9 +59,9 @@ export function StatsSection() {
                 </p>
 
                 {/* Label */}
-                <p className="mt-3 max-w-full text-[11px] font-semibold uppercase leading-snug tracking-[0.12em] text-text-secondary md:mt-4">
-                  {s.label}
-                </p>
+                <h3 className="mt-3 max-w-full text-[11px] font-semibold uppercase leading-snug tracking-[0.12em] text-text-secondary md:mt-4">
+                  {STAT_HEADINGS[i] ?? s.label}
+                </h3>
 
                 {/* Detail */}
                 <p className="mt-1.5 max-w-full text-[13px] leading-snug text-text-muted">

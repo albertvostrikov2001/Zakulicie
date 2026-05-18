@@ -155,8 +155,11 @@ export function CasesMarquee({ cases }: CasesMarqueeProps) {
           <div>
             <p className="caption-text">Проекты</p>
             <h2 className="mt-3 font-display text-[clamp(28px,3.5vw,48px)] font-bold leading-snug tracking-tight text-text-primary">
-              Кейсы, за которые не стыдно
+              Кейсы для федеральных брендов и лидеров региона
             </h2>
+            <h3 className="mt-3 max-w-[52ch] font-body text-[15px] font-medium leading-snug text-text-secondary md:text-[16px]">
+              От ритейла и банков до дилерских съездов и корпоративных событий
+            </h3>
           </div>
           <Link
             href="/cases"

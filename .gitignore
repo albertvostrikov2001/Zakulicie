@@ -35,3 +35,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# Локальная папка с исходниками фото кейсов (не коммитим; сайт использует public/cases)
+/Кейсы/

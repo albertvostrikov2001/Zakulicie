@@ -11,6 +11,13 @@ import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useState } from "react";
 
+const SERVICE_PRIMARY_HEADINGS: Partial<Record<ServiceSlug, string>> = {
+  "korporativnye-meropriyatiya":
+    "Корпоративные события для сотрудников, партнёров и клиентских сообществ",
+  "delovye-meropriyatiya": "Деловые мероприятия с чёткой бизнес-задачей",
+  timbilding: "Тимбилдинг и командные форматы",
+};
+
 export function ServicesSection() {
   const defaultSlug = (serviceNav[0]?.slug ?? "korporativnye-meropriyatiya") as ServiceSlug;
   const [hovered, setHovered] = useState<ServiceSlug | null>(null);
@@ -74,7 +81,7 @@ export function ServicesSection() {
           <RevealOnScroll>
             <p className="caption-text">Услуги</p>
             <h2 className="mt-3 font-display text-[clamp(28px,3.5vw,48px)] font-bold leading-snug tracking-tight text-text-primary">
-              Направления работы
+              Корпоративные, деловые и командные мероприятия
             </h2>
           </RevealOnScroll>
         </div>
@@ -121,15 +128,27 @@ export function ServicesSection() {
 
                     {/* Title + description */}
                     <div className="min-w-0 flex-1">
-                      <span
-                        className={cn(
-                          "block font-display font-bold transition-colors duration-200",
-                          "text-[clamp(18px,2.2vw,32px)] leading-snug tracking-tight",
-                          isActive ? "text-accent" : "text-text-primary"
-                        )}
-                      >
-                        {s.title}
-                      </span>
+                      {SERVICE_PRIMARY_HEADINGS[s.slug] ? (
+                        <h3
+                          className={cn(
+                            "font-display font-bold transition-colors duration-200",
+                            "text-[clamp(18px,2.2vw,32px)] leading-snug tracking-tight",
+                            isActive ? "text-accent" : "text-text-primary"
+                          )}
+                        >
+                          {SERVICE_PRIMARY_HEADINGS[s.slug]}
+                        </h3>
+                      ) : (
+                        <span
+                          className={cn(
+                            "block font-display font-bold transition-colors duration-200",
+                            "text-[clamp(18px,2.2vw,32px)] leading-snug tracking-tight",
+                            isActive ? "text-accent" : "text-text-primary"
+                          )}
+                        >
+                          {s.title}
+                        </span>
+                      )}
                       {row?.shortDescription && (
                         <p
                           className={cn(

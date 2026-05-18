@@ -14,19 +14,16 @@ const LIGHT        = "#f2efe9";
 const DARK         = "#0a0a0a";
 const WORD_ON_LIGHT = "#1a1a1a";
 const WORD_ON_DARK  = "#f5f5f5";
-const TAG_ON_LIGHT  = "#3a3a3a";
-const TAG_ON_DARK   = "rgba(245,245,245,0.65)";
+/** Descriptor + CTA label: светлая / тёмная фазы hero (≈ rgba(17,17,17,0.88) → rgba(242,239,233,0.82)) */
+const TAG_ON_LIGHT  = "#111111";
+const TAG_ON_DARK   = "#ECE8E0";
 
-const OFFER    = [
-  "АГЕНТСТВО ПОЛНОГО ЦИКЛА",
-  "ДЛЯ КОМПАНИЙ, КОТОРЫЕ НЕ ИДУТ НА КОМПРОМИСС",
-] as const;
 const WORDMARK = "ЗАКУЛИСЬЕ";
 
 export function TransitionSection() {
   const sectionRef    = useRef<HTMLElement>(null);
   const bgRef         = useRef<HTMLDivElement>(null);
-  const wordRef       = useRef<HTMLHeadingElement>(null);
+  const wordRef       = useRef<HTMLParagraphElement>(null);
   const tagWrapRef    = useRef<HTMLDivElement>(null);
   const ctaRef        = useRef<HTMLAnchorElement>(null);
   const scrollRef     = useRef<HTMLDivElement>(null);
@@ -105,7 +102,7 @@ export function TransitionSection() {
         const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
         tl.from(word,   { opacity: 0, y: 28, duration: 0.8  }, 0.25)
           .from(tagEls, { opacity: 0, y: 16, duration: 0.6,  stagger: 0.08 }, 0.50)
-          .from(cta,    { opacity: 0, scale: 0.97, duration: 0.5 }, 0.65)
+          .from(cta,    { opacity: 0, scale: 0.97, duration: 0.5 }, 0.58)
           .from(scroll, { opacity: 0, scaleY: 0, duration: 0.8, transformOrigin: "top center" }, 0.90);
       });
 
@@ -145,48 +142,43 @@ export function TransitionSection() {
 
           {/* Wordmark — dominant, left-anchored */}
           <div className="pointer-events-none relative w-[min(100%,96vw)] max-w-[1600px]">
-            <h1
+            <p
               ref={wordRef}
               data-transition-wordmark
-              className="font-display font-black uppercase leading-[0.9] tracking-[-0.03em]"
+              className="m-0 font-display font-black uppercase leading-[0.9] tracking-[-0.03em]"
               style={{
                 fontSize: "clamp(80px, 14vw, 180px)",
                 color: WORD_ON_LIGHT,
               }}
             >
               {WORDMARK}
-            </h1>
+            </p>
           </div>
 
-          {/* Bottom-right: description + CTA */}
-          <div ref={tagWrapRef} className="mt-auto flex w-full justify-end">
-            {/* Accent vertical bar + text block */}
-            <div
-              className="flex max-w-[min(100%,480px)] flex-col gap-7 pl-5 md:max-w-[520px] md:pl-6"
-              style={{ borderLeft: "3px solid var(--color-accent)" }}
-            >
-              <div className="space-y-1">
-                {OFFER.map((line) => (
-                  <p
-                    key={line}
-                    data-trans-tag
-                    className="font-body font-medium uppercase leading-[1.3]"
-                    style={{
-                      fontSize:      "clamp(18px, 2vw, 26px)",
-                      letterSpacing: "0.04em",
-                      color:         TAG_ON_LIGHT,
-                    }}
-                  >
-                    {line}
-                  </p>
-                ))}
-              </div>
+          {/* Bottom-right: descriptor + CTA — mobile: flow; md+: absolute */}
+          <div
+            ref={tagWrapRef}
+            className="relative z-[3] mt-auto flex w-full justify-center px-5 pb-11 pt-2 md:static md:mt-0 md:flex md:justify-end md:px-0 md:pb-0 md:pt-0"
+          >
+            <div className="flex w-full max-w-[440px] flex-col items-start gap-[22px] md:absolute md:bottom-[52px] md:right-14 md:w-auto">
+              <h1
+                data-trans-tag
+                className="m-0 max-w-[420px] font-body font-medium text-[color:inherit]"
+                style={{
+                  fontSize: "clamp(14px, 1.5vw, 18px)",
+                  lineHeight: 1.55,
+                  letterSpacing: "0.03em",
+                  color: TAG_ON_LIGHT,
+                }}
+              >
+                Ивент-агентство полного цикла для корпоративных и деловых событий
+              </h1>
 
               {/* Bordered CTA with arrow */}
               <a
                 ref={ctaRef}
                 href="#contact-form"
-                className="group inline-flex w-fit cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-7 py-[14px] font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+                className="group inline-flex w-fit cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
                 style={{
                   fontSize: "clamp(15px, 1.6vw, 20px)",
                   letterSpacing: "0.08em",

@@ -1,10 +1,14 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { AnimatePresence, motion, useInView } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
-import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion, useInView } from "framer-motion";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 
 /* ─── Letter-to-image map ─────────────────────────────────── */
 interface LetterEntry {
@@ -32,185 +36,238 @@ const IMAGE_SOURCES: string[] = [
 
 const LETTERS: LetterEntry[] = PHRASE.split("").map((char, i) => ({
   char,
-  imageSrc: IMAGE_SOURCES[i % IMAGE_SOURCES.length],
+  imageSrc: IMAGE_SOURCES[i % IMAGE_SOURCES.length] ?? "",
   imageAlt: `Событие без компромиссов — кадр ${i + 1}`,
 }));
 
-/** Pre-filtered list used in mobile auto-cycle — stable reference */
 const INTERACTIVE_LETTERS: LetterEntry[] = LETTERS.filter((l) => l.char !== " ");
 
-/* ─── Image overlay — positioned in safe zone ────────────── */
-interface ImageOverlayProps {
-  entry: LetterEntry | null;
-  anchorRef: React.RefObject<HTMLElement | null>;
-}
-
-function ImageOverlay({ entry, anchorRef }: ImageOverlayProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
+function useCoarsePointer(): boolean {
+  const [coarse, setCoarse] = useState(false);
 
   useEffect(() => {
-    if (!entry || !anchorRef.current || !containerRef.current) return;
-    const section = anchorRef.current;
-    const sRect   = section.getBoundingClientRect();
-    const sW = sRect.width;
-    const sH = sRect.height;
+    const mq = window.matchMedia("(hover: none)");
+    const update = () => setCoarse(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
 
-    // Safe zone: image appears in upper-left quadrant of the section
-    // to never overlap bottom-right CTA / подпись regions
-    const W = Math.min(220, sW * 0.18);
-    const H = W * (4 / 3);
-    const x = sW * 0.05;
-    const y = sH * 0.08;
+  return coarse;
+}
 
-    const el = containerRef.current;
-    el.style.width  = `${W}px`;
-    el.style.height = `${H}px`;
-    el.style.left   = `${x}px`;
-    el.style.top    = `${y}px`;
-  }, [entry, anchorRef]);
-
+/* ─── Desktop: absolute image layer (child of section) ───── */
+function DesktopImageLayer({
+  imageRefs,
+}: {
+  imageRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
+}) {
   return (
-    <div ref={containerRef} className="pointer-events-none absolute z-[5] overflow-hidden rounded-[2px]" aria-hidden>
-      <AnimatePresence mode="wait">
-        {entry && (
-          <motion.div
-            key={entry.imageSrc}
-            className="absolute inset-0"
-            initial={{ opacity: 0, scale: 0.94 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+    <div className="pointer-events-none absolute inset-0 z-[5]" aria-hidden>
+      {LETTERS.map((entry, i) => {
+        if (entry.char === " ") return null;
+        return (
+          <div
+            key={i}
+            ref={(el) => {
+              imageRefs.current[i] = el;
+            }}
+            className="overflow-hidden rounded-[2px]"
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              width: "200px",
+              height: "260px",
+              opacity: 0,
+              transform: "scale(0.94)",
+              transition: "opacity 0.28s ease, transform 0.28s ease",
+            }}
           >
             <Image
               src={entry.imageSrc}
               alt={entry.imageAlt}
               fill
-              sizes="240px"
+              sizes="260px"
               className="object-cover"
             />
-            <div className="absolute inset-0 bg-black/25" />
-          </motion.div>
-        )}
-      </AnimatePresence>
+            <div className="pointer-events-none absolute inset-0 bg-black/25" />
+          </div>
+        );
+      })}
     </div>
   );
 }
 
-/* ─── Desktop: hover-letter mechanic ─────────────────────── */
-function DesktopPhrase({ reduced }: { reduced: boolean }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
-  const sectionRef = useRef<HTMLDivElement>(null);
+/* ─── Desktop: letter row (inside motion / content flow) ──── */
+function DesktopLetterRow({
+  sectionRef,
+  letterRefs,
+  imageRefs,
+  reduced,
+}: {
+  sectionRef: React.RefObject<HTMLElement>;
+  letterRefs: React.MutableRefObject<(HTMLSpanElement | null)[]>;
+  imageRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
+  reduced: boolean;
+}) {
+  const handleLetterEnter = useCallback(
+    (index: number) => {
+      if (reduced) return;
+      const section = sectionRef.current;
+      const letter = letterRefs.current[index];
+      const image = imageRefs.current[index];
+      if (!section || !letter || !image) return;
+      if (LETTERS[index]?.char === " ") return;
 
-  const activeEntry = activeIndex !== null ? LETTERS[activeIndex] : null;
+      const sR = section.getBoundingClientRect();
+      const lR = letter.getBoundingClientRect();
+
+      const imgW = Math.min(Math.max(lR.width * 3.5, 160), 260);
+      const imgH = imgW * 1.3;
+      const safeM = 16;
+
+      let x = lR.left - sR.left + lR.width / 2 - imgW / 2;
+      let y = lR.top - sR.top - imgH - 12;
+
+      x = Math.max(safeM, Math.min(sR.width - imgW - safeM, x));
+      if (y < safeM) y = lR.top - sR.top + lR.height + 8;
+      y = Math.min(sR.height - imgH - safeM, y);
+
+      image.style.width = `${imgW}px`;
+      image.style.height = `${imgH}px`;
+      image.style.left = `${x}px`;
+      image.style.top = `${y}px`;
+      image.style.opacity = "1";
+      image.style.transform = "scale(1)";
+    },
+    [reduced, sectionRef, letterRefs, imageRefs]
+  );
+
+  const handleLetterLeave = useCallback((index: number) => {
+    const image = imageRefs.current[index];
+    if (!image) return;
+    image.style.opacity = "0";
+    image.style.transform = "scale(0.94)";
+  }, [imageRefs]);
 
   return (
-    <div ref={sectionRef} className="relative">
-      <ImageOverlay entry={activeEntry} anchorRef={sectionRef} />
-
-      <h2
-        className="relative z-[10] inline-block font-display font-bold uppercase leading-[1.05]"
-        style={{
-          fontSize:      "clamp(22px, 3.4vw, 48px)",
-          letterSpacing: "-0.02em",
-          whiteSpace:    "nowrap",
-          color:         "var(--color-text-primary)",
-        }}
-      >
-        {LETTERS.map((entry, i) => {
-          if (entry.char === " ") {
-            return <span key={i} className="inline-block w-[0.25em]" aria-hidden />;
-          }
-          return (
-            <motion.span
-              key={i}
-              className="relative inline-block cursor-default select-none"
-              onHoverStart={!reduced ? () => setActiveIndex(i) : undefined}
-              onHoverEnd={!reduced ? () => setActiveIndex(null) : undefined}
-              whileHover={!reduced ? { color: "var(--color-accent)" } : undefined}
-              transition={{ duration: 0.15 }}
-            >
-              {entry.char}
-            </motion.span>
-          );
-        })}
-      </h2>
-    </div>
+    <p
+      className="relative z-[10] m-0 inline-block font-display font-bold uppercase leading-[1.05]"
+      style={{
+        fontSize: "clamp(22px, 3.4vw, 48px)",
+        letterSpacing: "-0.02em",
+        whiteSpace: "nowrap",
+        color: "var(--color-text-primary)",
+      }}
+    >
+      {LETTERS.map((entry, i) => {
+        if (entry.char === " ") {
+          return <span key={i} className="inline-block w-[0.25em]" aria-hidden />;
+        }
+        return (
+          <span
+            key={i}
+            ref={(el) => {
+              letterRefs.current[i] = el;
+            }}
+            className="relative inline-block cursor-default select-none transition-colors duration-150 ease-out hover:text-accent"
+            onMouseEnter={reduced ? undefined : () => handleLetterEnter(i)}
+            onMouseLeave={reduced ? undefined : () => handleLetterLeave(i)}
+          >
+            {entry.char}
+          </span>
+        );
+      })}
+    </p>
   );
 }
 
-/* ─── Mobile: auto-cycle mechanic ────────────────────────── */
-function MobilePhrase({ reduced }: { reduced: boolean }) {
-  const [activeIndex, setActiveIndex] = useState<number | null>(null);
+/* ─── Touch: auto-cycle + зона под фразой ─────────────────── */
+function TouchPhrase({ reduced }: { reduced: boolean }) {
+  const [activeIndex, setActiveIndex] = useState(0);
   const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
 
   useEffect(() => {
     if (reduced) return;
-    let idx = 0;
     cycleRef.current = setInterval(() => {
-      setActiveIndex(idx % INTERACTIVE_LETTERS.length);
-      idx++;
-    }, 1300);
-    return () => { if (cycleRef.current) clearInterval(cycleRef.current); };
+      setActiveIndex((i) => (i + 1) % INTERACTIVE_LETTERS.length);
+    }, 1800);
+    return () => {
+      if (cycleRef.current) clearInterval(cycleRef.current);
+    };
   }, [reduced]);
 
-  const activeLetter = activeIndex !== null ? INTERACTIVE_LETTERS[activeIndex] : null;
+  const activeLetter = INTERACTIVE_LETTERS[activeIndex] ?? INTERACTIVE_LETTERS[0];
 
   return (
-    <div className="relative">
-      {/* Mini photo strip — mobile equivalent */}
-      <div className="mb-6 flex justify-center gap-3 overflow-hidden">
+    <div className="relative flex w-full flex-col items-center">
+      <p
+        className="m-0 font-display font-bold uppercase leading-[1.05]"
+        style={{
+          fontSize: "clamp(32px, 8vw, 52px)",
+          letterSpacing: "-0.02em",
+          color: "var(--color-text-primary)",
+        }}
+      >
+        {PHRASE}
+      </p>
+
+      <div
+        className="relative mt-6 flex w-full justify-center"
+        style={{ minHeight: "min(106vw, 400px)" }}
+        aria-hidden
+      >
         <AnimatePresence mode="wait">
-          {activeLetter && (
+          {activeLetter ? (
             <motion.div
-              key={activeLetter.imageSrc}
-              className="relative h-20 w-16 shrink-0 overflow-hidden rounded-[2px]"
-              initial={{ opacity: 0, x: 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.35 }}
+              key={`${activeLetter.imageSrc}-${activeIndex}`}
+              className="relative overflow-hidden rounded-[2px]"
+              style={{
+                width: "min(80vw, 300px)",
+                aspectRatio: "3 / 4",
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.4, ease: "easeOut" }}
             >
               <Image
                 src={activeLetter.imageSrc}
                 alt={activeLetter.imageAlt}
                 fill
-                sizes="64px"
+                sizes="300px"
                 className="object-cover"
               />
-              <div className="absolute inset-0 bg-black/30" />
+              <div className="pointer-events-none absolute inset-0 bg-black/30" />
             </motion.div>
-          )}
+          ) : null}
         </AnimatePresence>
       </div>
-
-      <h2
-        className="font-display font-bold uppercase leading-[1.05]"
-        style={{
-          fontSize:      "clamp(32px, 8vw, 52px)",
-          letterSpacing: "-0.02em",
-          color:         "var(--color-text-primary)",
-        }}
-      >
-        {PHRASE}
-      </h2>
     </div>
   );
 }
 
 /* ─── Main export ─────────────────────────────────────────── */
 export function EventPhrase() {
-  const mobile  = useIsMobile();
+  const coarsePointer = useCoarsePointer();
   const reduced = usePrefersReducedMotion();
-  const ref     = useRef<HTMLElement>(null);
-  const inView  = useInView(ref, { once: true, margin: "-15%" });
+  const sectionRef = useRef<HTMLElement>(null);
+  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
+  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const inView = useInView(sectionRef, { once: true, margin: "-15%" });
 
   return (
     <section
-      ref={ref}
+      ref={sectionRef}
       className="relative overflow-hidden bg-[var(--color-bg)] py-section"
       aria-label="Событие без компромиссов"
     >
-      <div className="mx-auto max-w-content px-4 md:px-8 text-center">
-        {/* Section micro-label */}
+      {!coarsePointer ? (
+        <DesktopImageLayer imageRefs={imageRefs} />
+      ) : null}
+
+      <div className="relative z-[10] mx-auto max-w-content px-4 text-center md:px-8">
         <motion.p
           className="caption-text mb-8 md:mb-12"
           initial={{ opacity: 0, y: 10 }}
@@ -225,14 +282,18 @@ export function EventPhrase() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.75, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
         >
-          {mobile ? (
-            <MobilePhrase reduced={reduced} />
+          {coarsePointer ? (
+            <TouchPhrase reduced={reduced} />
           ) : (
-            <DesktopPhrase reduced={reduced} />
+            <DesktopLetterRow
+              sectionRef={sectionRef}
+              letterRefs={letterRefs}
+              imageRefs={imageRefs}
+              reduced={reduced}
+            />
           )}
         </motion.div>
 
-        {/* Accent rule */}
         <motion.div
           className="mt-10 h-px origin-center bg-[var(--color-accent)] md:mt-14"
           initial={{ scaleX: 0 }}

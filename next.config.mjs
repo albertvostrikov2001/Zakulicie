@@ -34,6 +34,11 @@ const nextConfig = {
     unoptimized: isGhPages,
     remotePatterns: [
       { protocol: "https", hostname: "cdn.sanity.io", pathname: "/**" },
+      {
+        protocol: "https",
+        hostname: "albertvostrikov2001.github.io",
+        pathname: "/Zakulicie/**",
+      },
     ],
     formats: isGhPages ? undefined : ["image/avif", "image/webp"],
   },

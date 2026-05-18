@@ -1,21 +1,21 @@
 import { ClientsShowcase } from "@/components/sections/ClientsShowcase";
-import { ContactSection } from "@/components/sections/ContactSection";
+import { ContactStepSection } from "@/components/sections/ContactStepSection";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StatsSection } from "@/components/sections/StatsSection";
-import { TestimonialsSection } from "@/components/sections/TestimonialsSection";
+import { TestimonialsSpotlight } from "@/components/sections/TestimonialsSpotlight";
 import { TransitionSection } from "@/components/sections/TransitionSection";
 import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
 import { CasesMarquee } from "@/components/ui/CasesMarquee";
 import { CTAStrip } from "@/components/ui/CTAStrip";
 import { EventPhrase } from "@/components/ui/EventPhrase";
-import { getFeaturedCases, getTestimonials } from "@/lib/data";
+import { getFeaturedCases } from "@/lib/data";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 
 const homeUrl = getSiteUrl() + "/";
 
 export const metadata: Metadata = {
-  title: "Закулисье — Event-агентство премиум класса в Новосибирске",
+  title: "Закулисье — ивент-агентство полного цикла для корпоративных и деловых событий",
   description:
     "Организация корпоративных мероприятий, деловых событий, тимбилдинга и брендовых активностей в Новосибирске и Сибири. 20 лет опыта. 3000+ мероприятий.",
   keywords: [
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   ],
   alternates: { canonical: homeUrl },
   openGraph: {
-    title: "Закулисье — Event-агентство",
+    title: "Закулисье — ивент-агентство полного цикла для корпоративных и деловых событий",
     description:
       "Премиальные события для компаний, которые не идут на компромисс. Новосибирск, Сибирь, федеральные брифы.",
     locale: "ru_RU",
@@ -44,8 +44,7 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const featured     = await getFeaturedCases();
-  const testimonials = await getTestimonials();
+  const featured = await getFeaturedCases();
 
   return (
     <>
@@ -76,11 +75,11 @@ export default async function HomePage() {
       {/* 8 – КЛИЕНТЫ: premium flip-card showcase */}
       <ClientsShowcase />
 
-      {/* 9 – ОТЗЫВЫ: editorial Swiper */}
-      <TestimonialsSection items={testimonials} />
+      {/* 9 – ОТЗЫВЫ: spotlight (reviews-v2-spotlight) */}
+      <TestimonialsSpotlight />
 
       {/* 10 – ФОРМА: id=contact-form */}
-      <ContactSection />
+      <ContactStepSection />
     </>
   );
 }

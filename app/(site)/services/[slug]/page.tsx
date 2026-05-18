@@ -3,6 +3,7 @@ import { CaseCard } from "@/components/blocks/CaseCard";
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { serviceSeoH1 } from "@/data/services";
+import { getServiceSectionTitles } from "@/data/servicePageSections";
 import { getAllServiceSlugs, getCasesByServiceSlug, getService } from "@/lib/data";
 import type { ServiceSlug } from "@/lib/types";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
@@ -21,12 +22,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const s = await getService(slug);
   if (!s) return { title: "Услуга" };
   const url = `${getSiteUrl()}/services/${s.slug}`;
+  const h1 = serviceSeoH1[s.slug as ServiceSlug] ?? s.title;
   return {
-    title: s.seoTitle,
+    title: `${h1} | ${SITE_NAME}`,
     description: s.seoDescription,
     alternates: { canonical: url },
     openGraph: {
-      title: s.title,
+      title: h1,
       description: s.shortDescription,
       url,
       images: [{ url: s.heroImage.src, alt: s.heroImage.alt }],
@@ -40,13 +42,15 @@ export default async function ServicePage({ params }: Props) {
   if (!s) notFound();
 
   const related = await getCasesByServiceSlug(s.slug as ServiceSlug);
+  const titles = getServiceSectionTitles(s.slug as ServiceSlug);
 
   return (
     <>
       <BreadcrumbJsonLd
         items={[
           { name: "Главная", path: "/" },
-          { name: s.title, path: `/services/${s.slug}` },
+          { name: "Услуги", path: "/services" },
+          { name: serviceSeoH1[s.slug as ServiceSlug] ?? s.title, path: `/services/${s.slug}` },
         ]}
       />
       <header className="relative min-h-[70vh]">
@@ -75,9 +79,20 @@ export default async function ServicePage({ params }: Props) {
       </header>
 
       <PageWrapper>
-        <section className="grid gap-8 md:grid-cols-2 lg:grid-cols-3" aria-labelledby="includes">
-          <h2 id="includes" className="sr-only">
-            Что включает услуга
+        {titles.introH2 ? (
+          <section className="max-w-[52ch]" aria-labelledby="svc-intro">
+            <h2 id="svc-intro" className="font-display text-2xl font-semibold text-text-primary md:text-3xl">
+              {titles.introH2}
+            </h2>
+          </section>
+        ) : null}
+
+        <section
+          className={`grid gap-8 md:grid-cols-2 lg:grid-cols-3 ${titles.introH2 ? "mt-16" : ""}`}
+          aria-labelledby="includes"
+        >
+          <h2 id="includes" className="col-span-full font-display text-2xl text-text-primary md:text-3xl">
+            {titles.includesH2}
           </h2>
           {s.includes.map((block) => (
             <article key={block.title} className="border border-border bg-surface/50 p-6">
@@ -89,7 +104,7 @@ export default async function ServicePage({ params }: Props) {
 
         <section className="mt-20" aria-labelledby="why">
           <h2 id="why" className="font-display text-2xl text-text-primary md:text-3xl">
-            Почему «Закулисье»
+            {titles.whyH2}
           </h2>
           <ul className="mt-8 space-y-8">
             {s.whyUs.map((w) => (
@@ -104,7 +119,7 @@ export default async function ServicePage({ params }: Props) {
         {related.length > 0 ? (
           <section className="mt-20" aria-labelledby="cases">
             <h2 id="cases" className="font-display text-2xl text-text-primary">
-              Релевантные кейсы
+              {titles.casesH2}
             </h2>
             <ul className="mt-8 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
               {related.map((c, i) => (
@@ -150,7 +165,7 @@ export default async function ServicePage({ params }: Props) {
 
         <section className="mt-20 border border-border bg-surface/60 p-8 md:p-10" aria-labelledby="lead">
           <h2 id="lead" className="font-display text-2xl text-text-primary">
-            Обсудить проект
+            {titles.leadH2}
           </h2>
           <p className="mt-3 max-w-xl text-sm text-text-secondary">
             Оставьте заявку — мы свяжемся и предложим следующий шаг без навязанных брифов.

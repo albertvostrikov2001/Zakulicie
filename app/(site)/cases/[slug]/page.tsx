@@ -106,7 +106,7 @@ export default async function CasePage({ params }: Props) {
 
           <section className="mt-16" aria-labelledby="sol-heading">
             <h2 id="sol-heading" className="font-display text-2xl text-text-primary">
-              Решение
+              Что было реализовано
             </h2>
             <ul className="mt-6 max-w-3xl space-y-4 text-text-secondary">
               {c.solution.map((para, idx) => (
@@ -118,10 +118,13 @@ export default async function CasePage({ params }: Props) {
           </section>
 
           {c.gallery.length > 0 ? (
-            <section className="mt-20" aria-label="Галерея">
+            <section className="mt-20" aria-labelledby="gallery-heading">
+              <h2 id="gallery-heading" className="font-display text-2xl text-text-primary">
+                Фотографии с мероприятия
+              </h2>
               {/* Первые 2 фото — широкий full-width блок */}
               {c.gallery.slice(0, 2).length > 0 && (
-                <div className="grid gap-4 md:grid-cols-2">
+                <div className="mt-6 grid gap-4 md:grid-cols-2">
                   {c.gallery.slice(0, 2).map((img) => (
                     <div
                       key={img.src}
@@ -144,7 +147,7 @@ export default async function CasePage({ params }: Props) {
 
               {/* Остальные фото — горизонтальный скролл-слайдер */}
               {c.gallery.length > 2 && (
-                <div className="mt-4 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
+                <div className="mt-6 flex snap-x snap-mandatory gap-4 overflow-x-auto pb-2 md:grid md:grid-cols-3 md:overflow-visible">
                   {c.gallery.slice(2).map((img) => (
                     <div
                       key={img.src}
@@ -206,7 +209,11 @@ export default async function CasePage({ params }: Props) {
             </figure>
           ) : null}
 
-          <nav className="mt-20 flex flex-wrap justify-between gap-6 border-t border-border pt-10 text-sm">
+          <section className="mt-20 border-t border-border pt-10" aria-labelledby="other-cases-heading">
+            <h2 id="other-cases-heading" className="font-display text-2xl text-text-primary">
+              Другие кейсы агентства
+            </h2>
+            <nav className="mt-6 flex flex-wrap justify-between gap-6 text-sm">
             {prev ? (
               <Link href={`/cases/${prev.slug}`} className="text-text-secondary hover:text-accent">
                 ← {prev.title}
@@ -221,7 +228,8 @@ export default async function CasePage({ params }: Props) {
             ) : (
               <span />
             )}
-          </nav>
+            </nav>
+          </section>
 
           <CaseEndCTA />
         </PageWrapper>
