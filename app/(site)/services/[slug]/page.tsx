@@ -80,8 +80,11 @@ export default async function ServicePage({ params }: Props) {
 
       <PageWrapper>
         {titles.introH2 ? (
-          <section className="max-w-[52ch]" aria-labelledby="svc-intro">
-            <h2 id="svc-intro" className="font-display text-2xl font-semibold text-text-primary md:text-3xl">
+          <section className="max-w-4xl" aria-labelledby="svc-intro">
+            <h2
+              id="svc-intro"
+              className="whitespace-pre-line font-display text-2xl font-semibold leading-[1.15] text-text-primary md:text-3xl"
+            >
               {titles.introH2}
             </h2>
           </section>

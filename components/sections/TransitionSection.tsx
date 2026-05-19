@@ -160,40 +160,54 @@ export function TransitionSection() {
             ref={tagWrapRef}
             className="relative z-[3] mt-auto flex w-full justify-center px-5 pb-11 pt-2 md:static md:mt-0 md:flex md:justify-end md:px-0 md:pb-0 md:pt-0"
           >
-            <div className="flex w-full max-w-[440px] flex-col items-start gap-[22px] md:absolute md:bottom-[52px] md:right-14 md:w-auto">
-              <h1
-                data-trans-tag
-                className="m-0 max-w-[420px] font-body font-medium text-[color:inherit]"
-                style={{
-                  fontSize: "clamp(14px, 1.5vw, 18px)",
-                  lineHeight: 1.55,
-                  letterSpacing: "0.03em",
-                  color: TAG_ON_LIGHT,
-                }}
-              >
-                Ивент-агентство полного цикла для корпоративных и деловых событий
-              </h1>
-
-              {/* Bordered CTA with arrow */}
-              <a
-                ref={ctaRef}
-                href="#contact-form"
-                className="group inline-flex w-fit cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
-                style={{
-                  fontSize: "clamp(15px, 1.6vw, 20px)",
-                  letterSpacing: "0.08em",
-                  ["--hero-cta-fg" as string]: WORD_ON_LIGHT,
-                  ["--hero-cta-border" as string]: WORD_ON_LIGHT,
-                }}
-              >
-                <span>Обсудить проект</span>
-                <span
-                  className="inline-block transition-transform duration-[250ms] ease-out group-hover:translate-x-[6px]"
+            <div className="flex w-full max-w-[min(540px,94vw)] flex-col items-start md:absolute md:bottom-[52px] md:right-14 md:w-auto">
+              <div className="flex w-full gap-4 self-stretch md:gap-5">
+                <div
+                  className="w-px shrink-0 self-stretch rounded-full bg-accent"
                   aria-hidden
-                >
-                  →
-                </span>
-              </a>
+                />
+                <div className="flex min-w-0 flex-1 flex-col gap-5">
+                  <h1
+                    data-trans-tag
+                    className="m-0 font-display font-black text-[color:inherit]"
+                    style={{
+                      fontSize: "clamp(20px, 2.4vw, 32px)",
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.02em",
+                      color: TAG_ON_LIGHT,
+                    }}
+                  >
+                    Ивент-агентство
+                    <br />
+                    полного цикла
+                    <br />
+                    для корпоративных
+                    <br />
+                    и деловых событий
+                  </h1>
+
+                  {/* Bordered CTA with arrow */}
+                  <a
+                    ref={ctaRef}
+                    href="#contact-form"
+                    className="group mt-1 inline-flex w-fit cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
+                    style={{
+                      fontSize: "clamp(15px, 1.6vw, 20px)",
+                      letterSpacing: "0.08em",
+                      ["--hero-cta-fg" as string]: WORD_ON_LIGHT,
+                      ["--hero-cta-border" as string]: WORD_ON_LIGHT,
+                    }}
+                  >
+                    <span>Обсудить проект</span>
+                    <span
+                      className="inline-block transition-transform duration-[250ms] ease-out group-hover:translate-x-[6px]"
+                      aria-hidden
+                    >
+                      →
+                    </span>
+                  </a>
+                </div>
+              </div>
             </div>
           </div>
         </div>

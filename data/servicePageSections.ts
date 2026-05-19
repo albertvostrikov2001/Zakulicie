@@ -19,7 +19,7 @@ const DEFAULTS: ServiceSectionTitles = {
 
 const OVERRIDES: Partial<Record<ServiceSlug, Partial<ServiceSectionTitles>>> = {
   "korporativnye-meropriyatiya": {
-    introH2: "Корпоративы, внутренние события и мероприятия для сотрудников",
+    introH2: "Корпоративы,\nвнутренние события\nи мероприятия\nдля сотрудников",
     includesH2: "Что входит в организацию корпоративного мероприятия",
     whyH2: "Почему компании доверяют нам корпоративные события",
     casesH2: "Кейсы корпоративных мероприятий",

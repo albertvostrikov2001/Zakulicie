@@ -42,7 +42,7 @@ export default async function CasesPage() {
       <PageWrapper>
         <header className="max-w-3xl">
           <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">
-            Кейсы event-агентства «Закулисье»
+            Кейсы ивент агентства «Закулисье»
           </h1>
           <p className="mt-4 text-lg text-text-secondary">
             Проекты, за которые не стыдно отправить ссылку коллеге. Без лишних слов — фактура задач и

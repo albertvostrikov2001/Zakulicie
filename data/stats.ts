@@ -30,10 +30,10 @@ export const siteStats: StatItem[] = [
     detail: "среди клиентов",
   },
   {
-    value: 8000,
+    value: 11,
     suffix: "",
     unit: "",
     label: "МАКС. ОХВАТ",
-    detail: "участников в одном событии",
+    detail: "одновременно",
   },
 ];
