@@ -20,6 +20,7 @@ export function VideoSplitBlock() {
   const POSTER = SHOWREEL_POSTER;
 
   const onPlay = () => {
+    if (!videoUrl) return;
     const el = videoRef.current;
     if (!el) return;
     if (!el.src) el.src = videoUrl;
