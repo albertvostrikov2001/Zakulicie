@@ -6,20 +6,23 @@ import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useRef, useState } from "react";
 
-const POSTER = "/cases/syezd-dilerov-metall-profil/gallery/06.webp";
-const VIDEO_URL = process.env.NEXT_PUBLIC_SHOWREEL_VIDEO_URL;
+import { getShowreelVideoUrl, SHOWREEL_POSTER, SHOWREEL_VIDEO, SHOWREEL_VIDEO_MOBILE } from "@/lib/video";
+import { useIsMobile } from "@/hooks/useIsMobile";
 
 export function VideoSplitBlock() {
   const { openContact } = useContactModal();
+  const mobile = useIsMobile();
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
   const [hover, setHover] = useState(false);
+  const videoUrl = getShowreelVideoUrl(mobile) ?? (mobile ? SHOWREEL_VIDEO_MOBILE : SHOWREEL_VIDEO);
+  const POSTER = SHOWREEL_POSTER;
 
   const onPlay = () => {
-    if (!VIDEO_URL) return;
     const el = videoRef.current;
     if (!el) return;
-    if (!el.src) el.src = VIDEO_URL;
+    if (!el.src) el.src = videoUrl;
     void el.play().then(() => setPlaying(true));
   };
 
@@ -34,46 +37,43 @@ export function VideoSplitBlock() {
           transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
         >
           <div className="absolute inset-0">
-            {VIDEO_URL && (
+            {videoUrl && (
               <video
                 ref={videoRef}
                 className={
-                  playing ? "relative z-10 h-full w-full object-cover" : "pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0"
+                  playing && videoReady
+                    ? "relative z-10 h-full w-full object-cover"
+                    : "pointer-events-none absolute inset-0 h-full w-full object-cover opacity-0"
                 }
                 controls={playing}
                 playsInline
                 poster={POSTER}
                 preload="none"
+                onLoadedData={() => setVideoReady(true)}
                 aria-label="Showreel агентства Закулисье"
               />
             )}
             <Image
               src={POSTER}
-              alt="Атмосферное мероприятие — превью showreel агентства Закулисье"
+              alt="Showreel агентства Закулисье — превью"
               fill
-              className={playing && VIDEO_URL ? "hidden" : "object-cover"}
+              className={playing && videoReady ? "hidden" : "object-cover"}
               sizes="(max-width:768px) 100vw, 65vw"
             />
             <div
-              className={playing && VIDEO_URL ? "hidden" : "absolute inset-0 bg-bg/40"}
+              className={playing && videoReady ? "hidden" : "absolute inset-0 bg-bg/40"}
               aria-hidden
             />
-            {(!playing || !VIDEO_URL) && (
+            {(!playing || !videoReady) && (
               <div className="absolute inset-0 z-[2] flex items-center justify-center">
-                {VIDEO_URL ? (
-                  <button
-                    type="button"
-                    onClick={onPlay}
-                    className="flex h-20 w-20 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-accent"
-                    aria-label="Воспроизвести видео"
-                  >
-                    <span className="ml-1 inline-block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-white" />
-                  </button>
-                ) : (
-                  <p className="max-w-xs px-4 text-center text-xs text-text-secondary">
-                    Добавьте NEXT_PUBLIC_SHOWREEL_VIDEO_URL для воспроизведения.
-                  </p>
-                )}
+                <button
+                  type="button"
+                  onClick={onPlay}
+                  className="flex h-20 w-20 items-center justify-center rounded-full border border-white/30 bg-white/10 text-white backdrop-blur-md transition hover:bg-white/20 focus-visible:ring-2 focus-visible:ring-accent"
+                  aria-label="Воспроизвести видео"
+                >
+                  <span className="ml-1 inline-block h-0 w-0 border-y-[10px] border-l-[16px] border-y-transparent border-l-white" />
+                </button>
               </div>
             )}
           </div>
@@ -90,8 +90,7 @@ export function VideoSplitBlock() {
             для крупных компаний Сибири — на уровне федерального стандарта.
           </p>
           <div className="mt-10 flex flex-wrap gap-4">
-            {VIDEO_URL ? (
-              <MagneticButton>
+            <MagneticButton>
                 <button
                   type="button"
                   onClick={onPlay}
@@ -100,7 +99,6 @@ export function VideoSplitBlock() {
                   Смотреть showreel
                 </button>
               </MagneticButton>
-            ) : null}
             <MagneticButton>
               <button
                 type="button"

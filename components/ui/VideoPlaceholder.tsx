@@ -1,12 +1,15 @@
 "use client";
 
 import { cn } from "@/lib/cn";
+import { useIsMobile } from "@/hooks/useIsMobile";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useEffect, useRef, useState } from "react";
 
 export type VideoPlaceholderProps = {
   src?: string;
+  /** Lighter variant for mobile; falls back to src */
+  mobileSrc?: string;
   posterSrc?: string;
   caption?: string;
   description?: string;
@@ -17,6 +20,7 @@ export type VideoPlaceholderProps = {
 
 export function VideoPlaceholder({
   src,
+  mobileSrc,
   posterSrc,
   caption,
   description,
@@ -25,22 +29,26 @@ export function VideoPlaceholder({
 }: VideoPlaceholderProps) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [videoReady, setVideoReady] = useState(false);
 
-  const showVideo = Boolean(src && playing);
+  const mobile = useIsMobile();
+  const resolvedSrc = (mobile && mobileSrc ? mobileSrc : src) || mobileSrc || src;
+  const showVideo = Boolean(resolvedSrc && playing);
 
   const onPlay = () => {
-    if (!src) return;
+    if (!resolvedSrc) return;
     setPlaying(true);
   };
 
-  /* После монтирования video — подключить src и play (раньше: poster + Image давали «двойное» превью). */
   useEffect(() => {
-    if (!showVideo || !src) return;
+    if (!showVideo || !resolvedSrc) return;
     const el = videoRef.current;
     if (!el) return;
-    if (!el.src) el.src = src;
+    setVideoReady(false);
+    el.src = resolvedSrc;
+    el.load();
     void el.play().catch(() => setPlaying(false));
-  }, [showVideo, src]);
+  }, [showVideo, resolvedSrc]);
 
   return (
     <div className={cn("flex w-full flex-col gap-5", className)}>
@@ -49,7 +57,7 @@ export function VideoPlaceholder({
           className="absolute inset-0 bg-gradient-to-br from-[#222] via-[#121212] to-[#070707]"
           aria-hidden
         />
-        {posterSrc && !showVideo ? (
+        {posterSrc && (!showVideo || !videoReady) ? (
           <Image
             src={posterSrc}
             alt=""
@@ -61,13 +69,18 @@ export function VideoPlaceholder({
         ) : null}
         <div className="pointer-events-none absolute inset-0 grain opacity-[0.22]" aria-hidden />
 
-        {showVideo && src ? (
+        {showVideo && resolvedSrc ? (
           <video
             ref={videoRef}
-            className="relative z-10 h-full w-full object-cover"
+            className={cn(
+              "relative z-10 h-full w-full object-cover transition-opacity duration-500",
+              videoReady ? "opacity-100" : "opacity-0"
+            )}
             controls
             playsInline
             preload="metadata"
+            poster={posterSrc}
+            onLoadedData={() => setVideoReady(true)}
             aria-label="Showreel агентства Закулисье"
           />
         ) : null}
@@ -82,10 +95,10 @@ export function VideoPlaceholder({
               <motion.button
                 type="button"
                 onClick={onPlay}
-                disabled={!src}
+                disabled={!resolvedSrc}
                 className="group flex h-[4.25rem] w-[4.25rem] cursor-pointer items-center justify-center rounded-full border border-white/40 bg-white/[0.07] text-white shadow-[0_12px_48px_rgba(0,0,0,0.55)] backdrop-blur-md focus-visible:outline focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 focus-visible:ring-offset-[#0a0a0a] disabled:cursor-not-allowed disabled:opacity-45 md:h-20 md:w-20"
-                aria-label={src ? "Воспроизвести видео" : "Видео временно недоступно"}
-                whileHover={src ? { scale: 1.1, opacity: 0.9 } : undefined}
+                aria-label={resolvedSrc ? "Воспроизвести видео" : "Видео временно недоступно"}
+                whileHover={resolvedSrc ? { scale: 1.1, opacity: 0.9 } : undefined}
                 transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
               >
                 <svg

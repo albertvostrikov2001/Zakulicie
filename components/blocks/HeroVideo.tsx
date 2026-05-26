@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-const POSTER = "/cases/semejnyj-korporativ-varmix-warmax/gallery/08.webp";
+import { getHeroVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
 
 const lines = ["Когда на кону репутация,", "важна каждая деталь"];
 
@@ -17,7 +17,8 @@ export function HeroVideo() {
   const [videoOn, setVideoOn] = useState(false);
   const reduced = usePrefersReducedMotion();
   const { openContact } = useContactModal();
-  const src = process.env.NEXT_PUBLIC_HERO_VIDEO_URL;
+  const src = getHeroVideoUrl();
+  const POSTER = SHOWREEL_POSTER;
 
   useEffect(() => {
     if (reduced || !src) return;
