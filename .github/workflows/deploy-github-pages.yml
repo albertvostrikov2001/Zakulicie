@@ -1,5 +1,6 @@
 # Деплой статики на GitHub Pages (basePath = /имя-репозитория).
 # Pages: Settings → Pages → Source: GitHub Actions.
+# Manual run: Actions → Deploy to GitHub Pages → Run workflow.
 name: Deploy to GitHub Pages
 
 on:
