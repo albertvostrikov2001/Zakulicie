@@ -3,7 +3,7 @@
 import { VideoPlaceholder } from "@/components/ui/VideoPlaceholder";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { getShowreelVideoUrl, SHOWREEL_POSTER, SHOWREEL_VIDEO, SHOWREEL_VIDEO_MOBILE } from "@/lib/video";
+import { getShowreelVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -37,8 +37,6 @@ function parseSceneBgLuminance(): number | null {
   }
   return null;
 }
-
-const POSTER = SHOWREEL_POSTER;
 
 const OFFER = ["АГЕНТСТВО ПОЛНОГО ЦИКЛА", "ДЛЯ КОМПАНИЙ, КОТОРЫЕ", "НЕ ИДУТ НА КОМПРОМИСС"] as const;
 
@@ -122,9 +120,9 @@ export function VideoSplitSection() {
           className="w-full md:w-[62%] md:max-w-none md:flex-[1.15] md:pr-4"
         >
           <VideoPlaceholder
-            src={getShowreelVideoUrl(false) ?? SHOWREEL_VIDEO}
-            mobileSrc={getShowreelVideoUrl(true) ?? SHOWREEL_VIDEO_MOBILE}
-            posterSrc={POSTER}
+            src={getShowreelVideoUrl(false)}
+            mobileSrc={getShowreelVideoUrl(true)}
+            posterSrc={SHOWREEL_POSTER}
             caption="SHOWREEL"
             description="Фрагменты постановок, сцен и продакшна для брендов, которые задают планку на уровне страны."
             captionsOnLightBg={lightScene}

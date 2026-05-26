@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useRef, useState } from "react";
 
-import { getShowreelVideoUrl, SHOWREEL_POSTER, SHOWREEL_VIDEO, SHOWREEL_VIDEO_MOBILE } from "@/lib/video";
+import { getShowreelVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
 import { useIsMobile } from "@/hooks/useIsMobile";
 
 export function VideoSplitBlock() {
@@ -16,7 +16,7 @@ export function VideoSplitBlock() {
   const [playing, setPlaying] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
   const [hover, setHover] = useState(false);
-  const videoUrl = getShowreelVideoUrl(mobile) ?? (mobile ? SHOWREEL_VIDEO_MOBILE : SHOWREEL_VIDEO);
+  const videoUrl = getShowreelVideoUrl(mobile);
   const POSTER = SHOWREEL_POSTER;
 
   const onPlay = () => {

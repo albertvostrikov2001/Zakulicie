@@ -8,6 +8,7 @@ import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
+import { resolvePublicPath } from "@/lib/publicPath";
 import { getHeroVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
 
 const lines = ["Когда на кону репутация,", "важна каждая деталь"];
@@ -58,7 +59,7 @@ export function HeroVideo() {
             playsInline
             muted
             loop
-            poster={POSTER}
+            poster={resolvePublicPath(POSTER)}
             preload="none"
             aria-hidden
           />

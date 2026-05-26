@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/cn";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { resolvePublicPath } from "@/lib/publicPath";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useEffect, useRef, useState } from "react";
@@ -32,7 +33,9 @@ export function VideoPlaceholder({
   const [videoReady, setVideoReady] = useState(false);
 
   const mobile = useIsMobile();
-  const resolvedSrc = (mobile && mobileSrc ? mobileSrc : src) || mobileSrc || src;
+  const picked = (mobile && mobileSrc ? mobileSrc : src) || mobileSrc || src;
+  const resolvedSrc = picked ? resolvePublicPath(picked) : undefined;
+  const resolvedPoster = posterSrc ? resolvePublicPath(posterSrc) : undefined;
   const showVideo = Boolean(resolvedSrc && playing);
 
   const onPlay = () => {
@@ -79,7 +82,7 @@ export function VideoPlaceholder({
             controls
             playsInline
             preload="metadata"
-            poster={posterSrc}
+            poster={resolvedPoster}
             onLoadedData={() => setVideoReady(true)}
             aria-label="Showreel агентства Закулисье"
           />
