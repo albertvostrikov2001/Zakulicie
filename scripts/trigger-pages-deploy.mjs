@@ -97,22 +97,19 @@ async function waitForLive() {
 const token = getGitHubToken();
 
 let pages = await request("GET", `/repos/${REPO}/pages`, token);
-console.log("Pages before:", pages.status, pages.build_type, pages.source?.branch);
+console.log("Pages before:", pages.status, pages.build_type);
 
-if (pages.build_type !== "legacy" || pages.source?.branch !== "gh-pages") {
-  console.log("→ Switch Pages source to gh-pages branch…");
-  await request("PUT", `/repos/${REPO}/pages`, token, {
-    build_type: "legacy",
-    source: { branch: "gh-pages", path: "/" },
-  });
-  await sleep(3000);
+if (pages.build_type !== "workflow") {
+  console.log("→ Switch Pages source to GitHub Actions…");
+  await request("PUT", `/repos/${REPO}/pages`, token, { build_type: "workflow" });
+  await sleep(5000);
 }
 
-console.log("→ Trigger deploy workflow…");
+console.log("→ Trigger Deploy to GitHub Pages workflow…");
 await request("POST", `/repos/${REPO}/actions/workflows/${WORKFLOW}/dispatches`, token, { ref: "main" });
 
 await sleep(15000);
-const runs = await request("GET", `/repos/${REPO}/actions/runs?per_page=3`, token);
+const runs = await request("GET", `/repos/${REPO}/actions/runs?per_page=5`, token);
 const run = (runs.workflow_runs ?? []).find((r) => r.name === "Deploy to GitHub Pages");
 if (!run?.id) throw new Error("Deploy workflow did not start");
 
@@ -124,6 +121,8 @@ if (finished.conclusion !== "success") {
     for (const step of job.steps ?? []) {
       if (step.conclusion === "failure") console.log(`  failed: ${step.name}`);
     }
+    const ann = await request("GET", `/repos/${REPO}/check-runs/${job.id}/annotations`).catch(() => []);
+    for (const a of ann) console.log(`  ${a.message}`);
   }
   throw new Error(`Workflow failed: ${finished.html_url}`);
 }
@@ -132,5 +131,5 @@ pages = await request("GET", `/repos/${REPO}/pages`, token);
 console.log("Pages after workflow:", pages.status, pages.build_type);
 
 if (!(await waitForLive())) {
-  throw new Error("Deploy workflow succeeded but showreel poster is still missing on live site");
+  throw new Error("Workflow succeeded but showreel poster is still missing on live site");
 }

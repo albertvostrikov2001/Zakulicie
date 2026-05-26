@@ -1,0 +1,38 @@
+# Fallback: публикует out/ в gh-pages без marketplace actions.
+name: Publish gh-pages branch
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Build and push gh-pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          GITHUB_PAGES: "true"
+          NEXT_PUBLIC_PAGES_BASE_PATH: /${{ github.event.repository.name }}
+          NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
+          NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
+          NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
+        run: |
+          set -euo pipefail
+          git clone --depth=1 "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git" repo
+          cd repo
+          npm ci --legacy-peer-deps
+          rm -rf app/api app/studio
+          npm run build
+          touch out/.nojekyll
+          cd out
+          git init
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b gh-pages
+          git add -A
+          git commit -m "deploy: ${{ github.sha }}"
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git" gh-pages
