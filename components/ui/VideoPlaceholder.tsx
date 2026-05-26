@@ -18,7 +18,7 @@ export type VideoPlaceholderProps = {
   className?: string;
   /** Светлый фон секции — тёмные подписи под кадром */
   captionsOnLightBg?: boolean;
-  /** Запуск при появлении в viewport (без клика); без звука до unmute в controls */
+  /** Запуск при появлении в viewport (без клика и без UI плеера) */
   autoPlayInView?: boolean;
   /** Доп. классы для контейнера кадра (aspect / max-height) */
   frameClassName?: string;
@@ -113,9 +113,10 @@ export function VideoPlaceholder({
             ref={videoRef}
             className={cn(
               "relative z-10 h-full w-full object-cover transition-opacity duration-500",
-              videoReady ? "opacity-100" : "opacity-0"
+              videoReady ? "opacity-100" : "opacity-0",
+              autoPlayInView && "pointer-events-none"
             )}
-            controls
+            controls={!autoPlayInView}
             playsInline
             muted={autoPlayInView || undefined}
             preload="metadata"

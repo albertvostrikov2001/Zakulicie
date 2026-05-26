@@ -115,11 +115,11 @@ export function VideoSplitSection() {
       aria-label="Showreel и подход"
     >
       <div className="mx-auto flex min-h-[min(76dvh,760px)] max-w-content flex-col gap-8 px-4 py-11 md:flex-row md:items-center md:gap-10 md:px-8 md:py-[clamp(2.5rem,5vh,4rem)] lg:gap-12">
-        <div data-video-reveal className="w-full min-w-0 md:w-[56%] md:max-w-none md:flex-[0.56]">
+        <div data-video-reveal className="w-full min-w-0 md:w-[70%] md:max-w-none md:flex-[0.7]">
           <VideoPlaceholder
             autoPlayInView
-            frameClassName="max-h-[min(45vh,360px)] md:max-h-[min(45vh,468px)]"
-            imageSizes="(max-width: 768px) 100vw, 56vw"
+            frameClassName="max-h-[min(56vh,450px)] md:max-h-[min(56vh,585px)]"
+            imageSizes="(max-width: 768px) 100vw, 70vw"
             src={getShowreelVideoUrl(false)}
             mobileSrc={getShowreelVideoUrl(true)}
             posterSrc={SHOWREEL_POSTER}
@@ -133,8 +133,8 @@ export function VideoSplitSection() {
           data-text-reveal
           className={
             lightScene
-              ? "flex w-full min-w-0 flex-col justify-center text-[#1a1a1a] md:w-[44%] md:flex-[0.44] md:pl-2 lg:pl-6"
-              : "flex w-full min-w-0 flex-col justify-center md:w-[44%] md:flex-[0.44] md:pl-2 lg:pl-6"
+              ? "flex w-full min-w-0 flex-col justify-center text-[#1a1a1a] md:w-[30%] md:flex-[0.3] md:pl-2 lg:pl-4"
+              : "flex w-full min-w-0 flex-col justify-center md:w-[30%] md:flex-[0.3] md:pl-2 lg:pl-4"
           }
         >
           <h2

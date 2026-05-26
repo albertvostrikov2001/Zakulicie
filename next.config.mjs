@@ -1,6 +1,8 @@
 /** @type {import('next').NextConfig} */
 const isGhPages =
-  process.env.GITHUB_PAGES === "true" && process.env.VERCEL !== "1";
+  process.env.GITHUB_PAGES === "true" &&
+  process.env.VERCEL !== "1" &&
+  process.env.NODE_ENV === "production";
 
 /**
  * Публичный префикс пути для static export (GitHub Pages).
