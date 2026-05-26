@@ -15,7 +15,7 @@ export const clients: ClientData[] = [
     id: "metall-profil",
     brandName: "Металл Профиль",
     display: { type: "text" },
-    backText: "Дилерский съезд с финальной регатой — 200+ участников",
+    backText: "Стратегическая сессия и парусный тимбилдинг для дилеров",
   },
   {
     id: "lerua-merlen",

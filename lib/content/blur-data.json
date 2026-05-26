@@ -1046,9 +1046,9 @@
   "opening-holiley-classic": {
     "cover": {
       "src": "/cases/opening-holiley-classic/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAwBACdASoUAAwAPzmGuVOvKSWisAgB4CcJYgCdABmin94KGuCYR4Tv1gAA9jQ6HEcHeaxu4oBeqPt6Wo9KFkX+yMAUL3SBOckQY0K/6nrk7tqwflAY0vhW9kdb31A4RXw4OHDtOYm5Ze8ujmyH77MQeKRw4l1SrrHaFHAA",
-      "width": 1280,
-      "height": 853
+      "blurDataURL": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAwBACdASoUAAwAPzmGuVOvKSWisAgB4CcJZAC7ACPpzZHyNR+crnPovjAA/rX2ctBruaYlF3/S//chMv9wnFTxLrFdA57AUducU29zkDwUbneuatbtb+/yUB+CsfDspsaE5ujN3iTIXyy7roioDfiNMfOEHR4qQNHWgAAA",
+      "width": 1080,
+      "height": 1080
     },
     "gallery": [
       {
@@ -1474,9 +1474,9 @@
   "syezd-dilerov-metall-profil": {
     "cover": {
       "src": "/cases/syezd-dilerov-metall-profil/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAABQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJQBYjz+AYs1qOlKf0BrPKG9BAAP6GqxrEMWyqchRahApjlAzKGHpM8JJ7QVJmfGcjbLXSmCZovH9KJX7BiqAi/Z661j5RDFMoYPw+sC5w4eoo4TC6R1F0lE2lqAAA",
-      "width": 3700,
-      "height": 2470
+      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJQBYdhCWIzwY7lCV4WlCgAAD+tfku38cAPF4Yz9VwIY/eCJXV7YlYsTv3sOOGqyTPT/WOssswsbP/lsmrTKh/zh2KtVSEcUJekELIMSKlnLSHig+564R/Wo9UoAAA",
+      "width": 667,
+      "height": 667
     },
     "gallery": [
       {
