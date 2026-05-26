@@ -7,8 +7,9 @@ import Link from "next/link";
 import { useRef } from "react";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { cn } from "@/lib/cn";
-import type { CaseStudy } from "@/lib/types";
+import { caseImagePosition, CASE_CARD_OVERLAY } from "@/lib/caseImage";
 import { serviceNav } from "@/lib/content/services";
+import type { CaseStudy } from "@/lib/types";
 
 interface CasesMarqueeProps {
   cases: CaseStudy[];
@@ -32,17 +33,17 @@ function CaseCard({ item }: { item: CaseStudy }) {
         alt={`Кейс: ${item.title} | ${tag}`}
         fill
         className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
+        style={caseImagePosition(item.heroImage)}
         sizes="(max-width: 640px) 300px, (max-width: 768px) 340px, 380px"
         placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
         blurDataURL={item.heroImage.blurDataURL}
       />
 
-      {/* Gradient overlay — darkened on hover */}
+      <div className="absolute inset-0 bg-black/15" style={{ mixBlendMode: "multiply" }} aria-hidden />
+
       <div
-        className="absolute inset-0 transition-opacity duration-400"
-        style={{
-          background: "linear-gradient(to top, rgba(0,0,0,0.88) 0%, rgba(0,0,0,0.40) 60%, rgba(0,0,0,0.15) 100%)",
-        }}
+        className="absolute inset-0 transition-opacity duration-400 group-hover:opacity-90"
+        style={{ background: CASE_CARD_OVERLAY }}
         aria-hidden
       />
 

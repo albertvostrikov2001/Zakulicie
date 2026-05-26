@@ -1,6 +1,7 @@
 "use client";
 
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
+import { caseImagePosition, CASE_CARD_OVERLAY } from "@/lib/caseImage";
 import { cn } from "@/lib/cn";
 import { serviceNav } from "@/lib/content/services";
 import type { CaseStudy } from "@/lib/types";
@@ -39,9 +40,12 @@ function FlagshipCaseCard({ item, index }: { item: CaseStudy; index: number }) {
           alt={item.heroImage.alt}
           fill
           className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-105"
+          style={caseImagePosition(item.heroImage)}
           sizes="(max-width: 768px) 100vw, 50vw"
         />
-        <div className="absolute inset-0 bg-bg/30 transition-opacity duration-500 group-hover:bg-bg/10" aria-hidden />
+        <div className="absolute inset-0 bg-black/15" style={{ mixBlendMode: "multiply" }} aria-hidden />
+        <div className="absolute inset-0" style={{ background: CASE_CARD_OVERLAY }} aria-hidden />
+        <div className="absolute inset-0 bg-bg/20 transition-opacity duration-500 group-hover:bg-bg/10" aria-hidden />
 
         {/* Номер */}
         <span className="absolute bottom-4 right-4 font-display text-7xl font-bold leading-none text-white/10 select-none md:text-9xl">

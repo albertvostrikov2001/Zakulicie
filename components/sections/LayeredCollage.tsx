@@ -27,13 +27,13 @@ const WORD_TOKENS = buildTokens(PHRASE);
 
 /** 7 кадров из реальных кейсов — циклически по индексу буквы */
 const letterPhotos = [
-  "/cases/family-day-warmex/gallery/03.webp",
-  "/cases/blagotvoritelnyy-bal/gallery/02.webp",
+  "/cases/semejnyj-korporativ-varmix-warmax/gallery/03.webp",
+  "/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/gallery/02.webp",
   "/cases/syezd-dilerov-metall-profil/gallery/01.webp",
-  "/cases/dr-zolotogo-yabloka/gallery/03.webp",
-  "/cases/25-let-sts/gallery/01.webp",
-  "/cases/opening-lerua-kemerovo/gallery/02.webp",
-  "/cases/spartakiada/gallery/05.webp",
+  "/cases/dr-zolotoe-yabloko-master-klassy/gallery/03.webp",
+  "/cases/yubilej-sts-25-let/gallery/01.webp",
+  "/cases/otkrytie-lerua-merlen-kemerovo/gallery/02.webp",
+  "/cases/spartakiada-metall-profil/gallery/05.webp",
 ] as const;
 
 /** Safe zones: компактные кадры, позиции укладываются при min-height ~200px без обрезки */

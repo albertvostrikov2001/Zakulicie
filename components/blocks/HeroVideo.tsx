@@ -8,7 +8,7 @@ import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-const POSTER = "/cases/family-day-warmex/gallery/08.webp";
+const POSTER = "/cases/semejnyj-korporativ-varmix-warmax/gallery/08.webp";
 
 const lines = ["Когда на кону репутация,", "важна каждая деталь"];
 

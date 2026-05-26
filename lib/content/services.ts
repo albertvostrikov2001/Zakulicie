@@ -34,7 +34,7 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     shortDescription:
       "События для компаний, где важны культура, репутация и спокойная управляемость процесса.",
     heroImage: realImg(
-      "family-day-warmex",
+      "semejnyj-korporativ-varmix-warmax",
       "Корпоративные мероприятия — event-агентство Закулисье Новосибирск"
     ),
     includes: [
@@ -109,7 +109,7 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     shortDescription:
       "Форматы, которые укрепляют команду без дешёвых клише и давления на участников.",
     heroImage: realImg(
-      "spartakiada",
+      "spartakiada-metall-profil",
       "Тимбилдинг — event-агентство Закулисье Новосибирск"
     ),
     includes: [
@@ -247,7 +247,7 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     shortDescription:
       "Площадки с высоким трафиком, регламенты и дисциплина исполнения на каждой смене.",
     heroImage: realImg(
-      "opening-lerua-kemerovo",
+      "otkrytie-lerua-merlen-kemerovo",
       "Рекламные акции и активации — event-агентство Закулисье Новосибирск"
     ),
     includes: [
@@ -395,7 +395,7 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     shortDescription:
       "Когда сценарий, кадр и ритм должны совпасть — мы держим постановку как единый механизм.",
     heroImage: realImg(
-      "blagotvoritelnyy-bal",
+      "blagotvoritelnyj-bal-detskaya-ploshchadka",
       "Постановка и режиссура мероприятий — event-агентство Закулисье Новосибирск"
     ),
     includes: [

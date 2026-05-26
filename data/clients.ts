@@ -51,7 +51,7 @@ export const clients: ClientData[] = [
     id: "zolotoe-yabloko",
     brandName: "Золотое Яблоко",
     display: { type: "text" },
-    backText: "День рождения бренда — корпоративный формат",
+    backText: "День рождения бренда, рекламное и обучающее мероприятие",
   },
   {
     id: "suek",
@@ -63,24 +63,24 @@ export const clients: ClientData[] = [
     id: "bolotninskaya",
     brandName: "Болотнинская Гофротара",
     display: { type: "text" },
-    backText: "Юбилей производства — командный праздник",
+    backText: "Юбилей производства, городское событие",
   },
   {
     id: "chistaya-sloboda",
     brandName: "Чистая Слобода",
     display: { type: "text" },
-    backText: "Новогодний корпоратив — резидентский формат",
+    backText: "Серия имиджевых мероприятий ЖК",
   },
   {
     id: "sibmoll",
     brandName: "СибМолл",
     display: { type: "text" },
-    backText: "Открытие торгового центра — городское событие",
+    backText: "Рекламные акции, выставки, фестивали на территории ТЦ",
   },
   {
     id: "artdom",
     brandName: "АртДом",
     display: { type: "text" },
-    backText: "Корпоративный праздник — творческий формат",
+    backText: "Всероссийская дизайнерская конференция, обучающее и рекламное мероприятие",
   },
 ];

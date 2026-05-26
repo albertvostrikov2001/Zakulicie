@@ -6,8 +6,8 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useRef } from "react";
 
-const IMAGE_URL = "/cases/family-day-warmex/gallery/05.webp";
-const IMAGE_URL_2 = "/cases/blagotvoritelnyy-bal/gallery/04.webp";
+const IMAGE_URL = "/cases/semejnyj-korporativ-varmix-warmax/gallery/05.webp";
+const IMAGE_URL_2 = "/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/gallery/04.webp";
 
 export function VideoReveal() {
   const ref = useRef<HTMLElement>(null);

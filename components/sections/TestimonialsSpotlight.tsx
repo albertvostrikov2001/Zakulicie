@@ -32,7 +32,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Открытие объекта",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/opening-alfa-bank/cover.webp",
+    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/otkrytie-ofisov-alfa-bank/cover.webp",
     photoAlt: "Открытие Альфа-Банка",
     quote:
       "Открытие четырёх офисов одновременно — задача, с которой справились только они. Строго в срок, строго в концепции, ноль компромиссов по качеству. Гости уходили с ощущением федерального события.",
@@ -43,7 +43,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Корпоративный праздник",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/family-day-warmex/cover.webp",
+    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
     photoAlt: "Family Day Warmex",
     quote:
       "Семейный праздник на 1200 человек. Закулисье создали программу, которую взрослые запомнили так же хорошо, как дети. Мы продолжаем работу третий год подряд — это лучший показатель.",
@@ -54,7 +54,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Юбилей бренда",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/25-let-sts/cover.webp",
+    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/yubilej-sts-25-let/cover.webp",
     photoAlt: "25-летие СТС",
     quote:
       "Прямой эфир, живой оркестр, полторы тысячи гостей. Ни один из трёх часов программы не дал сбоя. Настолько слаженная работа — это не организация, это режиссура.",
@@ -65,7 +65,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Тимбилдинг",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/spartakiada/cover.webp",
+    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/spartakiada-metall-profil/cover.webp",
     photoAlt: "Спартакиада",
     quote:
       "180 инженеров, которые никогда не хотели командных игр. Закулисье нашли формат, который объединил людей без принуждения — через общую задачу, а не через принудительное веселье.",
@@ -76,7 +76,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Гала-вечер",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/blagotvoritelnyy-bal/cover.webp",
+    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/cover.webp",
     photoAlt: "Благотворительный бал",
     quote:
       "600 гостей, все топ-менеджеры и меценаты. Закулисье провели вечер так, что никто не ушёл раньше финала и все оставили пожертвования выше ожидаемых.",

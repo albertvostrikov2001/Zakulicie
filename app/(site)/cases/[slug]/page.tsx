@@ -1,6 +1,8 @@
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { BreadcrumbJsonLd, EventCaseJsonLd } from "@/components/seo/JsonLd";
 import { getAdjacentCases, getCaseBySlug } from "@/lib/data";
+import { LEGACY_SLUG_REDIRECTS } from "@/lib/content/caseAssets";
+import { caseImagePosition, CASE_HERO_OVERLAY } from "@/lib/caseImage";
 import { serviceNav } from "@/lib/content/services";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
@@ -14,7 +16,8 @@ type Props = { params: Promise<{ slug: string }> };
 export async function generateStaticParams() {
   const { getCasesResolved } = await import("@/lib/data");
   const cases = await getCasesResolved();
-  return cases.map((c) => ({ slug: c.slug }));
+  const legacy = Object.keys(LEGACY_SLUG_REDIRECTS);
+  return [...cases.map((c) => ({ slug: c.slug })), ...legacy.map((slug) => ({ slug }))];
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -22,10 +25,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const c = await getCaseBySlug(slug);
   if (!c) return { title: "Кейс не найден" };
   const url = `${getSiteUrl()}/cases/${c.slug}`;
+  const canonicalSlug = LEGACY_SLUG_REDIRECTS[slug];
   return {
     title: c.seoTitle,
     description: c.seoDescription,
-    alternates: { canonical: url },
+    alternates: { canonical: canonicalSlug ? `${getSiteUrl()}/cases/${c.slug}` : url },
     openGraph: {
       title: c.title,
       description: c.excerpt,
@@ -61,11 +65,17 @@ export default async function CasePage({ params }: Props) {
             fill
             priority
             className="object-cover"
+            style={caseImagePosition(c.heroImage)}
             sizes="100vw"
             placeholder={c.heroImage.blurDataURL ? "blur" : undefined}
             blurDataURL={c.heroImage.blurDataURL}
           />
-          <div className="absolute inset-0 bg-black/45" aria-hidden />
+          <div className="absolute inset-0 bg-black/15" style={{ mixBlendMode: "multiply" }} aria-hidden />
+          <div
+            className="absolute inset-0"
+            style={{ background: CASE_HERO_OVERLAY }}
+            aria-hidden
+          />
           <div className="absolute inset-0 bg-gradient-to-t from-bg via-bg/70 to-bg/30" aria-hidden />
           <div className="absolute inset-0 flex flex-col justify-end pb-16 pt-32">
             <PageWrapper className="!pb-0">

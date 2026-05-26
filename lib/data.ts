@@ -1,5 +1,6 @@
 import { staticBlogPosts } from "@/lib/content/blog";
 import { staticCases } from "@/lib/content/cases";
+import { LEGACY_SLUG_REDIRECTS } from "@/lib/content/caseAssets";
 import { staticServices } from "@/lib/content/services";
 import { staticTestimonials } from "@/lib/content/testimonials";
 import {
@@ -17,10 +18,15 @@ export async function getCasesResolved(): Promise<CaseStudy[]> {
   return fromCms ?? staticCases;
 }
 
+function resolveCaseSlug(slug: string) {
+  return LEGACY_SLUG_REDIRECTS[slug] ?? slug;
+}
+
 export async function getCaseBySlug(slug: string): Promise<CaseStudy | undefined> {
-  const fromCms = await fetchCaseBySlugFromSanity(slug);
+  const canonical = resolveCaseSlug(slug);
+  const fromCms = await fetchCaseBySlugFromSanity(canonical);
   if (fromCms) return fromCms;
-  return staticCases.find((c) => c.slug === slug);
+  return staticCases.find((c) => c.slug === canonical);
 }
 
 export async function getFeaturedCases(): Promise<CaseStudy[]> {
@@ -62,7 +68,8 @@ export async function getCasesByServiceSlug(serviceSlug: ServiceSlug): Promise<C
 
 export async function getAdjacentCases(slug: string): Promise<{ prev?: CaseStudy; next?: CaseStudy }> {
   const list = await getCasesResolved();
-  const i = list.findIndex((c) => c.slug === slug);
+  const canonical = resolveCaseSlug(slug);
+  const i = list.findIndex((c) => c.slug === canonical);
   if (i === -1) return {};
   return {
     prev: list[i - 1],

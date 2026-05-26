@@ -39,11 +39,11 @@ export default function ClientsPage() {
               alt: "Деловая конференция — event-агентство Закулисье Новосибирск",
             },
             {
-              src: "/cases/opening-lerua-kemerovo/gallery/03.webp",
+              src: "/cases/otkrytie-lerua-merlen-kemerovo/gallery/03.webp",
               alt: "Открытие — event-агентство Закулисье Новосибирск",
             },
             {
-              src: "/cases/spartakiada/gallery/08.webp",
+              src: "/cases/spartakiada-metall-profil/gallery/08.webp",
               alt: "Корпоративные форматы — event-агентство Закулисье Новосибирск",
             },
           ].map((ph) => (

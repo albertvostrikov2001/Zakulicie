@@ -2,7 +2,7 @@ import type { BlogPost, CaseStudy, ServiceSlug, Testimonial } from "@/lib/types"
 import { blocksToParagraphs } from "@/lib/sanity/portableText";
 import { urlForSanityImage } from "@/lib/sanity/image";
 
-const FALLBACK_CASE_HERO = "/cases/family-day-warmex/cover.webp";
+const FALLBACK_CASE_HERO = "/cases/semejnyj-korporativ-varmix-warmax/cover.webp";
 const FALLBACK_BLOG_COVER = "/cases/syezd-dilerov-metall-profil/cover.webp";
 
 const SERVICE_SLUGS: ServiceSlug[] = [

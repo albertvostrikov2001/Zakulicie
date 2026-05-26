@@ -12,6 +12,8 @@ export type SiteImage = {
   blurDataURL?: string;
   width?: number;
   height?: number;
+  /** CSS object-position for cover cropping */
+  objectPosition?: string;
 };
 
 export type CaseStudy = {

@@ -19,7 +19,7 @@ interface FloatingCard {
 
 const CARDS: FloatingCard[] = [
   {
-    src: "/cases/blagotvoritelnyy-bal/gallery/06.webp",
+    src: "/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/gallery/06.webp",
     alt: "Масштабное корпоративное мероприятие — event-агентство Закулисье",
     className:
       "absolute top-[8%] right-[4%] w-[clamp(120px,14vw,220px)] aspect-[3/4]",
@@ -27,7 +27,7 @@ const CARDS: FloatingCard[] = [
     delay: 0.4,
   },
   {
-    src: "/cases/25-let-sts/gallery/03.webp",
+    src: "/cases/yubilej-sts-25-let/gallery/03.webp",
     alt: "Вечернее мероприятие — event-агентство Закулисье Новосибирск",
     className:
       "absolute bottom-[18%] right-[18%] w-[clamp(100px,11vw,180px)] aspect-[3/4]",

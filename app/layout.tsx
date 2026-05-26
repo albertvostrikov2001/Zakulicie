@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     images: [
       {
-        url: "/cases/family-day-warmex/cover.webp",
+        url: "/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
         width: 1920,
         height: 1080,
         alt: "Event-агентство Закулисье — организация мероприятий в Новосибирске",

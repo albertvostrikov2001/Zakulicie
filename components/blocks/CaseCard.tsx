@@ -3,6 +3,7 @@
 import { Badge } from "@/components/ui/Badge";
 import type { CaseStudy } from "@/lib/types";
 import { serviceNav } from "@/lib/content/services";
+import { caseImagePosition, CASE_CARD_OVERLAY } from "@/lib/caseImage";
 import { cn } from "@/lib/cn";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
@@ -34,6 +35,7 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
             alt={`Кейс: ${item.title} | ${tag}`}
             fill
             className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
+            style={caseImagePosition(item.heroImage)}
             sizes="(max-width: 768px) 100vw, 50vw"
             priority={priority}
             placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
@@ -46,7 +48,7 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
           {/* Тёмный оверлей */}
           <div
             className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-90"
-            style={{ background: "linear-gradient(to top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.1) 60%)" }}
+            style={{ background: CASE_CARD_OVERLAY }}
             aria-hidden
           />
 

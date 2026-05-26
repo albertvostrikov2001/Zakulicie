@@ -15,7 +15,7 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "HR‑директор",
     company: "[Промышленный холдинг]",
-    relatedCaseSlug: "spartakiada",
+    relatedCaseSlug: "spartakiada-metall-profil",
   },
   {
     id: "3",
@@ -23,7 +23,7 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "Руководитель проектов",
     company: "[Отраслевая ассоциация]",
-    relatedCaseSlug: "ugol-rossii-mining",
+    relatedCaseSlug: "ugol-rossii-majning",
   },
   {
     id: "4",
@@ -31,6 +31,6 @@ export const staticTestimonials: Testimonial[] = [
     author: "[Имя]",
     position: "Руководитель регионального развития",
     company: "[Автомобильная сеть]",
-    relatedCaseSlug: "opening-alfa-bank",
+    relatedCaseSlug: "otkrytie-ofisov-alfa-bank",
   },
 ];

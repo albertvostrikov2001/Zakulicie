@@ -29,7 +29,7 @@ export const staticBlogPosts: BlogPost[] = [
       "Почему крупные форматы уезжают в Сибирь, и какие решения по логистике и сервису окупаются в первую очередь.",
     publishedAt: "2025-09-06",
     coverImage: {
-      src: "/cases/opening-lerua-kemerovo/gallery/04.webp",
+      src: "/cases/otkrytie-lerua-merlen-kemerovo/gallery/04.webp",
       alt: "Мероприятие в Новосибирске — event-агентство Закулисье",
     },
     content: [
