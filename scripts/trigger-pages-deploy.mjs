@@ -82,7 +82,7 @@ async function waitForRun(token, runId) {
 }
 
 async function waitForLive() {
-  for (let i = 0; i < 20; i += 1) {
+  for (let i = 0; i < 24; i += 1) {
     const status = await verifyLive();
     console.log(`poster check: ${status}`);
     if (status === 200) {
@@ -96,31 +96,41 @@ async function waitForLive() {
 
 const token = getGitHubToken();
 
-const pages = await request("GET", `/repos/${REPO}/pages`, token);
-console.log("Pages source:", pages.source?.branch ?? pages.build_type, pages.source?.path ?? "");
+let pages = await request("GET", `/repos/${REPO}/pages`, token);
+console.log("Pages before:", pages.status, pages.build_type, pages.source?.branch);
 
-if (pages.build_type === "workflow") {
-  console.log("→ Switch Pages source to GitHub Actions…");
-  await request("PUT", `/repos/${REPO}/pages`, token, { build_type: "workflow" });
+if (pages.build_type !== "legacy" || pages.source?.branch !== "gh-pages") {
+  console.log("→ Switch Pages source to gh-pages branch…");
+  await request("PUT", `/repos/${REPO}/pages`, token, {
+    build_type: "legacy",
+    source: { branch: "gh-pages", path: "/" },
+  });
+  await sleep(3000);
 }
 
-console.log("→ Trigger Deploy to GitHub Pages workflow…");
+console.log("→ Trigger deploy workflow…");
 await request("POST", `/repos/${REPO}/actions/workflows/${WORKFLOW}/dispatches`, token, { ref: "main" });
 
-await sleep(12000);
-const runs = await request("GET", `/repos/${REPO}/actions/runs?event=workflow_dispatch&per_page=1`, token);
-const runId = runs.workflow_runs?.[0]?.id;
-if (!runId) throw new Error("Workflow dispatch did not create a run");
+await sleep(15000);
+const runs = await request("GET", `/repos/${REPO}/actions/runs?per_page=3`, token);
+const run = (runs.workflow_runs ?? []).find((r) => r.name === "Deploy to GitHub Pages");
+if (!run?.id) throw new Error("Deploy workflow did not start");
 
-const run = await waitForRun(token, runId);
-if (run.conclusion !== "success") {
-  const jobs = await request("GET", `/repos/${REPO}/actions/runs/${runId}/jobs`, token);
+const finished = await waitForRun(token, run.id);
+if (finished.conclusion !== "success") {
+  const jobs = await request("GET", `/repos/${REPO}/actions/runs/${run.id}/jobs`, token);
   for (const job of jobs.jobs ?? []) {
     console.log(`job ${job.name}: ${job.conclusion}`);
+    for (const step of job.steps ?? []) {
+      if (step.conclusion === "failure") console.log(`  failed: ${step.name}`);
+    }
   }
-  throw new Error(`Workflow failed: ${run.html_url}`);
+  throw new Error(`Workflow failed: ${finished.html_url}`);
 }
 
+pages = await request("GET", `/repos/${REPO}/pages`, token);
+console.log("Pages after workflow:", pages.status, pages.build_type);
+
 if (!(await waitForLive())) {
-  throw new Error("Workflow succeeded but showreel poster is still missing on live site");
+  throw new Error("Deploy workflow succeeded but showreel poster is still missing on live site");
 }
