@@ -9,6 +9,7 @@
     "lint": "next lint",
     "format": "prettier --write \"**/*.{ts,tsx,js,json,css,md}\"",
     "encode-showreel": "node scripts/encode-showreel.mjs",
+    "deploy:pages": "node scripts/deploy-pages.mjs",
     "studio": "sanity dev --port 3333"
   },
   "dependencies": {

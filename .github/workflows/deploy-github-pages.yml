@@ -1,6 +1,8 @@
 # Деплой статики на GitHub Pages (basePath = /имя-репозитория).
-# Pages: Settings → Pages → Source: GitHub Actions.
+# Pages: Settings → Pages → Source: Deploy from branch → gh-pages / (root).
+# Либо Source: GitHub Actions (тогда deploy-pages ниже).
 # Manual run: Actions → Deploy to GitHub Pages → Run workflow.
+# Локально: npm run deploy:pages
 name: Deploy to GitHub Pages
 
 on:
@@ -9,7 +11,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
   pages: write
   id-token: write
 
@@ -51,6 +53,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
+
+      - name: Publish gh-pages branch (fallback)
+        uses: peaceiris/actions-gh-pages@v4
+        if: github.ref == 'refs/heads/main'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./out
+          commit_message: "deploy: ${{ github.sha }}"
 
   deploy:
     environment:
