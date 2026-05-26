@@ -1,4 +1,4 @@
-# Деплой на GitHub Pages через ветку gh-pages (без upload-pages-artifact).
+# Деплой без marketplace actions (codeload.github.com недоступен с GitHub runners).
 # Pages: Settings → Pages → Source: Deploy from branch → gh-pages / (root).
 name: Deploy to GitHub Pages
 
@@ -18,36 +18,28 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-
-      - name: Setup Node
-        uses: actions/setup-node@v4
-        with:
-          node-version: "22"
-          cache: npm
-
-      - name: Install
-        run: npm ci --legacy-peer-deps
-
-      - name: Remove API and Studio (не поддерживаются в static export)
-        run: rm -rf app/api app/studio
-
-      - name: Build static site
-        run: npm run build
+      - name: Build and publish to gh-pages
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
           GITHUB_PAGES: "true"
           NEXT_PUBLIC_PAGES_BASE_PATH: /${{ github.event.repository.name }}
           NEXT_PUBLIC_SITE_URL: https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
-
-      - name: Add .nojekyll
-        run: touch out/.nojekyll
-
-      - name: Deploy to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-          publish_branch: gh-pages
+        run: |
+          set -euo pipefail
+          git clone --depth=1 "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git" repo
+          cd repo
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          npm ci --legacy-peer-deps
+          rm -rf app/api app/studio
+          npm run build
+          touch out/.nojekyll
+          cd out
+          git init
+          git checkout -b gh-pages
+          git add -A
+          git commit -m "deploy: ${{ github.sha }}"
+          git push --force "https://x-access-token:${GITHUB_TOKEN}@github.com/${REPOSITORY}.git" gh-pages
