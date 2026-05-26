@@ -20,6 +20,10 @@ export type VideoPlaceholderProps = {
   captionsOnLightBg?: boolean;
   /** Запуск при появлении в viewport (без клика); без звука до unmute в controls */
   autoPlayInView?: boolean;
+  /** Доп. классы для контейнера кадра (aspect / max-height) */
+  frameClassName?: string;
+  /** sizes для poster Image */
+  imageSizes?: string;
 };
 
 export function VideoPlaceholder({
@@ -31,6 +35,8 @@ export function VideoPlaceholder({
   className,
   captionsOnLightBg = false,
   autoPlayInView = false,
+  frameClassName,
+  imageSizes = "(max-width: 768px) 100vw, 62vw",
 }: VideoPlaceholderProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -81,7 +87,10 @@ export function VideoPlaceholder({
     <div className={cn("flex w-full flex-col gap-5", className)}>
       <div
         ref={containerRef}
-        className="group relative isolate aspect-video w-full overflow-hidden rounded-sm md:max-h-[min(56vh,520px)] md:aspect-[16/9]"
+        className={cn(
+          "group relative isolate aspect-video w-full overflow-hidden rounded-sm md:aspect-[16/9] md:max-h-[min(56vh,520px)]",
+          frameClassName
+        )}
       >
         <div
           className="absolute inset-0 bg-gradient-to-br from-[#222] via-[#121212] to-[#070707]"
@@ -93,7 +102,7 @@ export function VideoPlaceholder({
             alt=""
             fill
             className="object-cover"
-            sizes="(max-width: 768px) 100vw, 62vw"
+            sizes={imageSizes}
             priority={false}
           />
         ) : null}
