@@ -10,6 +10,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,js,json,css,md}\"",
     "encode-showreel": "node scripts/encode-showreel.mjs",
     "deploy:pages": "node scripts/deploy-pages.mjs",
+    "deploy:pages:ci": "node scripts/trigger-pages-deploy.mjs",
     "studio": "sanity dev --port 3333"
   },
   "dependencies": {

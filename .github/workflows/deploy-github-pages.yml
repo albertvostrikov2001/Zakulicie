@@ -1,8 +1,7 @@
 # Деплой статики на GitHub Pages (basePath = /имя-репозитория).
-# Pages: Settings → Pages → Source: Deploy from branch → gh-pages / (root).
-# Либо Source: GitHub Actions (тогда deploy-pages ниже).
+# Pages: Settings → Pages → Source: GitHub Actions.
 # Manual run: Actions → Deploy to GitHub Pages → Run workflow.
-# Локально: npm run deploy:pages
+# Локально: npm run deploy:pages (ветка gh-pages) или npm run deploy:pages:ci (Actions)
 name: Deploy to GitHub Pages
 
 on:
@@ -11,13 +10,13 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
 concurrency:
   group: "pages"
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   build:
@@ -38,8 +37,6 @@ jobs:
       - name: Remove API and Studio (не поддерживаются в static export)
         run: rm -rf app/api app/studio
 
-      # NEXT_PUBLIC_PAGES_BASE_PATH: задайте пустую строку только если сайт отдаётся с корня домена
-      # (кастомный домен в Pages). Иначе — /repo как ниже, иначе CSS/JS по путям /repo/_next/… не найдутся.
       - name: Build static site
         run: npm run build
         env:
@@ -49,18 +46,13 @@ jobs:
           NEXT_PUBLIC_SANITY_PROJECT_ID: ${{ secrets.NEXT_PUBLIC_SANITY_PROJECT_ID }}
           NEXT_PUBLIC_SANITY_DATASET: ${{ secrets.NEXT_PUBLIC_SANITY_DATASET }}
 
+      - name: Add .nojekyll
+        run: touch out/.nojekyll
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
           path: out
-
-      - name: Publish gh-pages branch (fallback)
-        uses: peaceiris/actions-gh-pages@v4
-        if: github.ref == 'refs/heads/main'
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-          commit_message: "deploy: ${{ github.sha }}"
 
   deploy:
     environment:
