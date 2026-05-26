@@ -120,6 +120,7 @@ export function VideoSplitSection() {
           className="w-full md:w-[62%] md:max-w-none md:flex-[1.15] md:pr-4"
         >
           <VideoPlaceholder
+            autoPlayInView
             src={getShowreelVideoUrl(false)}
             mobileSrc={getShowreelVideoUrl(true)}
             posterSrc={SHOWREEL_POSTER}

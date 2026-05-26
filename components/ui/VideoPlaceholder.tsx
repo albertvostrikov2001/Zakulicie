@@ -2,6 +2,7 @@
 
 import { cn } from "@/lib/cn";
 import { useIsMobile } from "@/hooks/useIsMobile";
+import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { resolvePublicPath } from "@/lib/publicPath";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
@@ -17,6 +18,8 @@ export type VideoPlaceholderProps = {
   className?: string;
   /** Светлый фон секции — тёмные подписи под кадром */
   captionsOnLightBg?: boolean;
+  /** Запуск при появлении в viewport (без клика); без звука до unmute в controls */
+  autoPlayInView?: boolean;
 };
 
 export function VideoPlaceholder({
@@ -27,10 +30,13 @@ export function VideoPlaceholder({
   description,
   className,
   captionsOnLightBg = false,
+  autoPlayInView = false,
 }: VideoPlaceholderProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
   const [videoReady, setVideoReady] = useState(false);
+  const reduced = usePrefersReducedMotion();
 
   const mobile = useIsMobile();
   const picked = (mobile && mobileSrc ? mobileSrc : src) || mobileSrc || src;
@@ -44,18 +50,39 @@ export function VideoPlaceholder({
   };
 
   useEffect(() => {
+    if (!autoPlayInView || reduced || !resolvedSrc || playing) return;
+    const root = containerRef.current;
+    if (!root) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setPlaying(true);
+          io.disconnect();
+        }
+      },
+      { threshold: 0.35, rootMargin: "0px 0px -8% 0px" }
+    );
+    io.observe(root);
+    return () => io.disconnect();
+  }, [autoPlayInView, reduced, resolvedSrc, playing]);
+
+  useEffect(() => {
     if (!showVideo || !resolvedSrc) return;
     const el = videoRef.current;
     if (!el) return;
     setVideoReady(false);
     el.src = resolvedSrc;
+    if (autoPlayInView) el.muted = true;
     el.load();
     void el.play().catch(() => setPlaying(false));
-  }, [showVideo, resolvedSrc]);
+  }, [showVideo, resolvedSrc, autoPlayInView]);
 
   return (
     <div className={cn("flex w-full flex-col gap-5", className)}>
-      <div className="group relative isolate aspect-video w-full overflow-hidden rounded-sm md:max-h-[min(56vh,520px)] md:aspect-[16/9]">
+      <div
+        ref={containerRef}
+        className="group relative isolate aspect-video w-full overflow-hidden rounded-sm md:max-h-[min(56vh,520px)] md:aspect-[16/9]"
+      >
         <div
           className="absolute inset-0 bg-gradient-to-br from-[#222] via-[#121212] to-[#070707]"
           aria-hidden
@@ -81,6 +108,7 @@ export function VideoPlaceholder({
             )}
             controls
             playsInline
+            muted={autoPlayInView || undefined}
             preload="metadata"
             poster={resolvedPoster}
             onLoadedData={() => setVideoReady(true)}
