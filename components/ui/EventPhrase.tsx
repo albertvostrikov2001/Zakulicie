@@ -260,7 +260,7 @@ export function EventPhrase() {
   return (
     <section
       ref={sectionRef}
-      className="relative overflow-hidden bg-[var(--color-bg)] pb-section pt-12 md:pt-14"
+      className="relative overflow-hidden bg-[var(--color-bg)] py-section"
       aria-label="Событие без компромиссов"
     >
       {!coarsePointer ? (

@@ -70,8 +70,8 @@ export function VideoSplitSection() {
       const textEl = el.querySelector<HTMLElement>("[data-text-reveal]");
       if (!videoEl || !textEl) return;
 
-      const vShift = mobile ? 0 : -72;
-      const tShift = mobile ? 0 : 36;
+      const vShift = mobile ? 0 : -48;
+      const tShift = mobile ? 0 : 40;
 
       /* Только x: не трогаем opacity — иначе при сбое ScrollTrigger/Lenis на статике/GH Pages
          блок остаётся с opacity:0 и «пропадает» постер. */
@@ -114,12 +114,12 @@ export function VideoSplitSection() {
       style={{ backgroundColor: "var(--scene-bg, #0a0a0a)" }}
       aria-label="Showreel и подход"
     >
-      <div className="mx-auto grid min-h-[min(88dvh,920px)] max-w-[min(98vw,1720px)] grid-cols-1 gap-8 px-4 py-10 md:grid-cols-[minmax(0,1fr)_min(240px,26%)] md:items-center md:gap-7 md:px-6 md:py-[clamp(2.25rem,4.5vh,3.75rem)] lg:grid-cols-[minmax(0,1fr)_min(280px,24%)] lg:gap-9 lg:px-8">
-        <div data-video-reveal className="w-full min-w-0 md:col-start-1">
+      <div className="mx-auto flex min-h-[min(76dvh,760px)] max-w-content flex-col gap-8 px-4 py-11 md:flex-row md:items-center md:gap-10 md:px-8 md:py-[clamp(2.5rem,5vh,4rem)] lg:gap-12">
+        <div data-video-reveal className="w-full min-w-0 md:w-[56%] md:max-w-none md:flex-[0.56]">
           <VideoPlaceholder
             autoPlayInView
-            frameClassName="max-h-[min(58vh,440px)] md:max-h-[min(74vh,780px)]"
-            imageSizes="(max-width: 768px) 100vw, 76vw"
+            frameClassName="max-h-[min(45vh,360px)] md:max-h-[min(45vh,468px)]"
+            imageSizes="(max-width: 768px) 100vw, 56vw"
             src={getShowreelVideoUrl(false)}
             mobileSrc={getShowreelVideoUrl(true)}
             posterSrc={SHOWREEL_POSTER}
@@ -133,15 +133,15 @@ export function VideoSplitSection() {
           data-text-reveal
           className={
             lightScene
-              ? "flex w-full min-w-0 flex-col justify-center text-[#1a1a1a] md:col-start-2 md:pl-1 lg:pl-3"
-              : "flex w-full min-w-0 flex-col justify-center md:col-start-2 md:pl-1 lg:pl-3"
+              ? "flex w-full min-w-0 flex-col justify-center text-[#1a1a1a] md:w-[44%] md:flex-[0.44] md:pl-2 lg:pl-6"
+              : "flex w-full min-w-0 flex-col justify-center md:w-[44%] md:flex-[0.44] md:pl-2 lg:pl-6"
           }
         >
           <h2
             className={
               lightScene
-                ? "font-display text-[clamp(1.1rem,1.75vw,2rem)] font-black leading-[1.14] tracking-tight text-[#1a1a1a]"
-                : "font-display text-[clamp(1.1rem,1.75vw,2rem)] font-black leading-[1.14] tracking-tight text-text-primary"
+                ? "font-display text-[clamp(1.25rem,2.1vw,2.5rem)] font-black leading-[1.12] tracking-tight text-[#1a1a1a]"
+                : "font-display text-[clamp(1.25rem,2.1vw,2.5rem)] font-black leading-[1.12] tracking-tight text-text-primary"
             }
           >
             Организация мероприятий полного цикла
@@ -149,8 +149,8 @@ export function VideoSplitSection() {
           <p
             className={
               lightScene
-                ? "mt-4 text-[13px] leading-relaxed text-[rgba(26,26,26,0.72)] md:text-sm"
-                : "mt-4 text-[13px] leading-relaxed text-text-secondary md:text-sm"
+                ? "mt-5 text-sm leading-relaxed text-[rgba(26,26,26,0.72)] md:text-base"
+                : "mt-5 text-sm leading-relaxed text-text-secondary md:text-base"
             }
           >
             Двадцать лет в индустрии и свыше трёх тысяч реализованных форматов — от корпоративной повестки до
@@ -161,8 +161,8 @@ export function VideoSplitSection() {
             href="#contact-form"
             className={
               lightScene
-                ? "mt-7 inline-flex w-fit items-center border-[1.5px] border-[#1a1a1a] bg-transparent px-7 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition-[background-color,color] duration-[250ms] ease-out hover:bg-[#1a1a1a] hover:text-[#f2efe9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
-                : "mt-7 inline-flex w-fit items-center border-[1.5px] border-accent bg-transparent px-7 py-3 text-[12px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+                ? "mt-9 inline-flex w-fit items-center border-[1.5px] border-[#1a1a1a] bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition-[background-color,color] duration-[250ms] ease-out hover:bg-[#1a1a1a] hover:text-[#f2efe9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+                : "mt-9 inline-flex w-fit items-center border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
             }
           >
             Обсудить проект
@@ -171,8 +171,8 @@ export function VideoSplitSection() {
           <div
             className={
               lightScene
-                ? "mt-8 hidden max-w-[240px] text-right md:mt-10 md:block [&_p]:text-[rgba(26,26,26,0.45)]"
-                : "mt-8 hidden max-w-[240px] text-right md:mt-10 md:block"
+                ? "mt-10 hidden max-w-[300px] text-right md:mt-14 md:block [&_p]:text-[rgba(26,26,26,0.45)]"
+                : "mt-10 hidden max-w-[300px] text-right md:mt-14 md:block"
             }
           >
             {OFFER.map((line) => (
