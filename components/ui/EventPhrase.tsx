@@ -17,7 +17,11 @@ interface LetterEntry {
   imageAlt: string;
 }
 
-const PHRASE = "СОБЫТИЕ БЕЗ КОМПРОМИССОВ";
+const PHRASE = "Творчески. Системно. Про людей";
+
+function isInteractiveChar(char: string): boolean {
+  return char !== " " && char !== ".";
+}
 
 const IMAGE_SOURCES: string[] = [
   "/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/gallery/01.webp",
@@ -37,10 +41,12 @@ const IMAGE_SOURCES: string[] = [
 const LETTERS: LetterEntry[] = PHRASE.split("").map((char, i) => ({
   char,
   imageSrc: IMAGE_SOURCES[i % IMAGE_SOURCES.length] ?? "",
-  imageAlt: `Событие без компромиссов — кадр ${i + 1}`,
+  imageAlt: `Творчески. Системно. Про людей — кадр ${i + 1}`,
 }));
 
-const INTERACTIVE_LETTERS: LetterEntry[] = LETTERS.filter((l) => l.char !== " ");
+const INTERACTIVE_INDICES = LETTERS.map((_, i) => i).filter((i) =>
+  isInteractiveChar(LETTERS[i]!.char)
+);
 
 function useCoarsePointer(): boolean {
   const [coarse, setCoarse] = useState(false);
@@ -65,7 +71,7 @@ function DesktopImageLayer({
   return (
     <div className="pointer-events-none absolute inset-0 z-[5]" aria-hidden>
       {LETTERS.map((entry, i) => {
-        if (entry.char === " ") return null;
+        if (!isInteractiveChar(entry.char)) return null;
         return (
           <div
             key={i}
@@ -118,7 +124,7 @@ function DesktopLetterRow({
       const letter = letterRefs.current[index];
       const image = imageRefs.current[index];
       if (!section || !letter || !image) return;
-      if (LETTERS[index]?.char === " ") return;
+      if (!isInteractiveChar(LETTERS[index]?.char ?? "")) return;
 
       const sR = section.getBoundingClientRect();
       const lR = letter.getBoundingClientRect();
@@ -153,17 +159,23 @@ function DesktopLetterRow({
 
   return (
     <p
-      className="relative z-[10] m-0 inline-block font-display font-bold uppercase leading-[1.05]"
+      className="relative z-[10] m-0 inline-flex max-w-full flex-wrap justify-center font-display font-bold leading-[1.15]"
       style={{
-        fontSize: "clamp(22px, 3.4vw, 48px)",
+        fontSize: "clamp(20px, 2.8vw, 44px)",
         letterSpacing: "-0.02em",
-        whiteSpace: "nowrap",
         color: "var(--color-text-primary)",
       }}
     >
       {LETTERS.map((entry, i) => {
         if (entry.char === " ") {
           return <span key={i} className="inline-block w-[0.25em]" aria-hidden />;
+        }
+        if (!isInteractiveChar(entry.char)) {
+          return (
+            <span key={i} className="inline-block select-none">
+              {entry.char}
+            </span>
+          );
         }
         return (
           <span
@@ -191,26 +203,50 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
   useEffect(() => {
     if (reduced) return;
     cycleRef.current = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % INTERACTIVE_LETTERS.length);
+      setActiveIndex((i) => (i + 1) % INTERACTIVE_INDICES.length);
     }, 1800);
     return () => {
       if (cycleRef.current) clearInterval(cycleRef.current);
     };
   }, [reduced]);
 
-  const activeLetter = INTERACTIVE_LETTERS[activeIndex] ?? INTERACTIVE_LETTERS[0];
+  const activeLetterIndex = INTERACTIVE_INDICES[activeIndex] ?? INTERACTIVE_INDICES[0] ?? 0;
+  const activeLetter = LETTERS[activeLetterIndex];
 
   return (
     <div className="relative flex w-full flex-col items-center">
       <p
-        className="m-0 font-display font-bold uppercase leading-[1.05]"
+        className="m-0 inline-flex max-w-full flex-wrap justify-center font-display font-bold leading-[1.15]"
         style={{
-          fontSize: "clamp(32px, 8vw, 52px)",
+          fontSize: "clamp(28px, 7vw, 48px)",
           letterSpacing: "-0.02em",
           color: "var(--color-text-primary)",
         }}
       >
-        {PHRASE}
+        {LETTERS.map((entry, i) => {
+          if (entry.char === " ") {
+            return <span key={i} className="inline-block w-[0.25em]" aria-hidden />;
+          }
+          if (!isInteractiveChar(entry.char)) {
+            return (
+              <span key={i} className="inline-block select-none">
+                {entry.char}
+              </span>
+            );
+          }
+          return (
+            <span
+              key={i}
+              className={
+                !reduced && activeLetterIndex === i
+                  ? "text-accent transition-colors duration-300"
+                  : "transition-colors duration-300"
+              }
+            >
+              {entry.char}
+            </span>
+          );
+        })}
       </p>
 
       <div
@@ -221,7 +257,7 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
         <AnimatePresence mode="wait">
           {activeLetter ? (
             <motion.div
-              key={`${activeLetter.imageSrc}-${activeIndex}`}
+              key={`${activeLetter.imageSrc}-${activeLetterIndex}`}
               className="relative overflow-hidden rounded-[2px]"
               style={{
                 width: "min(80vw, 300px)",
@@ -261,7 +297,7 @@ export function EventPhrase() {
     <section
       ref={sectionRef}
       className="relative overflow-hidden bg-[var(--color-bg)] py-section"
-      aria-label="Событие без компромиссов"
+      aria-label="Творчески. Системно. Про людей"
     >
       {!coarsePointer ? (
         <DesktopImageLayer imageRefs={imageRefs} />

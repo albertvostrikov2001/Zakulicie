@@ -6,10 +6,11 @@ import { cn } from "@/lib/cn";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import { useCallback, useEffect, useRef, useState } from "react";
-const PHRASE = "СОБЫТИЕ БЕЗ КОМПРОМИССОВ";
+const PHRASE = "Творчески. Системно. Про людей";
 
 type Token =
   | { kind: "space"; key: string }
+  | { kind: "punct"; char: string; key: string }
   | { kind: "letter"; char: string; letterIndex: number; key: string };
 
 function buildTokens(phrase: string): Token[] {
@@ -18,6 +19,7 @@ function buildTokens(phrase: string): Token[] {
   for (let i = 0; i < phrase.length; i++) {
     const ch = phrase[i];
     if (ch === " ") out.push({ kind: "space", key: `sp-${i}` });
+    else if (ch === ".") out.push({ kind: "punct", char: ch, key: `p-${i}` });
     else out.push({ kind: "letter", char: ch, letterIndex: letterIndex++, key: `L-${i}-${ch}` });
   }
   return out;
@@ -145,10 +147,14 @@ export function LayeredCollage() {
             </AnimatePresence>
           </div>
 
-          <div className="relative z-[10] flex flex-wrap justify-center gap-x-[0.015em] gap-y-2 px-1 text-center font-display text-[clamp(1.15rem,3.4vw,2.85rem)] font-bold uppercase leading-[1.05] tracking-tight text-text-primary md:gap-x-[0.02em] md:px-2 md:text-[clamp(1.35rem,3.8vw,3.35rem)] md:leading-none md:tracking-tighter">
+          <div className="relative z-[10] flex flex-wrap justify-center gap-x-[0.015em] gap-y-2 px-1 text-center font-display text-[clamp(1.15rem,3.4vw,2.85rem)] font-bold leading-[1.15] tracking-tight text-text-primary md:gap-x-[0.02em] md:px-2 md:text-[clamp(1.35rem,3.8vw,3.35rem)] md:leading-none md:tracking-tighter">
             {WORD_TOKENS.map((t) =>
               t.kind === "space" ? (
                 <span key={t.key} className="inline-block w-[0.22em] shrink-0 md:w-[0.28em]" aria-hidden />
+              ) : t.kind === "punct" ? (
+                <span key={t.key} className="inline-block select-none">
+                  {t.char}
+                </span>
               ) : (
                 <span
                   key={t.key}

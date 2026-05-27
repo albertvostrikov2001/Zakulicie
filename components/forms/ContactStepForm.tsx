@@ -6,6 +6,7 @@ import {
   contactFormSchema,
   type ContactFormValues,
 } from "@/lib/validators/contact";
+import Link from "next/link";
 import {
   useCallback,
   useEffect,
@@ -312,7 +313,8 @@ export function ContactStepForm() {
                 }}
               />
               <label className={styles.consentText} htmlFor="consent">
-                Согласен с <a href="#">политикой конфиденциальности</a> и обработкой
+                Согласен с{" "}
+                <Link href="/privacy-policy">политикой конфиденциальности</Link> и обработкой
                 персональных данных
               </label>
             </div>

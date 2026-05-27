@@ -4,9 +4,7 @@ import Link from "next/link";
 
 const legal = [
   { href: "/privacy-policy", label: "Политика конфиденциальности" },
-  { href: "/data-consent",   label: "Согласие на обработку данных" },
   { href: "/requisites",     label: "Реквизиты" },
-  { href: "/oferta",         label: "Оферта" },
 ];
 
 export function Footer() {

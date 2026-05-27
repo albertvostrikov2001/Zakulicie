@@ -54,7 +54,7 @@ export default async function HomePage() {
       {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />
 
-      {/* 1.5 – «СОБЫТИЕ БЕЗ КОМПРОМИССОВ» — эмоциональный переход */}
+      {/* 1.5 – «Творчески. Системно. Про людей» — эмоциональный переход */}
       <EventPhrase />
 
       {/* 3 – STATS: 4 крупных числа, counter-up */}

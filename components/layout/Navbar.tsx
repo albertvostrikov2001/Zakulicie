@@ -11,8 +11,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+/** Текст бренда в левой части хедера (ссылка на главную) */
+const BRAND_LABEL = "Ивент-агентство полного цикла";
+
 /** ~×1.5 к прежним 13px — навигация, телефон, выпадающий список */
 const NAV_TEXT = "text-[19px] leading-snug tracking-[0.03em]";
+
+/** Бренд в хедере: на 1 шаг крупнее навигации, без подчёркивания */
+const BRAND_TEXT = "text-[20px] leading-snug tracking-[0.03em]";
 
 const navLinkClass = (light: boolean) =>
   cn(
@@ -20,6 +26,13 @@ const navLinkClass = (light: boolean) =>
     NAV_TEXT,
     "after:pointer-events-none after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:ease-out",
     "hover:after:scale-x-100",
+    light ? "text-[#1A1A1A]/90 hover:text-[#1A1A1A]" : "text-white/80 hover:text-white"
+  );
+
+const brandLinkClass = (light: boolean) =>
+  cn(
+    "inline-flex items-center font-medium transition-colors duration-200 ease-out",
+    BRAND_TEXT,
     light ? "text-[#1A1A1A]/90 hover:text-[#1A1A1A]" : "text-white/80 hover:text-white"
   );
 
@@ -92,15 +105,17 @@ export function Navbar() {
           ref={innerRef}
           className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-5 md:gap-5 md:px-8 md:py-5"
         >
-          {/* Logo — размер как был (не трогаем композицию wordmark) */}
+          {/* Бренд / home — крупнее навигации, без подчёркивания */}
           <Link
             href="/"
+            aria-label="На главную — Ивент-агентство полного цикла"
             className={cn(
-              "shrink-0 font-display text-base font-semibold tracking-tight md:text-lg",
-              lightHero ? "text-text-dark" : "text-text-primary"
+              brandLinkClass(lightHero),
+              "max-w-[min(11rem,42vw)] shrink-0 sm:max-w-[12.5rem] lg:max-w-[13.5rem] xl:max-w-[15rem] 2xl:max-w-none 2xl:whitespace-nowrap",
+              pathname === "/" && (lightHero ? "text-text-dark" : "text-accent")
             )}
           >
-            Закулисье
+            {BRAND_LABEL}
           </Link>
 
           {/* Desktop nav */}

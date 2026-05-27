@@ -20,10 +20,13 @@ const TAG_ON_DARK   = "#ECE8E0";
 
 const WORDMARK = "ЗАКУЛИСЬЕ";
 
-/** Hero: короткая «надстройка» над supporting — без дублирования ниже */
-const HERO_CAPTION = "ивент-агентство полного цикла";
-/** Основной supporting-текст hero (единственное развёрнутое пояснение) */
-const HERO_SUPPORTING = "организация корпоративных и деловых событий для вашего бизнеса";
+/** Hero headline — левый нижний угол (как на референсе) */
+const HERO_HEADLINE_LINES = [
+  "Ивент-агентство",
+  "полного цикла",
+  "для корпоративных",
+  "и деловых событий",
+] as const;
 
 export function TransitionSection() {
   const sectionRef    = useRef<HTMLElement>(null);
@@ -145,8 +148,8 @@ export function TransitionSection() {
 
         <div className="relative z-[3] flex min-h-0 flex-1 flex-col justify-between px-4 pb-12 pt-[clamp(5.5rem,12vh,8rem)] md:px-8 md:pb-14 md:pt-[clamp(6rem,14vh,9rem)]">
 
-          {/* Wordmark — dominant, left-anchored (отступ к текстовому блоку, без наезда) */}
-          <div className="pointer-events-none relative mb-8 w-[min(100%,96vw)] max-w-[1600px] md:mb-10">
+          {/* Wordmark — dominant, left-anchored */}
+          <div className="pointer-events-none relative w-[min(100%,96vw)] max-w-[1600px]">
             <p
               ref={wordRef}
               data-transition-wordmark
@@ -160,47 +163,39 @@ export function TransitionSection() {
             </p>
           </div>
 
-          {/* Bottom-right: descriptor + CTA — mobile: flow; md+: absolute */}
+          {/* Bottom-right: headline + CTA */}
           <div
             ref={tagWrapRef}
-            className="relative z-[3] mt-auto flex w-full justify-center px-5 pb-11 pt-1 md:static md:mt-0 md:flex md:justify-end md:px-0 md:pb-0 md:pt-0"
+            className="relative z-[3] mt-auto flex w-full justify-center px-5 pb-11 pt-1 md:static md:mt-0 md:justify-end md:px-0 md:pb-0 md:pt-0"
           >
-            <div className="flex w-full max-w-[min(540px,94vw)] flex-col items-start md:absolute md:bottom-[52px] md:right-14 md:max-w-[min(520px,40ch)] md:w-auto">
-              <div className="flex w-full gap-3 self-stretch sm:gap-4 md:gap-5">
+            <div className="flex w-full max-w-[min(540px,94vw)] flex-col items-start md:absolute md:bottom-[52px] md:right-14 md:w-auto">
+              <div className="flex w-full gap-4 self-stretch sm:gap-5">
                 <div
                   className="w-px shrink-0 self-stretch rounded-full bg-accent"
                   aria-hidden
                 />
-                <div className="flex min-w-0 flex-1 flex-col gap-4 md:gap-5">
-                  <p
-                    data-trans-tag
-                    className="m-0 max-w-full font-body font-semibold uppercase leading-snug tracking-[0.18em] text-[color:inherit] [text-wrap:balance] md:tracking-[0.2em]"
-                    style={{
-                      fontSize: "clamp(11px, 2.85vw, 12px)",
-                      lineHeight: 1.45,
-                      color: TAG_ON_LIGHT,
-                    }}
-                  >
-                    {HERO_CAPTION}
-                  </p>
+                <div className="flex min-w-0 flex-1 flex-col gap-5">
                   <h1
                     data-trans-tag
-                    className="m-0 max-w-full font-body font-medium leading-snug tracking-[-0.015em] text-[color:inherit] md:leading-[1.5]"
+                    className="m-0 font-display font-black text-[color:inherit]"
                     style={{
-                      fontSize: "clamp(16px, 3.95vw, 22px)",
-                      lineHeight: 1.45,
+                      fontSize: "clamp(20px, 2.4vw, 32px)",
+                      lineHeight: 1.15,
+                      letterSpacing: "-0.02em",
                       color: TAG_ON_LIGHT,
                     }}
                   >
-                    {HERO_SUPPORTING.charAt(0).toUpperCase()}
-                    {HERO_SUPPORTING.slice(1)}
+                    {HERO_HEADLINE_LINES.map((line, i) => (
+                      <span key={line} className={i > 0 ? "block" : undefined}>
+                        {line}
+                      </span>
+                    ))}
                   </h1>
 
-                  {/* Bordered CTA with arrow */}
                   <a
                     ref={ctaRef}
                     href="#contact-form"
-                    className="group mt-0.5 inline-flex w-fit scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:mt-0 md:hover:shadow-2xl"
+                    className="group inline-flex w-fit scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
                     style={{
                       fontSize: "clamp(15px, 1.6vw, 20px)",
                       letterSpacing: "0.08em",
