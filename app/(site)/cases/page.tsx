@@ -43,17 +43,17 @@ export default async function CasesPage() {
       <PageWrapper>
         <header className="max-w-3xl">
           <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">
-            Кейсы ивент агентства «Закулисье»
+            Кейсы event&#8209;агентства «Закулисье»
           </h1>
           <p className="mt-4 text-lg text-text-secondary">
-            Проекты, за которые не стыдно отправить ссылку коллеге. Без лишних слов — фактура задач и
-            результата.
+            Реализованные проекты — без лишних слов: задача, что сделано и результат.
+            Федеральные бренды, региональные лидеры, события от 150 до 8 000 человек.
           </p>
         </header>
 
         <section className="mt-12" aria-labelledby="cases-intro-heading">
           <h2 id="cases-intro-heading" className="font-display text-2xl font-semibold text-text-primary md:text-3xl">
-            Мероприятия для федеральных брендов и лидеров региона
+            Корпоративы, деловые форумы, церемонии, тимбилдинг и городские события
           </h2>
         </section>
 

@@ -14,7 +14,7 @@ export const UPDATED_CASE_ASSETS: CaseAssetMeta[] = [
   {
     slug: "spartakiada-metall-profil",
     legacySlug: "spartakiada",
-    coverFocal: "center top",
+    coverFocal: "center center",
     assetMatch: "65f07c17",
   },
   {
@@ -32,13 +32,13 @@ export const UPDATED_CASE_ASSETS: CaseAssetMeta[] = [
   {
     slug: "veterinarnyj-forum",
     legacySlug: "veterinarnyy-festival",
-    coverFocal: "right center",
+    coverFocal: "center center",
     assetMatch: "f962de77",
   },
   {
     slug: "novogodnij-korporativ-alfa-dengi",
     legacySlug: "alfa-dengi-kazino",
-    coverFocal: "center bottom",
+    coverFocal: "center center",
     assetMatch: "7685e9f3",
   },
   {
@@ -122,7 +122,7 @@ export const UPDATED_CASE_ASSETS: CaseAssetMeta[] = [
   {
     slug: "ugol-rossii-majning",
     legacySlug: "ugol-rossii-mining",
-    coverFocal: "right center",
+    coverFocal: "center center",
     assetMatch: "ugol-rossii-majning",
   },
 ];

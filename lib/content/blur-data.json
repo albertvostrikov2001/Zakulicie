@@ -1046,9 +1046,9 @@
   "opening-holiley-classic": {
     "cover": {
       "src": "/cases/opening-holiley-classic/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRogAAABXRUJQVlA4IHwAAAAwBACdASoUAAwAPzmGuVOvKSWisAgB4CcJZAC7ACPpzZHyNR+crnPovjAA/rX2ctBruaYlF3/S//chMv9wnFTxLrFdA57AUducU29zkDwUbneuatbtb+/yUB+CsfDspsaE5ujN3iTIXyy7roioDfiNMfOEHR4qQNHWgAAA",
-      "width": 1080,
-      "height": 1080
+      "blurDataURL": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAABQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdL144AB9TSrmT2YqSJL3QAP4G8RtXNxHr12MuPeEBNXpdBubBA3IIQTYLIrDvkabqFPb0blEVt5L0+MsI4zFSpSP2FK8b4qPGqNJf+X+Ql96AfQmhooT5UgUaufnC5hu/vkIhGS+QUC7ciE7dbnXSAAAA",
+      "width": 1280,
+      "height": 853
     },
     "gallery": [
       {
@@ -1474,9 +1474,9 @@
   "syezd-dilerov-metall-profil": {
     "cover": {
       "src": "/cases/syezd-dilerov-metall-profil/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAAAQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJQBYdhCWIzwY7lCV4WlCgAAD+tfku38cAPF4Yz9VwIY/eCJXV7YlYsTv3sOOGqyTPT/WOssswsbP/lsmrTKh/zh2KtVSEcUJekELIMSKlnLSHig+564R/Wo9UoAAA",
-      "width": 667,
-      "height": 667
+      "blurDataURL": "data:image/webp;base64,UklGRnQAAABXRUJQVlA4IGgAAAAQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJQBOgBGAW0iCEorQJ8YOjAAD9rTq1rqf0JugEXBDE7jFxqZvsuCqNtaXxMHwtnGhOEQAw/V+VrCuFd9a76efsPL+xvyDDQEoQrXLvA4IgAA==",
+      "width": 1920,
+      "height": 1282
     },
     "gallery": [
       {
@@ -1796,9 +1796,9 @@
   "spartakiada-metall-profil": {
     "cover": {
       "src": "/cases/spartakiada-metall-profil/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJZACdACBTcWx20xzo9NxpgAD4Q7PXxQ9KKvfIsYYpd1FDBgpQng2pocyv7xCGxSapddb64ETJMgLyN3CgxFgmh5WKTE/Iq8NF82hUtwvh17oauy/7ijWgAAA=",
-      "width": 682,
-      "height": 1024
+      "blurDataURL": "data:image/webp;base64,UklGRnoAAABXRUJQVlA4IG4AAACQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJZQDImA36rSZQ3hoAAP59o20yyHPSsU+3GwbHrRhDcYpgYTRrUeYeUIZdrMPmLuJo6glK7tV5amfn0qXA34lgD/HjMmxp3AyAoBoNqDvirtUyn3AAAA==",
+      "width": 1600,
+      "height": 1067
     },
     "gallery": [
       {
@@ -1896,9 +1896,9 @@
   "yubilej-bolotninskaya-gofrotara": {
     "cover": {
       "src": "/cases/yubilej-bolotninskaya-gofrotara/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJQAADm89/8muaAADOHXBwyNhgXfUFUIuqQBC58O2PXeYoEI8Tji2MzqdK7sQzpFBF7XnwojfdmpP7p9DSFSRuYOr8MRPQIlgAAA==",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAACQAwCdASoUAAwAPzmGulOvKKWisAgB4CcJYwAARjEVb20BxWhwAPkGVUtM+gT2Vsi59SKu9zQPyb45i/6swoH7w4eR5yrqTPF9CWYnyk1yL3ErwqE2L2iifI2NxdiwS/CoAAAA",
+      "width": 2000,
+      "height": 1334
     },
     "gallery": [
       {
@@ -1978,9 +1978,9 @@
   "artdom-dizajn-konferenciya": {
     "cover": {
       "src": "/cases/artdom-dizajn-konferenciya/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJQAALvhS5E+9nuprLwAAA/tj1M9FYPhAfTdMMezbSGfbaoybeEvwrNmanDj64XnmdfjZuoAuaZu4MtpL9qvfV5krn2LcAAAA=",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRmwAAABXRUJQVlA4IGAAAADwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJQAALvhVA5U3tYF16FmYAAP7Y9TPRWD4QH0u7tci+1lqWW6xUx8vwrNmanDSk0aTBktgzCQaPCz0yDGyvfNhrn2XHnvkcAAA=",
+      "width": 2000,
+      "height": 1333
     },
     "gallery": [
       {
@@ -2048,9 +2048,9 @@
   "veterinarnyj-forum": {
     "cover": {
       "src": "/cases/veterinarnyj-forum/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAACwAwCdASoUAAwAPzmGulOvKKWisAgB4CcJYwDCgBobgrKnjjuKAAD5BlVLTPoE9lbIufUirvc0D8m+w4HBqUIPxwmT56O3HKev5TnfXIXMxVM4MsSn7MMW6zNcYNIZ1MVAAA==",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJZADCgB9xTPSGQSk+hJAA/uXYf4AID14XT5LaC6bCdftyTi26yZqBtsHjtFgATYMzgX/V3jEMfewQ0Z6N15mAkiT/WYeBdRKZd8zJB1izgjlR+l8TsTExigxHp1bmJ8nmnub+AAA=",
+      "width": 2000,
+      "height": 1334
     },
     "gallery": [
       {
@@ -2118,9 +2118,9 @@
   "novogodnij-korporativ-alfa-dengi": {
     "cover": {
       "src": "/cases/novogodnij-korporativ-alfa-dengi/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAACwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdABuKlcip1zmawAD+wZkZujf/UjSS3ro/9l5xF0qAbiudlAZc5qVK+upPva8hJ4JXN2iWHVKI4HymN1ny+pkraGUEg1PIqmouwB6C+QS0xYjF0OgA",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoUAAwAPzmGulOvKKWisAgB4CcJbAC06BuKlco4h/Pl8hgA/sGZGbo3/1I0kt66P/ZecRdKgG4rnZQGXOalSvrqT72wZEMFIVea+kvCxArRL/73/sshPdnbhXyJCHZa6uBHqi+fQdnXYHwfTX3AAA==",
+      "width": 2000,
+      "height": 1333
     },
     "gallery": [
       {
@@ -2188,9 +2188,9 @@
   "otkrytie-fontana-centralnyj-park": {
     "cover": {
       "src": "/cases/otkrytie-fontana-centralnyj-park/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJaQAARPDGM/ZwuSOX+baAAP6FTnRiRR5Ow1acecOPZWTD/EIo6EtwruAq01GoqNaw038NofNxH6piI5HCaL7rGd8T638R0kyQoAAA",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAADwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJaQAARPDGM/ZwuSOX+QAAAP6FTnRiRR5Ow1acecOPZWTD/EIo6EtwruAq01GoqNaw038NofNxH6piI5HCaL7rGd8T638R0kgQAA==",
+      "width": 2000,
+      "height": 1333
     },
     "gallery": [
       {
@@ -2264,7 +2264,7 @@
   "yubilej-sts-25-let": {
     "cover": {
       "src": "/cases/yubilej-sts-25-let/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdABoeshe6QVQO1vywAP610bkm0tzOFJd+vzG7r2Lub+utN2AvQXv0WXMGXhvF5HW5kCu1K4UEn/uqmufjbgeEeZvZTZqGS+X6KHMj/GH+tYrRxbvBPOPjgAAA",
+      "blurDataURL": "data:image/webp;base64,UklGRoIAAABXRUJQVlA4IHYAAADwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdABoeshe6QVQO1vywAP610bkm0twvgklCa66OcZujvk6qSws9Thhcr/4auFCbuZ3R+Y6V2QQbloQjd6iCVGgsVDU1dnxntSxPyUh0tgWc6Sw1T+uQUur24AAA",
       "width": 749,
       "height": 501
     },
@@ -2316,9 +2316,9 @@
   "korporativ-lyubimaya-kuhnya": {
     "cover": {
       "src": "/cases/korporativ-lyubimaya-kuhnya/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJZQBTAAY3pfFr8kAA/uv/Jtq5JQk49VcJzi2k0sq5SUR7fWnuT84Gihere+5Q7DgAAA==",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRlYAAABXRUJQVlA4IEoAAABwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJZQBTAAY3pfFr8kAA/uv/Jtq5JQk49VcJzi2k0sq5SUTTipSbkCcwqfQ2Ot6GCvaAAA==",
+      "width": 2000,
+      "height": 1333
     },
     "gallery": [
       {
@@ -2398,9 +2398,9 @@
   "otkrytie-lerua-merlen-kemerovo": {
     "cover": {
       "src": "/cases/otkrytie-lerua-merlen-kemerovo/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRnwAAABXRUJQVlA4IHAAAABwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJQBYdg6XqRienFoAA+R7HgPLEMI4k+2gcO01NS/v82VvTBESAGLmeoeuT1lZwhiWGxEHmX9AybFbg10EQZgWzLjTRd8IuA9tVweuHjKStyiHAlSKSuUAA",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAABwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJQBYdg6XqRiu85wAA+R7HgPLEMI4k+2gcO01NS/v82VvTBESAGLmeoeuT1lZwhiWGxEHmX9AybFbg10EQZgWzLmbOXWnyPzWCcNnGUlb0cxy2oiRSVygAAAA=",
+      "width": 1280,
+      "height": 853
     },
     "gallery": [
       {
@@ -2438,9 +2438,9 @@
   "dr-zolotoe-yabloko-master-klassy": {
     "cover": {
       "src": "/cases/dr-zolotoe-yabloko-master-klassy/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRoYAAABXRUJQVlA4IHoAAADQAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJYwDG9CBXssorGaBAMkAA/fog71BhjlQlEgI3tKIdJ1FB587qNjESoICs9Q0gFxh7zSaFy20FfnfaLqR+sAmaLi+4aEj97B2ln2sLs4+iDM7FH43qzTRyQJENObc/98gAAA==",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRm4AAABXRUJQVlA4IGIAAABQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJQAADm89/8muaAADOHXBwyNhgXfUFUIuqQBC58O2PXeYoEI8Tji2MzqdK7sQzpFBF7XnwojfdmpP7p9DSFSRuYOr8MRPQIlgAAA==",
+      "width": 1280,
+      "height": 853
     },
     "gallery": [
       {
@@ -2514,9 +2514,9 @@
   "cherno-belyj-fest-sibirskij-moll": {
     "cover": {
       "src": "/cases/cherno-belyj-fest-sibirskij-moll/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAAAQBACdASoUAAwAPzmGuVOvKSWisAgB4CcJYwAAVJr0GzhCnAkDmWpIAADMQ425dGZm8bg1WqqM4Th8IQSC1krXrPVOsdNOaEjdgq5HWkSX7/uKViww0I7GYhEVhS1N1WPSCHzl2ve+c9Bf0Lfnvdq5HgA=",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRn4AAABXRUJQVlA4IHIAAADwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJYwAAVJr0G2o9KAcy1qcAAMxDjbl0ZmbxuDVaqozhOHwhBILWStes9U6DuXcYMfLhnyOtIkv3/cUrFhhoRmyiERWF+WOYLNuYioVQurRIAbzJvHee92rkeAA=",
+      "width": 2000,
+      "height": 1334
     },
     "gallery": [
       {
@@ -2590,9 +2590,9 @@
   "korporativ-metall-profil-ng": {
     "cover": {
       "src": "/cases/korporativ-metall-profil-ng/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRnAAAABXRUJQVlA4IGQAAADQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdMoAB0JUt032PhAAA+KToO3mZBD9UwKrGnbHRqid19CJwwjR78SwIwQ/CAzxYARH1oyz1yTXJCZgjq7GxnfSxfsiGi6uYAAAA",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRnIAAABXRUJQVlA4IGYAAACwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdMoAB3plSICqpAAD4pOg7eZkD5R1YzkAA2dGqJ3X0InQwV5p9BYSaGc1g5uZDicnnMurmIU+cXPVpUlnYEEsJVxXvqY0xdHiAAAA=",
+      "width": 2000,
+      "height": 1334
     },
     "gallery": [
       {
@@ -2642,9 +2642,9 @@
   "semejnyj-korporativ-varmix-warmax": {
     "cover": {
       "src": "/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJQAAMLel5azLkpRLW7IAA/ZniKxSx6Dmn1nnFUp18wWtdOO7l+0OnuHeeZLgGNmowhBCf1knMqK57Xc5ldkt0N5UBKxzBbPbYmCMajuvpuDsiApooeiyBPnSAAA==",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRoAAAABXRUJQVlA4IHQAAADQAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJQAAMLel5azLkpRLWJwAA/ZniKxSx6Dmn1nnFUp18wXjmi7JzjgbTrG2VQN2Yn91uzFhfxRIFfgKyZzh+UTpf0FaWD/7XlHwFoeBaNyF23BRnK3fxGNRNsp9gAA==",
+      "width": 2000,
+      "height": 1334
     },
     "gallery": [
       {
@@ -2760,18 +2760,18 @@
   "obuchenie-detej-pdd": {
     "cover": {
       "src": "/cases/obuchenie-detej-pdd/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRowAAABXRUJQVlA4IIAAAADQAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdIIjBpW4W5w0/ATAAy/VLnzpby7ZV92wiGngL8pC+wsmnHOEUyt65P0REbTxNiPgmm0HEYSpzg8vEdNiAc5Hs9wyzqaTIgTLMKeA5y/sajONpvBFOr02hO+uxF6aZWyii2TIAAA==",
-      "width": 1024,
-      "height": 683
+      "blurDataURL": "data:image/webp;base64,UklGRo4AAABXRUJQVlA4IIIAAADQAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdIIjBpW4W5w0/ATAAy/VLnzpby7ZV92wiGngL8pC+wsmnHOEUyt65P4TYeYq+dau2OVyDKZ1yBEZYsxAASUnGg2YNGn6Oi2hEoyk/gWTNC5+gUKYL+XNml42FHPxSTZOR5LJnAAAA",
+      "width": 2000,
+      "height": 1336
     },
     "gallery": []
   },
   "blagotvoritelnyj-bal-detskaya-ploshchadka": {
     "cover": {
       "src": "/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACwBACdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdMoR3JoHh/gOD+8tZiGuJr63oAP2P40bLJKo4cPDpOUsoFGTO4rRSaTkFlD/BA7L64IpL5Lb4sCNq3jwP7R5VEtcRGOK9ifFztkJmv7GOfvzmv3igtys2qKzgqBRw7lGWAAA=",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAACwBACdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdMoR3JoHh/gOD+8tZiGuJr63oAP2P40bLJKo4cPDpOUsoFGTO4rRSaTkFlD/BA7L64IpL5Lb4sCNq3jwP7R5VEtcRGOK9ifFztkJmv7GOfvzmv3igtys2qKzgqBRw7lGWAAA=",
+      "width": 1920,
+      "height": 1280
     },
     "gallery": [
       {
@@ -2869,9 +2869,9 @@
   "otkrytie-ofisov-alfa-bank": {
     "cover": {
       "src": "/cases/otkrytie-ofisov-alfa-bank/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRngAAABXRUJQVlA4IGwAAADwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdAB+AlaCILxNRBNWAAP7RyR1FP/+c1T6RKn8nSF6mmGFZ8aCZV5rHqRBc+0YHB0HceriUhalis15nQzsnb/Y/UNmxapCkJscHbpkhSF/rAAA=",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRnYAAABXRUJQVlA4IGoAAADwAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdAB+AlaCILxNQrX6QAP7RyRl3D+/7hrS1Je1xyaYJy7kEBc6YRXeC7/6mByDCFov4jMlSFqWKzXmdDOydv9j9Q2AFs1P10vrKN0UKGmAA",
+      "width": 1280,
+      "height": 853
     },
     "gallery": [
       {
@@ -3003,9 +3003,9 @@
   "ceremoniya-ya-volonter": {
     "cover": {
       "src": "/cases/ceremoniya-ya-volonter/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACQAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJZQAAQY7NNszHU0AAAP7o8OElcVTFFnqJLpzrpZJ5BAJaoMYdusg9nZ3C8R+mScDoMkeaeQAAAA==",
-      "width": 1024,
-      "height": 682
+      "blurDataURL": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAACwAwCdASoUAAwAPzmGulOvKSWisAgB4CcJZQAAQY7NNttL9/9AAAD+6PDhJXFUxRZ6iS6c66WSeQQCWqDGHbCM0hPx2Xo0PsNqHOH3CntQAA==",
+      "width": 2000,
+      "height": 1334
     },
     "gallery": [
       {
@@ -3079,7 +3079,7 @@
   "ugol-rossii-majning": {
     "cover": {
       "src": "/cases/ugol-rossii-majning/cover.webp",
-      "blurDataURL": "data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADwAwCdASoUAAwAPzmGuVOvKSWisAgB4CcJbACdABZrU2PVX9PLMyIAAOH7JafHbrZs31zNZmYoXPvF4XKxYgJROjM70HF3t8vsEuQmp8kH49RCbzYXdBI/7awpvO8/BXQ6AmvZ6s+9/H95y5k6awQddMcSqMk2GBG4CnArGAA=",
+      "blurDataURL": "data:image/webp;base64,UklGRoQAAABXRUJQVlA4IHgAAADQAwCdASoUAAwAPzmEuVOvKKWisAgB4CcJYwAAV5BSDkPGAZZ+uYAA/fog71BhjlQlEgI3tKIdJ1FwmVxj9ylLb8o/fnWJnFEXgGPq8QTXPd1nnrR+DeNH6Pu1GLKDFln19n+HMAX+G9jgc3BR2AAKFBcNnTMPoAA=",
       "width": 1280,
       "height": 853
     },

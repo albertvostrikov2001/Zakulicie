@@ -30,8 +30,8 @@ export function CasesListing({ all }: { all: CaseStudy[] }) {
   return (
     <>
       <CasesFilter options={filterOptions} active={filter} />
-      {/* mobile: 1 col; tablet md–lg‒: 2 col; desktop xl+: 3 col */}
-      <ul className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-7">
+      {/* mobile: 1 col; tablet md–lg: 2 col; desktop xl+: 3 col */}
+      <ul className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-7">
         {filtered.map((c, i) => (
           <li key={c.slug}>
             <CaseCard item={c} priority={i < 3} index={i} />

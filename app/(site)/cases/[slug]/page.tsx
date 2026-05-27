@@ -92,12 +92,13 @@ export default async function CasePage({ params }: Props) {
                   <dt className="text-text-muted">Год</dt>
                   <dd className="mt-1 text-text-primary">{c.year}</dd>
                 </div>
-                {c.participantsCount ? (
+                {(c.participantsCount || c.scaleLabel) ? (
                   <div>
                     <dt className="text-text-muted">Масштаб</dt>
                     <dd className="mt-1 text-text-primary">
-                      {c.participantsCount.toLocaleString("ru-RU")} участников
-                      {c.scaleLabel ? ` · ${c.scaleLabel}` : ""}
+                      {c.participantsCount
+                        ? `${c.participantsCount.toLocaleString("ru-RU")} участников${c.scaleLabel ? ` · ${c.scaleLabel}` : ""}`
+                        : c.scaleLabel}
                     </dd>
                   </div>
                 ) : null}
