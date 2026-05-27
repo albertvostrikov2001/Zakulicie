@@ -10,80 +10,70 @@ type Slide = {
   tag: string;
   photo: string;
   photoAlt: string;
+  photoLogo?: boolean;
   quote: string;
   name: string;
   pos: string;
   initials: string;
   company: string;
+  source: "2gis" | "site";
 };
+
+const pagesBase = process.env.NEXT_PUBLIC_PAGES_BASE_PATH ?? "";
+
+function asset(path: string): string {
+  return `${pagesBase}${path}`;
+}
 
 const DATA: Slide[] = [
   {
-    tag: "Дилерское мероприятие",
-    photo:
-      "https://albertvostrikov2001.github.io/Zakulicie/cases/syezd-dilerov-metall-profil/cover.webp",
-    photoAlt: "Стратегическая встреча и тимбилдинг для дилеров «Металл Профиль»",
+    tag: "День комплекса",
+    photo: asset("/testimonials/chkalovskie-dachi.jpg"),
+    photoAlt:
+      "Живой концерт на сцене в парке отдыха «Чкаловские дачи» — организация event-агентства Закулисье",
     quote:
-      "Закулисье провели двухэтапное мероприятие для дилеров — стратегическую сессию и парусный тимбилдинг. Каждый этап был выстроен чётко: от деловой работы на фабрике до командного драйва на воде. Формат укрепил и деловые, и личные связи внутри сети.",
-    name: "Михаил Петровский",
-    pos: "Директор по развитию · Металл Профиль",
-    initials: "МП",
-    company: "Металл Профиль",
+      "Обращались в агентство с запросом провести День Рождения комплекса. С первых встреч дамы уловили \"вайб\" площадки, выслушали наши пожелания и практически сразу же начали генерить гениальные идеи. Процесс согласования, разработки программы был максимально простым и чётким. Сметы, таблицы, тайминги — всё под рукой. В день мероприятия мы забыли о страшном слове \"суета, хлопоты\". Ведь девушки присутствовали на площадке всей командой: руководители, координаторы, организаторы. Безусловно рекомендую данную компанию к сотрудничеству. Приятные и компетентные дамы из мира ваших ЛУЧШИХ ивентов. Успехов вам!",
+    name: "Клиент комплекса",
+    pos: "Экопарк «Чкаловские дачи»",
+    initials: "ЧД",
+    company: "Экопарк «Чкаловские дачи»",
+    source: "2gis",
   },
   {
-    tag: "Открытие объекта",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/otkrytie-ofisov-alfa-bank/cover.webp",
-    photoAlt: "Открытие Альфа-Банка",
+    tag: "Family Day",
+    photo: asset("/cases/semejnyj-korporativ-varmix-warmax/cover.webp"),
+    photoAlt: "Семейный корпоратив Warmex — event-агентство Закулисье",
     quote:
-      "Открытие четырёх офисов одновременно — задача, с которой справились только они. Строго в срок, строго в концепции, ноль компромиссов по качеству. Гости уходили с ощущением федерального события.",
-    name: "Анна Белова",
-    pos: "Директор по маркетингу · Альфа-Банк",
-    initials: "АБ",
-    company: "Альфа-Банк",
+      "Летом в 2023 году Закулисье устроило просто нереально красивое и насыщенное семейное мероприятие для нашей компании. Там было всё 🎉 и крутой кейтеринг и развлечения для взрослых и детей, бомбический ведущий 😄 Девчонки сделали его на все 💯 Без форс-мажоров Крутая команда, которая устроит праздник из обычного дня 🎊",
+    name: "Ольга Рыбалко",
+    pos: "Вармекс (WARMEX)",
+    initials: "ОР",
+    company: "WARMEX",
+    source: "2gis",
+  },
+  {
+    tag: "Корпоративный формат",
+    photo: asset("/cases/korporativ-lyubimaya-kuhnya/cover.webp"),
+    photoAlt: "Корпоративное мероприятие — event-агентство Закулисье",
+    quote:
+      "Очень креативные ребята, с интересными идеями, всегда на позитиве. Всю работу сделали очень качественно, вовремя. Мне нравится, что они всегда пойдут на встречу, решат любой форс-мажор и предложат варианты. Настоящие профессионалы. Рекомендую.",
+    name: "Ирина Смирнова",
+    pos: "Клиент",
+    initials: "ИС",
+    company: "—",
+    source: "2gis",
   },
   {
     tag: "Корпоративный праздник",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
-    photoAlt: "Family Day Warmex",
+    photo: asset("/cases/novogodnij-korporativ-alfa-dengi/cover.webp"),
+    photoAlt: "Корпоративное мероприятие — event-агентство Закулисье",
     quote:
-      "Семейный праздник на 1200 человек. Закулисье создали программу, которую взрослые запомнили так же хорошо, как дети. Мы продолжаем работу третий год подряд — это лучший показатель.",
-    name: "Светлана Комарова",
-    pos: "HR-директор · Warmex",
-    initials: "СК",
-    company: "Warmex",
-  },
-  {
-    tag: "Юбилей бренда",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/yubilej-sts-25-let/cover.webp",
-    photoAlt: "25-летие СТС",
-    quote:
-      "Прямой эфир, живой оркестр, полторы тысячи гостей. Ни один из трёх часов программы не дал сбоя. Настолько слаженная работа — это не организация, это режиссура.",
-    name: "Дмитрий Николаев",
-    pos: "Исполнительный продюсер · СТС",
-    initials: "ДН",
-    company: "СТС",
-  },
-  {
-    tag: "Тимбилдинг",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/spartakiada-metall-profil/cover.webp",
-    photoAlt: "Спартакиада",
-    quote:
-      "180 инженеров, которые никогда не хотели командных игр. Закулисье нашли формат, который объединил людей без принуждения — через общую задачу, а не через принудительное веселье.",
-    name: "Ольга Сергеева",
-    pos: "Директор по персоналу · Промэко",
-    initials: "ОС",
-    company: "Промэко",
-  },
-  {
-    tag: "Гала-вечер",
-    photo: "https://albertvostrikov2001.github.io/Zakulicie/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/cover.webp",
-    photoAlt: "Благотворительный бал",
-    quote:
-      "600 гостей, все топ-менеджеры и меценаты. Закулисье провели вечер так, что никто не ушёл раньше финала и все оставили пожертвования выше ожидаемых.",
-    name: "Наталья Кузьмина",
-    pos: "Президент фонда · Добрые руки",
-    initials: "НК",
-    company: "Добрые руки",
+      "Добрый день. Выражаем огромную благодарность команде ивент-агентства \"Закулисье\" за индивидуальный подход и профессионализм при подготовке корпоративного праздника. Детали продуманы, работа слажена, результат отличный. Специалисты, которым можно доверять, которые знают и любят своё дело! Спасибо!",
+    name: "Марина",
+    pos: "Клиент",
+    initials: "М",
+    company: "—",
+    source: "2gis",
   },
 ];
 
@@ -108,6 +98,7 @@ export function TestimonialsSpotlight() {
   const [photoAlt, setPhotoAlt] = useState(d0.photoAlt);
   const [photoCaseText, setPhotoCaseText] = useState(d0.company);
   const [photoSwitching, setPhotoSwitching] = useState(false);
+  const [photoLogo, setPhotoLogo] = useState(Boolean(d0.photoLogo));
   const [featTag, setFeatTag] = useState(d0.tag);
   const [featQuoteText, setFeatQuoteText] = useState(d0.quote);
   const [featAvatar, setFeatAvatar] = useState(d0.initials);
@@ -141,6 +132,7 @@ export function TestimonialsSpotlight() {
         setPhotoSrc(d.photo);
         setPhotoAlt(d.photoAlt);
         setPhotoCaseText(d.company);
+        setPhotoLogo(Boolean(d.photoLogo));
         setPhotoSwitching(false);
       }, 300);
 
@@ -243,7 +235,7 @@ export function TestimonialsSpotlight() {
         >
           <div
             id="photoPanel"
-            className={`${styles.photoPanel} ${photoSwitching ? styles.photoPanelSwitching : ""}`}
+            className={`${styles.photoPanel} ${photoSwitching ? styles.photoPanelSwitching : ""} ${photoLogo ? styles.photoPanelLogo : ""}`}
           >
             <img id="featPhoto" src={photoSrc} alt={photoAlt} />
             <div className={styles.photoOverlay} />
@@ -254,6 +246,9 @@ export function TestimonialsSpotlight() {
           </div>
 
           <div className={styles.featured}>
+            {DATA[cur]?.source === "2gis" ? (
+              <span className={styles.sourceBadge}>2ГИС</span>
+            ) : null}
             <div className={styles.featNum} id="bigNum">
               {bigNumText}
             </div>

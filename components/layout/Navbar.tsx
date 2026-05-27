@@ -3,6 +3,7 @@
 import { serviceNav } from "@/lib/content/services";
 import { cn } from "@/lib/cn";
 import { CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/constants";
+import { CTALink } from "@/components/ui/CTALink";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
@@ -184,8 +185,8 @@ export function Navbar() {
           </nav>
 
           {/* CTA button — always visible */}
-          <a
-            href="#contact-form"
+          <CTALink
+            onNavigate={() => setMobileOpen(false)}
             className={cn(
               "hidden shrink-0 items-center border-[1.5px] px-6 py-3 text-[18px] font-semibold uppercase leading-snug tracking-[0.1em] transition-[background-color,color,border-color] duration-[250ms] ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent lg:inline-flex",
               lightHero
@@ -194,7 +195,7 @@ export function Navbar() {
             )}
           >
             Обсудить проект
-          </a>
+          </CTALink>
 
           {/* Mobile hamburger */}
           <button
@@ -273,13 +274,12 @@ export function Navbar() {
               {CONTACT_PHONE}
             </a>
             <div className="mt-9">
-              <a
-                href="#contact-form"
+              <CTALink
+                onNavigate={() => setMobileOpen(false)}
                 className="inline-flex items-center border-[1.5px] border-accent bg-transparent px-9 py-[1.125rem] text-[19px] font-semibold uppercase leading-snug tracking-[0.1em] text-text-primary transition-[background-color,color] duration-[250ms] hover:bg-accent hover:text-[#0A0A0A]"
-                onClick={() => setMobileOpen(false)}
               >
                 Обсудить проект
-              </a>
+              </CTALink>
             </div>
           </nav>
         </div>

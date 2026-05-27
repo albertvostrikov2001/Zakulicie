@@ -18,7 +18,7 @@ export const contactFormSchema = z.object({
       { message: "Телефон в формате +7 (___) ___-__-__" }
     ),
   eventType: z.enum(eventTypes),
-  dates: z.string().trim().min(1, "Укажите ориентировочные сроки"),
+  dates: z.string().trim(),
   consent: z.boolean().refine((v) => v === true, { message: "Нужно согласие с политикой" }),
 });
 

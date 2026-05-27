@@ -79,3 +79,35 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; path: strin
     />
   );
 }
+
+export function ArticleJsonLd({
+  title,
+  description,
+  publishedAt,
+  url,
+  image,
+}: {
+  title: string;
+  description: string;
+  publishedAt: string;
+  url: string;
+  image: string;
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: title,
+    author: { "@type": "Organization", name: SITE_NAME },
+    publisher: { "@type": "Organization", name: SITE_NAME },
+    datePublished: publishedAt,
+    description,
+    mainEntityOfPage: url,
+    image,
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}

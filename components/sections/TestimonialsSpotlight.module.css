@@ -146,7 +146,27 @@
 
 .featured {
   position: relative;
-  padding-top: 8px;
+}
+
+.sourceBadge {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 2;
+  border: 1px solid rgba(201, 168, 76, 0.35);
+  background: rgba(10, 10, 10, 0.72);
+  padding: 6px 10px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.photoPanelLogo img {
+  object-fit: contain;
+  padding: 24px;
+  background: #111;
 }
 
 .featNum {
@@ -184,12 +204,12 @@
 }
 
 .featQuote {
-  font-family: var(--font-d);
-  font-weight: 700;
-  font-size: clamp(18px, 2.2vw, 28px);
-  line-height: 1.28;
-  letter-spacing: -0.015em;
-  color: var(--light);
+  font-family: var(--font-b);
+  font-weight: 400;
+  font-size: clamp(14px, 1.5vw, 15px);
+  line-height: 1.65;
+  letter-spacing: 0;
+  color: rgba(242, 239, 233, 0.82);
   margin: 0 0 32px 0;
   position: relative;
   padding-left: 20px;

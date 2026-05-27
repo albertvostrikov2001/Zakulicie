@@ -68,17 +68,27 @@ export type Testimonial = {
   position: string;
   company: string;
   relatedCaseSlug?: string;
-  /** Опциональный логотип бренда */
   logoUrl?: string;
+  caseCover?: string;
+  source?: "2gis" | "site";
+  avatar?: string;
 };
+
+export type BlogBlock =
+  | { type: "p"; text: string }
+  | { type: "h2"; text: string }
+  | { type: "h3"; text: string }
+  | { type: "img"; src: string; alt: string };
 
 export type BlogPost = {
   title: string;
   slug: string;
   excerpt: string;
   publishedAt: string;
+  category: string;
+  readTime: string;
   coverImage: SiteImage;
-  content: string[];
+  blocks: BlogBlock[];
   seoTitle: string;
   seoDescription: string;
 };

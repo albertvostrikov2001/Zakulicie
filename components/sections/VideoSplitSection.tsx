@@ -7,7 +7,7 @@ import { getShowreelVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Link from "next/link";
+import { CTALink } from "@/components/ui/CTALink";
 import { useEffect, useRef, useState } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -157,8 +157,7 @@ export function VideoSplitSection() {
             федеральных сборов. База в Новосибирске, стандарты и команда — как у столичных лидеров: смета,
             сроки и смысл остаются под контролем на каждом этапе.
           </p>
-          <Link
-            href="#contact-form"
+          <CTALink
             className={
               lightScene
                 ? "mt-9 inline-flex w-fit items-center border-[1.5px] border-[#1a1a1a] bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition-[background-color,color] duration-[250ms] ease-out hover:bg-[#1a1a1a] hover:text-[#f2efe9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
@@ -166,7 +165,7 @@ export function VideoSplitSection() {
             }
           >
             Обсудить проект
-          </Link>
+          </CTALink>
 
           <div
             className={

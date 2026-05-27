@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { PageWrapper } from "@/components/layout/PageWrapper";
+import { CTALink } from "@/components/ui/CTALink";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { serviceNav, staticServices } from "@/lib/content/services";
 import type { ServiceSlug } from "@/lib/types";
@@ -96,12 +97,11 @@ export default function ServicesIndexPage() {
           <p className="mt-3 max-w-xl text-sm text-text-secondary">
             Короткий созвон и понятный следующий шаг — без обязательств и шаблонных коммерческих.
           </p>
-          <Link
-            href="/#contact-form"
+          <CTALink
             className="mt-6 inline-flex border border-accent px-8 py-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-colors hover:bg-accent hover:text-[#0A0A0A]"
           >
             Связаться
-          </Link>
+          </CTALink>
         </section>
       </PageWrapper>
     </>

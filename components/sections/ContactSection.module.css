@@ -1,0 +1,170 @@
+.section {
+  --accent: #c9a84c;
+  --light: #f0ede7;
+  --bg: #0c0c0c;
+  background: var(--bg);
+  color: var(--light);
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-height: 100vh;
+}
+
+.left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 64px 56px 64px 72px;
+  border-right: 1px solid rgba(240, 237, 231, 0.08);
+}
+
+.leftInner {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+  font-family: var(--font-body), "Inter", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #c9a84c;
+}
+
+.eyebrow::before {
+  content: "";
+  display: block;
+  width: 24px;
+  height: 1px;
+  background: #c9a84c;
+}
+
+.headline {
+  margin: 0;
+  font-family: var(--font-display), "Unbounded", sans-serif;
+  font-size: clamp(40px, 5vw, 72px);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.025em;
+  color: #f0ede7;
+}
+
+.headline span {
+  color: #c9a84c;
+}
+
+.lead {
+  max-width: 340px;
+  margin: 20px 0 0;
+  font-family: var(--font-body), "Inter", system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 400;
+  line-height: 1.65;
+  color: rgba(240, 237, 231, 0.42);
+}
+
+.trustList {
+  margin: 36px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.trustItem {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+  font-family: var(--font-body), "Inter", system-ui, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(240, 237, 231, 0.55);
+}
+
+.trustItem:last-child {
+  margin-bottom: 0;
+}
+
+.trustIcon {
+  display: flex;
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(201, 168, 76, 0.3);
+  border-radius: 50%;
+  font-size: 11px;
+  color: #c9a84c;
+}
+
+.contactBlock {
+  margin-top: auto;
+  padding-top: 32px;
+  border-top: 1px solid rgba(240, 237, 231, 0.08);
+}
+
+.contactLabel {
+  margin: 0 0 10px;
+  font-family: var(--font-body), "Inter", system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 231, 0.42);
+}
+
+.contactPhone {
+  font-family: var(--font-display), "Unbounded", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #f0ede7;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.contactPhone:hover {
+  color: #c9a84c;
+}
+
+.right {
+  display: flex;
+  min-height: 100vh;
+  align-items: center;
+  padding: 64px 72px 64px 56px;
+}
+
+@media (max-width: 960px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    min-height: auto;
+    padding: 48px 24px 40px;
+    border-right: 0;
+    border-bottom: 1px solid rgba(240, 237, 231, 0.08);
+  }
+
+  .leftInner {
+    flex: none;
+  }
+
+  .contactBlock {
+    margin-top: 40px;
+  }
+
+  .right {
+    min-height: auto;
+    padding: 40px 24px 56px;
+  }
+}

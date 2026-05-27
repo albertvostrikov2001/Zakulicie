@@ -6,6 +6,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { CTALink } from "@/components/ui/CTALink";
 import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -192,9 +193,8 @@ export function TransitionSection() {
                     ))}
                   </h1>
 
-                  <a
+                  <CTALink
                     ref={ctaRef}
-                    href="#contact-form"
                     className="group inline-flex w-fit scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
                     style={{
                       fontSize: "clamp(15px, 1.6vw, 20px)",
@@ -210,7 +210,7 @@ export function TransitionSection() {
                     >
                       →
                     </span>
-                  </a>
+                  </CTALink>
                 </div>
               </div>
             </div>

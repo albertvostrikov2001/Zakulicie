@@ -112,8 +112,8 @@ type SanityBlogDoc = {
 export function mapSanityBlogPost(doc: SanityBlogDoc): BlogPost | null {
   if (!doc.slug || !doc.title) return null;
   const cover = urlForSanityImage(doc.coverImage) ?? FALLBACK_BLOG_COVER;
-  let content = blocksToParagraphs(doc.content as Parameters<typeof blocksToParagraphs>[0]);
-  if (content.length === 0) content = [doc.excerpt ?? doc.title];
+  let paragraphs = blocksToParagraphs(doc.content as Parameters<typeof blocksToParagraphs>[0]);
+  if (paragraphs.length === 0) paragraphs = [doc.excerpt ?? doc.title];
   const publishedAt = doc.publishedAt
     ? new Date(doc.publishedAt).toISOString().slice(0, 10)
     : new Date().toISOString().slice(0, 10);
@@ -123,8 +123,10 @@ export function mapSanityBlogPost(doc: SanityBlogDoc): BlogPost | null {
     slug: doc.slug,
     excerpt: doc.excerpt ?? doc.title,
     publishedAt,
+    category: "Блог",
+    readTime: "5 мин",
     coverImage: { src: cover, alt: doc.title },
-    content,
+    blocks: paragraphs.map((text) => ({ type: "p" as const, text })),
     seoTitle: doc.seoTitle ?? doc.title,
     seoDescription: doc.seoDescription ?? doc.excerpt ?? doc.title,
   };

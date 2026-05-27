@@ -86,8 +86,9 @@ function DesktopImageLayer({
               width: "200px",
               height: "260px",
               opacity: 0,
+              visibility: "hidden",
               transform: "scale(0.94)",
-              transition: "opacity 0.28s ease, transform 0.28s ease",
+              transition: "opacity 0.28s ease, transform 0.28s ease, visibility 0.28s",
             }}
           >
             <Image
@@ -145,6 +146,7 @@ function DesktopLetterRow({
       image.style.left = `${x}px`;
       image.style.top = `${y}px`;
       image.style.opacity = "1";
+      image.style.visibility = "visible";
       image.style.transform = "scale(1)";
     },
     [reduced, sectionRef, letterRefs, imageRefs]
@@ -154,6 +156,7 @@ function DesktopLetterRow({
     const image = imageRefs.current[index];
     if (!image) return;
     image.style.opacity = "0";
+    image.style.visibility = "hidden";
     image.style.transform = "scale(0.94)";
   }, [imageRefs]);
 

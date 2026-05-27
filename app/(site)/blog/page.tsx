@@ -9,7 +9,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "Блог — заметки о событиях и организации",
   description:
-    "Материалы «Закулисье» о B2B-событиях, логистике крупных форматов, работе с площадками и собственным реквизитом.",
+    "Материалы «Закулисье» о корпоративных мероприятиях, командной работе и event-инструментах для развития бизнеса.",
   alternates: { canonical: `${getSiteUrl()}/blog` },
   openGraph: {
     title: `Блог | ${SITE_NAME}`,
@@ -31,8 +31,8 @@ export default async function BlogPage() {
       <PageWrapper>
         <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">Блог</h1>
         <p className="mt-4 max-w-2xl text-text-secondary">
-          Короткие текстовые разборы без «праздничного» тона — про процесс, ответственность и то, что
-          видит руководство, когда открывает сайт агентства.
+          Разборы и практические заметки о корпоративных событиях, командной работе и том, как event
+          помогает бизнесу достигать стратегических целей.
         </p>
         <ul className="mt-12 space-y-12">
           {posts.map((p) => (

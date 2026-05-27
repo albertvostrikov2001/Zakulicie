@@ -1,3 +1,4 @@
+import { CTALink } from "@/components/ui/CTALink";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/constants";
 import { serviceNav } from "@/lib/content/services";
 import Link from "next/link";
@@ -21,12 +22,11 @@ export function Footer() {
               Свяжемся в течение нескольких часов.
             </p>
           </div>
-          <a
-            href="#contact-form"
+          <CTALink
             className="inline-flex shrink-0 items-center border-[1.5px] border-accent bg-transparent px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
           >
             Обсудить проект
-          </a>
+          </CTALink>
         </div>
       </div>
 

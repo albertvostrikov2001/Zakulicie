@@ -1,6 +1,7 @@
 "use client";
 
 import { BrandDisplay } from "@/components/ui/BrandDisplay";
+import { CTALink } from "@/components/ui/CTALink";
 import { FlipCard } from "@/components/ui/FlipCard";
 import type { ClientData } from "@/data/clients";
 import { clients } from "@/data/clients";
@@ -120,9 +121,7 @@ export function ClientsShowcase() {
 
         {/* CTA */}
         <div className="mt-10 text-center md:text-left">
-          <a href="#contact-form" className="clients-cta-btn">
-            Обсудить проект
-          </a>
+          <CTALink className="clients-cta-btn">Обсудить проект</CTALink>
         </div>
       </div>
     </section>

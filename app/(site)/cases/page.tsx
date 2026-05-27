@@ -1,5 +1,6 @@
 import { CasesListing } from "@/app/(site)/cases/CasesListing";
 import { PageWrapper } from "@/components/layout/PageWrapper";
+import { CTALink } from "@/components/ui/CTALink";
 import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import { getCasesResolved } from "@/lib/data";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
@@ -71,12 +72,11 @@ export default async function CasesPage() {
           <p className="mt-3 max-w-xl text-sm text-text-secondary">
             Расскажите о задаче — предложим формат и таймлайн без шаблонных коммерческих.
           </p>
-          <a
-            href="/#contact-form"
+          <CTALink
             className="mt-6 inline-flex border border-accent px-8 py-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-colors hover:bg-accent hover:text-[#0A0A0A]"
           >
             Связаться
-          </a>
+          </CTALink>
         </section>
       </PageWrapper>
     </>
