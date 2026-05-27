@@ -14,6 +14,18 @@ type Props = { item: CaseStudy; className?: string; priority?: boolean; index?: 
 export function CaseCard({ item, className, priority, index = 0 }: Props) {
   const tag = serviceNav.find((s) => s.slug === item.serviceTypeSlug)?.title ?? "";
 
+  // Always show 1–2 accent metrics: prefer explicit resultNumbers, fall back to
+  // participantsCount + year so every card has a consistent yellow stats block.
+  const displayStats: { value: string; label: string }[] =
+    item.resultNumbers && item.resultNumbers.length > 0
+      ? item.resultNumbers.slice(0, 2)
+      : item.participantsCount
+      ? [
+          { value: item.participantsCount.toLocaleString("ru-RU"), label: "участников" },
+          { value: String(item.year), label: "год" },
+        ]
+      : [{ value: String(item.year), label: "год" }];
+
   return (
     <motion.div
       initial={{ opacity: 1, y: 28 }}
@@ -42,17 +54,17 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
             blurDataURL={item.heroImage.blurDataURL}
           />
 
-          {/* Тональный оверлей — нивелирует разнородность яркости */}
+          {/* Тональный оверлей */}
           <div className="absolute inset-0 bg-black/15" style={{ mixBlendMode: "multiply" }} aria-hidden />
 
-          {/* Тёмный оверлей */}
+          {/* Тёмный градиентный оверлей */}
           <div
             className="absolute inset-0 transition-opacity duration-500 group-hover:opacity-90"
             style={{ background: CASE_CARD_OVERLAY }}
             aria-hidden
           />
 
-          {/* Hover оверлей - clip-path reveal */}
+          {/* Hover оверлей */}
           <div className="case-overlay absolute inset-0 bg-accent/10 backdrop-blur-[1px]" aria-hidden />
 
           {/* Номер кейса */}
@@ -63,38 +75,43 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
           )}
 
           {/* Контент */}
-          <div className="absolute inset-0 flex flex-col justify-end p-6 md:p-8">
-            <Badge className="mb-3 w-fit border-white/15 text-[10px] text-text-secondary">
+          <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6">
+            <Badge className="mb-2.5 w-fit border-white/15 text-[10px] text-text-secondary">
               {tag}
             </Badge>
-            <h3 className="font-display text-xl font-semibold leading-snug text-text-primary md:text-2xl md:leading-snug xl:text-xl xl:leading-snug xl:font-semibold min-[1536px]:text-2xl min-[1536px]:leading-snug">
+
+            {/* Заголовок: 3 строки на мобильном (tall 4:5), 2 на десктопе (wide 3:2) */}
+            <h3 className="line-clamp-3 font-display text-xl font-semibold leading-snug text-text-primary md:line-clamp-2 md:text-2xl xl:text-xl min-[1536px]:text-2xl">
               {item.title}
             </h3>
+
             {item.client && (
               <p className="mt-1.5 text-sm text-text-secondary">{item.client}</p>
             )}
-            <p className="mt-3 line-clamp-2 text-sm leading-relaxed text-text-secondary/80">
+
+            {/* Excerpt: только мобильный (4:5 tall) — на 3:2 не помещается */}
+            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-text-secondary/80 md:hidden">
               {item.excerpt}
             </p>
 
-            {/* Результаты */}
-            {item.resultNumbers && item.resultNumbers.length > 0 && (
-              <div className="mt-4 flex gap-6 border-t border-border/40 pt-4">
-                {item.resultNumbers.slice(0, 2).map((r) => (
-                  <div key={r.label}>
-                    <p className="font-display text-lg font-bold text-accent">{r.value}</p>
-                    <p className="text-[10px] text-text-muted">{r.label}</p>
-                  </div>
-                ))}
-              </div>
-            )}
+            {/* Метрики — всегда одинаковый стиль для всех кейсов */}
+            <div className="mt-4 flex gap-5 border-t border-border/40 pt-3">
+              {displayStats.map((r) => (
+                <div key={r.label}>
+                  <p className="font-display text-lg font-bold text-accent">{r.value}</p>
+                  <p className="text-[10px] text-text-muted">{r.label}</p>
+                </div>
+              ))}
+            </div>
 
+            {/* CTA — absolute, не влияет на высоту flow, появляется при hover */}
             <span className={cn(
-              "mt-5 inline-flex items-center gap-2 text-xs font-medium uppercase tracking-widest text-accent",
+              "absolute bottom-5 right-5 md:bottom-6 md:right-6",
+              "inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-widest text-accent",
               "translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
             )}>
               Смотреть кейс
-              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
+              <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
                 <path d="M2 7h10M7.5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </span>
