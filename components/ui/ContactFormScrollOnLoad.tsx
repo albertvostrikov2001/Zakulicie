@@ -1,22 +1,25 @@
 "use client";
 
 import {
-  SCROLL_TO_CONTACT_KEY,
-  scrollToContactForm,
+  clearContactFormScrollIntent,
+  shouldScrollToContactForm,
+  waitForContactFormAndScroll,
 } from "@/lib/contactFormNavigation";
+import { usePathname } from "next/navigation";
 import { useEffect } from "react";
 
 export function ContactFormScrollOnLoad() {
+  const pathname = usePathname();
+
   useEffect(() => {
-    if (sessionStorage.getItem(SCROLL_TO_CONTACT_KEY) !== "1") return;
-    sessionStorage.removeItem(SCROLL_TO_CONTACT_KEY);
+    if (!shouldScrollToContactForm()) return;
 
-    const timer = window.setTimeout(() => {
-      scrollToContactForm();
-    }, 300);
+    clearContactFormScrollIntent();
 
-    return () => window.clearTimeout(timer);
-  }, []);
+    const cancel = waitForContactFormAndScroll("smooth", 50, 100);
+
+    return cancel;
+  }, [pathname]);
 
   return null;
 }

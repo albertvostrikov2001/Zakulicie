@@ -21,6 +21,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
   useEffect(() => {
     if (reduced) {
       lenisRef.current = null;
+      window.__zakulicieLenis = null;
       return;
     }
 
@@ -33,6 +34,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
     });
 
     lenisRef.current = lenis;
+    window.__zakulicieLenis = lenis;
 
     const onLenisScroll = () => {
       ScrollTrigger.update();
@@ -60,6 +62,7 @@ export function SmoothScrollProvider({ children }: { children: React.ReactNode }
       lenis.off("scroll", onLenisScroll);
       lenis.destroy();
       lenisRef.current = null;
+      window.__zakulicieLenis = null;
     };
   }, [reduced]);
 

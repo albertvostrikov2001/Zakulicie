@@ -49,6 +49,12 @@ const buildEnv = {
   GITHUB_PAGES: "true",
   NEXT_PUBLIC_PAGES_BASE_PATH: `/${repoName}`,
   NEXT_PUBLIC_SITE_URL: `https://albertvostrikov2001.github.io/${repoName}`,
+  ...(process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || process.env.WEB3FORMS_ACCESS_KEY
+    ? {
+        NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY:
+          process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY || process.env.WEB3FORMS_ACCESS_KEY,
+      }
+    : {}),
 };
 
 console.log("→ Сборка static export для GitHub Pages…");

@@ -1,28 +1,24 @@
 "use client";
 
 import {
-  SCROLL_TO_CONTACT_KEY,
-  scrollToContactForm,
+  getContactFormHref,
+  isHomePath,
+  waitForContactFormAndScroll,
 } from "@/lib/contactFormNavigation";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useCallback } from "react";
 
-function isHomePath(pathname: string): boolean {
-  return pathname === "/" || pathname === "";
-}
-
 export function useCTANavigation() {
-  const router = useRouter();
   const pathname = usePathname();
 
   const navigateToForm = useCallback(() => {
     if (isHomePath(pathname)) {
-      scrollToContactForm();
+      waitForContactFormAndScroll();
       return;
     }
-    sessionStorage.setItem(SCROLL_TO_CONTACT_KEY, "1");
-    router.push("/");
-  }, [pathname, router]);
+
+    window.location.assign(getContactFormHref());
+  }, [pathname]);
 
   return { navigateToForm };
 }

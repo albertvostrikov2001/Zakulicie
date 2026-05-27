@@ -1,6 +1,5 @@
 import { ClientsShowcase } from "@/components/sections/ClientsShowcase";
 import { ContactStepSection } from "@/components/sections/ContactStepSection";
-import { ContactFormScrollOnLoad } from "@/components/ui/ContactFormScrollOnLoad";
 import { ServicesSection } from "@/components/sections/ServicesSection";
 import { StatsSection } from "@/components/sections/StatsSection";
 import { TestimonialsSpotlight } from "@/components/sections/TestimonialsSpotlight";
@@ -49,7 +48,6 @@ export default async function HomePage() {
 
   return (
     <>
-      <ContactFormScrollOnLoad />
       {/* 1 – HERO: oversized wordmark, description, CTA, image-motion */}
       <TransitionSection />
 

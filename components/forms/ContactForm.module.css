@@ -214,6 +214,15 @@
   color: rgba(240, 237, 231, 0.2);
 }
 
+.submitError {
+  margin: 12px 0 0;
+  font-family: var(--font-body), "Inter", system-ui, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
+  text-align: center;
+  color: rgba(220, 100, 100, 0.95);
+}
+
 .successOverlay {
   position: fixed;
   inset: 0;

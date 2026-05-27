@@ -37,6 +37,7 @@ export function ContactForm() {
   const [phoneInvalid, setPhoneInvalid] = useState(false);
   const [consentInvalid, setConsentInvalid] = useState(false);
   const [formatInvalid, setFormatInvalid] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const nameRef = useRef<HTMLInputElement>(null);
   const phoneRef = useRef<HTMLInputElement>(null);
@@ -93,9 +94,13 @@ export function ContactForm() {
     if (!parsed.success) return;
 
     setIsSubmitting(true);
+    setSubmitError(false);
     const { ok } = await submitContactPayload(parsed.data);
     setIsSubmitting(false);
-    if (!ok) return;
+    if (!ok) {
+      setSubmitError(true);
+      return;
+    }
 
     trackContactFormSubmit();
     setShowSuccess(true);
@@ -222,6 +227,12 @@ export function ContactForm() {
             </svg>
           </span>
         </button>
+
+        {submitError ? (
+          <p className={styles.submitError} role="alert">
+            Не удалось отправить заявку. Позвоните нам или попробуйте ещё раз.
+          </p>
+        ) : null}
 
         <p className={styles.formNote}>Ответим в рабочее время · Данные защищены</p>
       </div>
