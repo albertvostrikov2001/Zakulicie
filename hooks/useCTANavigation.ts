@@ -3,6 +3,7 @@
 import {
   getContactFormHref,
   isHomePath,
+  SCROLL_TO_CONTACT_KEY,
   waitForContactFormAndScroll,
 } from "@/lib/contactFormNavigation";
 import { usePathname } from "next/navigation";
@@ -17,6 +18,7 @@ export function useCTANavigation() {
       return;
     }
 
+    sessionStorage.setItem(SCROLL_TO_CONTACT_KEY, "1");
     window.location.assign(getContactFormHref());
   }, [pathname]);
 

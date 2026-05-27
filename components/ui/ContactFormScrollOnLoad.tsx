@@ -16,7 +16,7 @@ export function ContactFormScrollOnLoad() {
 
     clearContactFormScrollIntent();
 
-    const cancel = waitForContactFormAndScroll("smooth", 50, 100);
+    const cancel = waitForContactFormAndScroll("smooth", 60, 100);
 
     return cancel;
   }, [pathname]);

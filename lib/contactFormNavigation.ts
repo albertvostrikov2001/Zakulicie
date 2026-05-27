@@ -16,8 +16,15 @@ declare global {
 }
 
 export function getContactFormHref(): string {
-  const base = process.env.NEXT_PUBLIC_PAGES_BASE_PATH ?? "";
-  return `${base}/#${CONTACT_FORM_ID}`;
+  const base = (process.env.NEXT_PUBLIC_PAGES_BASE_PATH ?? "").replace(/\/$/, "");
+  const path = base ? `${base}/` : "/";
+
+  if (typeof window !== "undefined") {
+    return `${window.location.origin}${path}#${CONTACT_FORM_ID}`;
+  }
+
+  const site = (process.env.NEXT_PUBLIC_SITE_URL ?? "").replace(/\/$/, "");
+  return site ? `${site}${path}#${CONTACT_FORM_ID}` : `${path}#${CONTACT_FORM_ID}`;
 }
 
 export function isHomePath(pathname: string): boolean {
@@ -69,7 +76,7 @@ export function waitForContactFormAndScroll(
     }
   };
 
-  timer = window.setTimeout(tryScroll, 150);
+  timer = window.setTimeout(tryScroll, 450);
 
   return () => window.clearTimeout(timer);
 }
