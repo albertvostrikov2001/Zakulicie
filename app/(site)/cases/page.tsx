@@ -20,7 +20,7 @@ export const metadata: Metadata = {
 
 function CasesGridFallback() {
   return (
-    <ul className="mt-12 grid gap-6 md:grid-cols-2">
+    <ul className="mt-12 grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3 xl:gap-x-7">
       {Array.from({ length: 4 }).map((_, i) => (
         <li key={i} className="aspect-[16/10] animate-pulse rounded-card bg-surface" />
       ))}

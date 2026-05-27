@@ -11,10 +11,14 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
+/** ~×1.5 к прежним 13px — навигация, телефон, выпадающий список */
+const NAV_TEXT = "text-[19px] leading-snug tracking-[0.03em]";
+
 const navLinkClass = (light: boolean) =>
   cn(
-    "relative inline-flex text-[13px] font-medium transition-colors duration-200 ease-out tracking-[0.04em]",
-    "after:pointer-events-none after:absolute after:bottom-[-2px] after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:ease-out",
+    "relative inline-flex items-center font-medium transition-colors duration-200 ease-out",
+    NAV_TEXT,
+    "after:pointer-events-none after:absolute after:-bottom-0.5 after:left-0 after:h-px after:w-full after:origin-left after:scale-x-0 after:bg-accent after:transition-transform after:duration-200 after:ease-out",
     "hover:after:scale-x-100",
     light ? "text-[#1A1A1A]/90 hover:text-[#1A1A1A]" : "text-white/80 hover:text-white"
   );
@@ -86,13 +90,13 @@ export function Navbar() {
       >
         <div
           ref={innerRef}
-          className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-4 md:px-8"
+          className="mx-auto flex max-w-content items-center justify-between gap-4 px-4 py-5 md:gap-5 md:px-8 md:py-5"
         >
-          {/* Logo */}
+          {/* Logo — размер как был (не трогаем композицию wordmark) */}
           <Link
             href="/"
             className={cn(
-              "font-display text-base font-semibold tracking-tight md:text-lg",
+              "shrink-0 font-display text-base font-semibold tracking-tight md:text-lg",
               lightHero ? "text-text-dark" : "text-text-primary"
             )}
           >
@@ -100,7 +104,10 @@ export function Navbar() {
           </Link>
 
           {/* Desktop nav */}
-          <nav className="hidden items-center gap-6 lg:flex xl:gap-8" aria-label="Основная навигация">
+          <nav
+            className="hidden min-w-0 flex-1 items-center justify-end gap-5 lg:flex lg:gap-6 xl:gap-8 2xl:gap-9"
+            aria-label="Основная навигация"
+          >
             <Link href="/cases" className={cn(navLinkClass(lightHero), isActive("/cases") && activeClass)}>
               Кейсы
             </Link>
@@ -123,19 +130,19 @@ export function Navbar() {
                 onClick={() => setServicesOpen((v) => !v)}
               >
                 Услуги
-                <ChevronDown className="h-3.5 w-3.5 opacity-60" aria-hidden />
+                <ChevronDown className="h-[1.05rem] w-[1.05rem] shrink-0 opacity-60" aria-hidden />
               </button>
               {servicesOpen && (
                 <div
                   role="menu"
-                  className="absolute left-1/2 top-full z-50 mt-3 w-72 -translate-x-1/2 border border-[var(--color-border)] bg-[var(--color-surface-elevated)] py-2 shadow-2xl shadow-black/40"
+                  className="absolute left-1/2 top-full z-50 mt-3 w-[min(22rem,calc(100vw-2rem))] -translate-x-1/2 border border-[var(--color-border)] bg-[var(--color-surface-elevated)] py-2.5 shadow-2xl shadow-black/40"
                 >
                   {serviceNav.map((s) => (
                     <Link
                       key={s.slug}
                       role="menuitem"
                       href={`/services/${s.slug}`}
-                      className="block px-4 py-2.5 text-[13px] text-text-secondary transition-colors duration-150 hover:bg-white/5 hover:text-text-primary"
+                      className="block px-5 py-3 text-[19px] leading-snug text-text-secondary transition-colors duration-150 hover:bg-white/5 hover:text-text-primary"
                     >
                       {s.title}
                     </Link>
@@ -146,6 +153,10 @@ export function Navbar() {
 
             <Link href="/about" className={cn(navLinkClass(lightHero), isActive("/about") && activeClass)}>
               О нас
+            </Link>
+
+            <Link href="/blog" className={cn(navLinkClass(lightHero), isActive("/blog") && activeClass)}>
+              Блог
             </Link>
 
             <a
@@ -161,7 +172,7 @@ export function Navbar() {
           <a
             href="#contact-form"
             className={cn(
-              "hidden items-center border-[1.5px] px-5 py-2.5 text-[12px] font-semibold uppercase tracking-[0.12em] transition-[background-color,color,border-color] duration-[250ms] ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent lg:inline-flex",
+              "hidden shrink-0 items-center border-[1.5px] px-6 py-3 text-[18px] font-semibold uppercase leading-snug tracking-[0.1em] transition-[background-color,color,border-color] duration-[250ms] ease-out focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent lg:inline-flex",
               lightHero
                 ? "border-[#1A1A1A]/50 text-[#1A1A1A] hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-white"
                 : "border-accent text-text-primary hover:bg-accent hover:text-[#0A0A0A]"
@@ -174,14 +185,14 @@ export function Navbar() {
           <button
             type="button"
             className={cn(
-              "flex h-11 w-11 items-center justify-center border lg:hidden",
+              "flex h-12 w-12 shrink-0 items-center justify-center border lg:hidden",
               lightHero ? "border-text-dark/25 text-text-dark" : "border-[var(--color-border)] text-text-primary"
             )}
             aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
           >
-            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
           </button>
         </div>
       </header>
@@ -194,47 +205,62 @@ export function Navbar() {
           aria-modal="true"
           aria-label="Меню"
         >
-          <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-4">
-            <span className="font-display text-lg font-semibold text-text-primary">Меню</span>
+          <div className="flex items-center justify-between border-b border-[var(--color-border)] px-4 py-5">
+            <span className="font-display text-2xl font-semibold leading-tight text-text-primary">Меню</span>
             <button
               type="button"
-              className="flex h-11 w-11 items-center justify-center border border-[var(--color-border)]"
+              className="flex h-12 w-12 items-center justify-center border border-[var(--color-border)]"
               aria-label="Закрыть"
               onClick={() => setMobileOpen(false)}
             >
-              <X className="h-5 w-5" />
+              <X className="h-6 w-6" />
             </button>
           </div>
 
-          <nav className="flex flex-1 flex-col gap-1 overflow-y-auto px-4 py-6" aria-label="Мобильная навигация">
-            <Link href="/cases" className="py-3 text-lg font-medium text-text-primary" onClick={() => setMobileOpen(false)}>
+          <nav className="flex flex-1 flex-col gap-0.5 overflow-y-auto px-4 py-7" aria-label="Мобильная навигация">
+            <Link
+              href="/cases"
+              className="py-3.5 text-[27px] font-medium leading-snug text-text-primary"
+              onClick={() => setMobileOpen(false)}
+            >
               Кейсы
             </Link>
-            <p className="mt-4 text-[11px] uppercase tracking-widest text-text-muted">Услуги</p>
+            <p className="mt-5 text-base font-medium uppercase tracking-[0.16em] text-text-muted">Услуги</p>
             {serviceNav.map((s) => (
               <Link
                 key={s.slug}
                 href={`/services/${s.slug}`}
-                className="py-2.5 text-[15px] text-text-secondary"
+                className="py-3 text-[22px] leading-snug text-text-secondary"
                 onClick={() => setMobileOpen(false)}
               >
                 {s.title}
               </Link>
             ))}
-            <Link href="/about" className="mt-4 py-3 text-lg font-medium text-text-primary" onClick={() => setMobileOpen(false)}>
+            <Link
+              href="/about"
+              className="mt-5 py-3.5 text-[27px] font-medium leading-snug text-text-primary"
+              onClick={() => setMobileOpen(false)}
+            >
               О нас
+            </Link>
+            <Link
+              href="/blog"
+              className="py-3.5 text-[27px] font-medium leading-snug text-text-primary"
+              onClick={() => setMobileOpen(false)}
+            >
+              Блог
             </Link>
             <a
               href={`tel:${CONTACT_PHONE_TEL}`}
-              className="mt-4 py-2 text-[15px] text-text-secondary"
+              className="mt-5 py-2.5 text-[22px] leading-snug text-text-secondary"
               onClick={() => setMobileOpen(false)}
             >
               {CONTACT_PHONE}
             </a>
-            <div className="mt-8">
+            <div className="mt-9">
               <a
                 href="#contact-form"
-                className="inline-flex items-center border-[1.5px] border-accent bg-transparent px-8 py-4 text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] hover:bg-accent hover:text-[#0A0A0A]"
+                className="inline-flex items-center border-[1.5px] border-accent bg-transparent px-9 py-[1.125rem] text-[19px] font-semibold uppercase leading-snug tracking-[0.1em] text-text-primary transition-[background-color,color] duration-[250ms] hover:bg-accent hover:text-[#0A0A0A]"
                 onClick={() => setMobileOpen(false)}
               >
                 Обсудить проект

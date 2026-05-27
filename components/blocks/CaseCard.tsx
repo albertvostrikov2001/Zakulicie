@@ -36,7 +36,7 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
             fill
             className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
             style={caseImagePosition(item.heroImage)}
-            sizes="(max-width: 768px) 100vw, 50vw"
+            sizes="(max-width: 767px) 100vw, (max-width: 1279px) 50vw, 34vw"
             priority={priority}
             placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
             blurDataURL={item.heroImage.blurDataURL}
@@ -67,7 +67,7 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
             <Badge className="mb-3 w-fit border-white/15 text-[10px] text-text-secondary">
               {tag}
             </Badge>
-            <h3 className="font-display text-xl font-semibold text-text-primary md:text-2xl">
+            <h3 className="font-display text-xl font-semibold leading-snug text-text-primary md:text-2xl md:leading-snug xl:text-xl xl:leading-snug xl:font-semibold min-[1536px]:text-2xl min-[1536px]:leading-snug">
               {item.title}
             </h3>
             {item.client && (
