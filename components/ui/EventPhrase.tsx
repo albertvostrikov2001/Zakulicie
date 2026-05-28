@@ -3,12 +3,7 @@
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import Image from "@/components/ui/SiteImage";
 import { AnimatePresence, motion, useInView } from "framer-motion";
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 /* ─── Letter-to-image map ─────────────────────────────────── */
 interface LetterEntry {
@@ -50,7 +45,6 @@ const INTERACTIVE_INDICES = LETTERS.map((_, i) => i).filter((i) =>
 
 function useCoarsePointer(): boolean {
   const [coarse, setCoarse] = useState(false);
-
   useEffect(() => {
     const mq = window.matchMedia("(hover: none)");
     const update = () => setCoarse(mq.matches);
@@ -58,11 +52,36 @@ function useCoarsePointer(): boolean {
     mq.addEventListener("change", update);
     return () => mq.removeEventListener("change", update);
   }, []);
-
   return coarse;
 }
 
-/* ─── Desktop: absolute image layer (child of section) ───── */
+/* ─── RAF-based float loop (compositor-only transforms) ─────── */
+function launchFloat(
+  image: HTMLDivElement,
+  onId: (id: number) => void
+): void {
+  // Each image gets its own random float personality
+  const ampX = 2 + Math.random() * 4;          // 2–6 px horizontal drift
+  const ampY = 3 + Math.random() * 6;          // 3–9 px vertical float
+  const ampR = 0.4 + Math.random() * 1.8;      // 0.4–2.2° rotation swing
+  const fX   = 0.20 + Math.random() * 0.20;    // 0.20–0.40 Hz
+  const fY   = 0.17 + Math.random() * 0.18;    // 0.17–0.35 Hz
+  const pX   = Math.random() * Math.PI * 2;    // random phase offset
+  const pY   = Math.random() * Math.PI * 2;
+  const t0   = performance.now();
+
+  const tick = (now: number) => {
+    const t  = (now - t0) / 1000;
+    const dx = Math.sin(t * fX * Math.PI * 2 + pX) * ampX;
+    const dy = Math.sin(t * fY * Math.PI * 2 + pY) * ampY;
+    const r  = Math.sin(t * 0.48 + pX * 0.65) * ampR;
+    image.style.transform = `translate(${dx}px, ${dy}px) rotate(${r}deg)`;
+    onId(requestAnimationFrame(tick));
+  };
+  onId(requestAnimationFrame(tick));
+}
+
+/* ─── Desktop: absolute image layer ─────────────────────────── */
 function DesktopImageLayer({
   imageRefs,
 }: {
@@ -75,9 +94,7 @@ function DesktopImageLayer({
         return (
           <div
             key={i}
-            ref={(el) => {
-              imageRefs.current[i] = el;
-            }}
+            ref={(el) => { imageRefs.current[i] = el; }}
             className="overflow-hidden rounded-[2px]"
             style={{
               position: "absolute",
@@ -87,8 +104,9 @@ function DesktopImageLayer({
               height: "260px",
               opacity: 0,
               visibility: "hidden",
-              transform: "scale(0.94)",
-              transition: "opacity 0.28s ease, transform 0.28s ease, visibility 0.28s",
+              transform: "scale(0.88) translateY(28px) rotate(0deg)",
+              willChange: "transform, opacity",
+              boxShadow: "0 24px 64px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)",
             }}
           >
             <Image
@@ -98,7 +116,7 @@ function DesktopImageLayer({
               sizes="260px"
               className="object-cover"
             />
-            <div className="pointer-events-none absolute inset-0 bg-black/25" />
+            <div className="pointer-events-none absolute inset-0 bg-black/20" />
           </div>
         );
       })}
@@ -106,7 +124,7 @@ function DesktopImageLayer({
   );
 }
 
-/* ─── Desktop: letter row (inside motion / content flow) ──── */
+/* ─── Desktop: interactive letter row ───────────────────────── */
 function DesktopLetterRow({
   sectionRef,
   letterRefs,
@@ -118,47 +136,110 @@ function DesktopLetterRow({
   imageRefs: React.MutableRefObject<(HTMLDivElement | null)[]>;
   reduced: boolean;
 }) {
-  const handleLetterEnter = useCallback(
-    (index: number) => {
-      if (reduced) return;
-      const section = sectionRef.current;
-      const letter = letterRefs.current[index];
-      const image = imageRefs.current[index];
-      if (!section || !letter || !image) return;
-      if (!isInteractiveChar(LETTERS[index]?.char ?? "")) return;
+  const floatRafs   = useRef<Map<number, number>>(new Map());
+  const floatTimers = useRef<Map<number, ReturnType<typeof setTimeout>>>(new Map());
 
-      const sR = section.getBoundingClientRect();
-      const lR = letter.getBoundingClientRect();
+  // Cleanup all pending RAF / timers on unmount
+  useEffect(() => {
+    return () => {
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      floatRafs.current.forEach((id) => cancelAnimationFrame(id));
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+      floatTimers.current.forEach((id) => clearTimeout(id));
+    };
+  }, []);
 
-      const imgW = Math.min(Math.max(lR.width * 3.5, 160), 260);
-      const imgH = imgW * 1.3;
-      const safeM = 16;
+  /** Stop float RAF + pending timer for a given letter index */
+  const killFloat = useCallback((idx: number) => {
+    const raf = floatRafs.current.get(idx);
+    if (raf !== undefined) { cancelAnimationFrame(raf); floatRafs.current.delete(idx); }
+    const tim = floatTimers.current.get(idx);
+    if (tim !== undefined) { clearTimeout(tim); floatTimers.current.delete(idx); }
+  }, []);
 
-      let x = lR.left - sR.left + lR.width / 2 - imgW / 2;
-      let y = lR.top - sR.top - imgH - 12;
+  const handleLetterEnter = useCallback((idx: number) => {
+    if (reduced) return;
+    const section = sectionRef.current;
+    const letter  = letterRefs.current[idx];
+    const image   = imageRefs.current[idx];
+    if (!section || !letter || !image) return;
+    if (!isInteractiveChar(LETTERS[idx]?.char ?? "")) return;
 
-      x = Math.max(safeM, Math.min(sR.width - imgW - safeM, x));
-      if (y < safeM) y = lR.top - sR.top + lR.height + 8;
-      y = Math.min(sR.height - imgH - safeM, y);
+    killFloat(idx);
 
-      image.style.width = `${imgW}px`;
-      image.style.height = `${imgH}px`;
-      image.style.left = `${x}px`;
-      image.style.top = `${y}px`;
-      image.style.opacity = "1";
-      image.style.visibility = "visible";
-      image.style.transform = "scale(1)";
-    },
-    [reduced, sectionRef, letterRefs, imageRefs]
-  );
+    const sR = section.getBoundingClientRect();
+    const lR = letter.getBoundingClientRect();
 
-  const handleLetterLeave = useCallback((index: number) => {
-    const image = imageRefs.current[index];
+    const imgW  = Math.min(Math.max(lR.width * 3.5, 160), 260);
+    const imgH  = imgW * 1.3;
+    const safeM = 16;
+
+    /* ── chaotic position jitter ── */
+    const jitterX = (Math.random() - 0.5) * 52;  // ±26 px
+    const jitterY = (Math.random() - 0.5) * 30;  // ±15 px
+
+    let x = lR.left - sR.left + lR.width / 2 - imgW / 2 + jitterX;
+    let y = lR.top  - sR.top  - imgH - 14    + jitterY;
+
+    x = Math.max(safeM, Math.min(sR.width  - imgW - safeM, x));
+    if (y < safeM) y = lR.top - sR.top + lR.height + 10;
+    y = Math.min(sR.height - imgH - safeM, y);
+
+    /* ── random entry personality ── */
+    const eRot   = (Math.random() - 0.5) * 18;   // −9°…+9°
+    const eScale = 0.78 + Math.random() * 0.14;  // 0.78–0.92
+    const eY     = 22  + Math.random() * 26;      // 22–48 px below final pos
+    const eDur   = 0.34 + Math.random() * 0.22;  // 0.34–0.56 s
+
+    image.style.width  = `${imgW}px`;
+    image.style.height = `${imgH}px`;
+    image.style.left   = `${x}px`;
+    image.style.top    = `${y}px`;
+
+    /* snap to start state without any transition */
+    image.style.transition = "none";
+    image.style.opacity    = "0";
+    image.style.transform  = `scale(${eScale}) translateY(${eY}px) rotate(${eRot}deg)`;
+    image.style.visibility = "visible";
+
+    /* double-RAF: let browser paint the "start" state first */
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        const ease = "cubic-bezier(0.16, 1, 0.3, 1)";
+        image.style.transition = `opacity ${eDur}s ${ease}, transform ${eDur}s ${ease}`;
+        image.style.opacity    = "1";
+        image.style.transform  = "scale(1) translateY(0px) rotate(0deg)";
+
+        /* after entry animation, hand off to the float loop */
+        const timer = setTimeout(() => {
+          floatTimers.current.delete(idx);
+          image.style.transition = "opacity 0.22s ease"; // only opacity transitions from here
+          launchFloat(image, (id) => floatRafs.current.set(idx, id));
+        }, Math.round(eDur * 1000));
+
+        floatTimers.current.set(idx, timer);
+      });
+    });
+  }, [reduced, sectionRef, letterRefs, imageRefs, killFloat]);
+
+  const handleLetterLeave = useCallback((idx: number) => {
+    const image = imageRefs.current[idx];
     if (!image) return;
-    image.style.opacity = "0";
-    image.style.visibility = "hidden";
-    image.style.transform = "scale(0.94)";
-  }, [imageRefs]);
+
+    killFloat(idx);
+
+    /* exit: fade + slight scale-down + random exit rotation */
+    const exitRot = (Math.random() - 0.5) * 12;
+    image.style.transition = "opacity 0.18s ease, transform 0.18s cubic-bezier(0.4, 0, 1, 1)";
+    image.style.opacity    = "0";
+    image.style.transform  = `scale(0.90) translateY(10px) rotate(${exitRot}deg)`;
+
+    setTimeout(() => {
+      if (parseFloat(image.style.opacity ?? "1") < 0.05) {
+        image.style.visibility = "hidden";
+      }
+    }, 220);
+  }, [imageRefs, killFloat]);
 
   return (
     <p
@@ -183,9 +264,7 @@ function DesktopLetterRow({
         return (
           <span
             key={i}
-            ref={(el) => {
-              letterRefs.current[i] = el;
-            }}
+            ref={(el) => { letterRefs.current[i] = el; }}
             className="relative inline-block cursor-default select-none transition-colors duration-150 ease-out hover:text-accent"
             onMouseEnter={reduced ? undefined : () => handleLetterEnter(i)}
             onMouseLeave={reduced ? undefined : () => handleLetterLeave(i)}
@@ -198,7 +277,7 @@ function DesktopLetterRow({
   );
 }
 
-/* ─── Touch: auto-cycle + зона под фразой ─────────────────── */
+/* ─── Touch: auto-cycle + image zone below phrase ───────────── */
 function TouchPhrase({ reduced }: { reduced: boolean }) {
   const [activeIndex, setActiveIndex] = useState(0);
   const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -262,10 +341,7 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
             <motion.div
               key={`${activeLetter.imageSrc}-${activeLetterIndex}`}
               className="relative overflow-hidden rounded-[2px]"
-              style={{
-                width: "min(65vw, 220px)",
-                aspectRatio: "4 / 3",
-              }}
+              style={{ width: "min(65vw, 220px)", aspectRatio: "4 / 3" }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
@@ -290,11 +366,11 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
 /* ─── Main export ─────────────────────────────────────────── */
 export function EventPhrase() {
   const coarsePointer = useCoarsePointer();
-  const reduced = usePrefersReducedMotion();
-  const sectionRef = useRef<HTMLElement>(null);
-  const letterRefs = useRef<(HTMLSpanElement | null)[]>([]);
-  const imageRefs = useRef<(HTMLDivElement | null)[]>([]);
-  const inView = useInView(sectionRef, { once: true, margin: "-15%" });
+  const reduced       = usePrefersReducedMotion();
+  const sectionRef    = useRef<HTMLElement>(null);
+  const letterRefs    = useRef<(HTMLSpanElement | null)[]>([]);
+  const imageRefs     = useRef<(HTMLDivElement | null)[]>([]);
+  const inView        = useInView(sectionRef, { once: true, margin: "-15%" });
 
   return (
     <section
