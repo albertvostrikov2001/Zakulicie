@@ -19,7 +19,7 @@ const BRAND_LABEL = "Ивент-агентство полного цикла";
 const NAV_TEXT = "text-[19px] leading-snug tracking-[0.03em]";
 
 /** Бренд в хедере: на 1 шаг крупнее навигации, без подчёркивания */
-const BRAND_TEXT = "text-[20px] leading-snug tracking-[0.03em]";
+const BRAND_TEXT = "text-[12px] sm:text-[17px] lg:text-[20px] leading-snug tracking-[0.03em]";
 
 const navLinkClass = (light: boolean) =>
   cn(
@@ -112,8 +112,7 @@ export function Navbar() {
             aria-label="На главную — Ивент-агентство полного цикла"
             className={cn(
               brandLinkClass(),
-              "max-w-[min(11rem,42vw)] shrink-0 sm:max-w-[12.5rem] lg:max-w-[13.5rem] xl:max-w-[15rem] 2xl:max-w-none 2xl:whitespace-nowrap",
-              pathname === "/" && (lightHero ? "text-text-dark" : "text-accent")
+              "max-w-[min(12rem,46vw)] shrink-0 sm:max-w-[12.5rem] lg:max-w-[13.5rem] xl:max-w-[15rem] 2xl:max-w-none 2xl:whitespace-nowrap"
             )}
           >
             {BRAND_LABEL}
