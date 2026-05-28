@@ -227,7 +227,7 @@ export function TransitionSection() {
         {/* Scroll indicator */}
         <div
           ref={scrollRef}
-          className="absolute bottom-8 left-1/2 z-[3] flex -translate-x-1/2 flex-col items-center gap-1"
+          className="absolute bottom-8 left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-1 md:flex"
           aria-hidden
         >
           <div

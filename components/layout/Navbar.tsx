@@ -30,11 +30,11 @@ const navLinkClass = (light: boolean) =>
     light ? "text-[#1A1A1A]/90 hover:text-[#1A1A1A]" : "text-white/80 hover:text-white"
   );
 
-const brandLinkClass = (light: boolean) =>
+const brandLinkClass = () =>
   cn(
-    "inline-flex items-center font-medium transition-colors duration-200 ease-out",
+    "inline-flex items-center font-display font-black transition-colors duration-200 ease-out",
     BRAND_TEXT,
-    light ? "text-[#1A1A1A]/90 hover:text-[#1A1A1A]" : "text-white/80 hover:text-white"
+    "text-white/90 hover:text-white"
   );
 
 export function Navbar() {
@@ -111,7 +111,7 @@ export function Navbar() {
             href="/"
             aria-label="На главную — Ивент-агентство полного цикла"
             className={cn(
-              brandLinkClass(lightHero),
+              brandLinkClass(),
               "max-w-[min(11rem,42vw)] shrink-0 sm:max-w-[12.5rem] lg:max-w-[13.5rem] xl:max-w-[15rem] 2xl:max-w-none 2xl:whitespace-nowrap",
               pathname === "/" && (lightHero ? "text-text-dark" : "text-accent")
             )}
