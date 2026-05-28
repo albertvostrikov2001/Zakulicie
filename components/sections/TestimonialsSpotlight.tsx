@@ -192,8 +192,9 @@ export function TestimonialsSpotlight() {
     };
   }, [startAuto, stopAuto, clearSlideTimeouts]);
 
-  const hdrRevealRef = useRef<HTMLDivElement | null>(null);
+  const hdrRevealRef  = useRef<HTMLDivElement | null>(null);
   const mainRevealRef = useRef<HTMLDivElement | null>(null);
+  const touchStartX   = useRef(0);
 
   useEffect(() => {
     const io = new IntersectionObserver(
@@ -232,6 +233,13 @@ export function TestimonialsSpotlight() {
           ref={mainRevealRef}
           className={`${styles.main} ${styles.reveal}`}
           style={{ transitionDelay: "0.15s" }}
+          onTouchStart={(e) => { touchStartX.current = e.touches[0]?.clientX ?? 0; }}
+          onTouchEnd={(e) => {
+            const dx = (e.changedTouches[0]?.clientX ?? 0) - touchStartX.current;
+            if (Math.abs(dx) < 45) return;
+            if (dx < 0) { goToRef.current((curRef.current + 1) % DATA.length); stopAuto(); startAuto(); }
+            else        { goToRef.current((curRef.current - 1 + DATA.length) % DATA.length); stopAuto(); startAuto(); }
+          }}
         >
           <div
             id="photoPanel"
@@ -321,6 +329,7 @@ export function TestimonialsSpotlight() {
             </div>
           </div>
 
+          {/* Thumbnails — desktop */}
           <div className={styles.thumbs} id="thumbs">
             {DATA.map((item, i) => (
               <div
@@ -328,11 +337,7 @@ export function TestimonialsSpotlight() {
                 role="button"
                 tabIndex={0}
                 className={`${styles.thumb} ${i === cur ? styles.thumbActive : ""}`}
-                onClick={() => {
-                  goTo(i);
-                  stopAuto();
-                  startAuto();
-                }}
+                onClick={() => { goTo(i); stopAuto(); startAuto(); }}
                 onKeyDown={(e) => {
                   if (e.key === "Enter" || e.key === " ") {
                     e.preventDefault();
@@ -351,6 +356,21 @@ export function TestimonialsSpotlight() {
                   <div className={styles.thumbCo}>{item.company}</div>
                 </div>
               </div>
+            ))}
+          </div>
+
+          {/* Dot navigation — mobile only */}
+          <div className={styles.mobileDots} role="tablist" aria-label="Навигация по отзывам">
+            {DATA.map((_, i) => (
+              <button
+                key={i}
+                type="button"
+                role="tab"
+                aria-selected={i === cur}
+                aria-label={`Отзыв ${i + 1}`}
+                className={`${styles.mobileDot} ${i === cur ? styles.mobileDotActive : ""}`}
+                onClick={() => { goTo(i); stopAuto(); startAuto(); }}
+              />
             ))}
           </div>
         </div>

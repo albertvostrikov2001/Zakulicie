@@ -25,6 +25,7 @@ const SERVICE_PRIMARY_HEADINGS: Partial<Record<ServiceSlug, string>> = {
 export function ServicesSection() {
   const defaultSlug = (serviceNav[0]?.slug ?? "korporativnye-meropriyatiya") as ServiceSlug;
   const [hovered, setHovered] = useState<ServiceSlug | null>(null);
+  const [svcActiveIdx, setSvcActiveIdx] = useState(0);
   const reducedMotion = usePrefersReducedMotion();
   const mobile = useIsMobile();
   const activeSlug = hovered ?? defaultSlug;
@@ -107,11 +108,16 @@ export function ServicesSection() {
       ══════════════════════════════════════════════════════ */}
       <div className="block md:hidden">
         {/* Compact header */}
-        <div className="mb-5 px-4">
-          <p className="caption-text">Услуги</p>
-          <h2 className="mt-2 font-display text-[clamp(22px,6.5vw,32px)] font-bold leading-snug tracking-tight text-text-primary">
-            Корпоративные, деловые<br />и командные мероприятия
-          </h2>
+        <div className="mb-5 px-4 flex items-end justify-between gap-3">
+          <div className="min-w-0">
+            <p className="caption-text">Услуги</p>
+            <h2 className="mt-2 font-display text-[clamp(22px,6.5vw,32px)] font-bold leading-snug tracking-tight text-text-primary">
+              Корпоративные, деловые<br />и командные мероприятия
+            </h2>
+          </div>
+          <span className="mb-1 shrink-0 font-mono text-[11px] tabular-nums text-white/35">
+            {String(svcActiveIdx + 1).padStart(2, "0")}&thinsp;/&thinsp;{String(serviceNav.length).padStart(2, "0")}
+          </span>
         </div>
 
         {/* Service cards swiper */}
@@ -122,6 +128,7 @@ export function ServicesSection() {
           centeredSlides={false}
           modules={[Pagination]}
           pagination={{ clickable: true }}
+          onSlideChange={(swiper) => setSvcActiveIdx(swiper.realIndex)}
           style={{
             paddingLeft: "16px",
             paddingRight: "8px",
@@ -210,6 +217,9 @@ export function ServicesSection() {
             );
           })}
         </Swiper>
+        <p className="mt-0.5 px-4 text-[10px] font-semibold uppercase tracking-[0.18em] text-white/30">
+          Свайпайте для просмотра&nbsp;→
+        </p>
       </div>
 
       {/* ══════════════════════════════════════════════════════

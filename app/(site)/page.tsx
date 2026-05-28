@@ -69,8 +69,8 @@ export default async function HomePage() {
       {/* 6 – НАПРАВЛЕНИЯ РАБОТЫ: hover reveal услуг */}
       <ServicesSection />
 
-      {/* 7 – CTA-вставка */}
-      <CTAStrip text="Есть задача? Расскажите — предложим решение." />
+      {/* 7 – CTA-вставка (filled variant для визуального контраста) */}
+      <CTAStrip text="Есть задача? Расскажите — предложим решение." variant="filled" />
 
       {/* 8 – КЛИЕНТЫ: premium flip-card showcase */}
       <ClientsShowcase />

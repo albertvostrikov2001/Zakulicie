@@ -277,26 +277,69 @@ function DesktopLetterRow({
   );
 }
 
-/* ─── Touch: auto-cycle + image zone below phrase ───────────── */
+/* ─── Touch: cinematic Stories-style image cycle ─────────────── */
+
+/** A curated subset of IMAGE_SOURCES for mobile stories */
+const STORY_SRCS = IMAGE_SOURCES.slice(0, 6);
+const STORY_DURATION = 2600; // ms per story slide
+
+/** Stable per-story random transforms (generated once) */
+const STORY_ROTATIONS = STORY_SRCS.map(() => (Math.random() - 0.5) * 7);
+const STORY_OFFSETS   = STORY_SRCS.map(() => (Math.random() - 0.5) * 18);
+
 function TouchPhrase({ reduced }: { reduced: boolean }) {
   const [activeIndex, setActiveIndex] = useState(0);
-  const cycleRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const progressFillRef = useRef<HTMLDivElement>(null);
+  const rafRef = useRef(0);
 
+  /* RAF-driven progress + auto-advance */
   useEffect(() => {
     if (reduced) return;
-    cycleRef.current = setInterval(() => {
-      setActiveIndex((i) => (i + 1) % INTERACTIVE_INDICES.length);
-    }, 1800);
-    return () => {
-      if (cycleRef.current) clearInterval(cycleRef.current);
-    };
-  }, [reduced]);
+    const start = performance.now();
+    if (progressFillRef.current) progressFillRef.current.style.width = "0%";
 
-  const activeLetterIndex = INTERACTIVE_INDICES[activeIndex] ?? INTERACTIVE_INDICES[0] ?? 0;
-  const activeLetter = LETTERS[activeLetterIndex];
+    const tick = (now: number) => {
+      const pct = Math.min(((now - start) / STORY_DURATION) * 100, 100);
+      if (progressFillRef.current) progressFillRef.current.style.width = `${pct}%`;
+      if (pct >= 100) {
+        setActiveIndex((i) => (i + 1) % STORY_SRCS.length);
+        return; // cleanup will cancel; next effect run starts fresh
+      }
+      rafRef.current = requestAnimationFrame(tick);
+    };
+    rafRef.current = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(rafRef.current);
+  }, [reduced, activeIndex]);
+
+  const currentSrc = STORY_SRCS[activeIndex] ?? "";
+  const rotation   = STORY_ROTATIONS[activeIndex] ?? 0;
+  const offsetX    = STORY_OFFSETS[activeIndex] ?? 0;
+
+  /* Map activeIndex → a letter to highlight in the phrase */
+  const hlLetterIndex = INTERACTIVE_INDICES[(activeIndex * 4) % INTERACTIVE_INDICES.length] ?? 0;
 
   return (
     <div className="relative flex w-full flex-col items-center">
+
+      {/* Stories progress segments */}
+      {!reduced && (
+        <div className="mb-6 flex w-full gap-[3px] px-1" aria-hidden>
+          {STORY_SRCS.map((_, i) => (
+            <div
+              key={i}
+              className="h-[2px] flex-1 overflow-hidden rounded-full bg-white/15"
+            >
+              {i < activeIndex ? (
+                <div className="h-full w-full bg-accent" />
+              ) : i === activeIndex ? (
+                <div ref={progressFillRef} className="h-full bg-accent" style={{ width: "0%" }} />
+              ) : null}
+            </div>
+          ))}
+        </div>
+      )}
+
+      {/* Phrase text */}
       <p
         className="m-0 inline-flex max-w-full flex-wrap justify-center font-display font-bold leading-[1.15]"
         style={{
@@ -320,9 +363,9 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
             <span
               key={i}
               className={
-                !reduced && activeLetterIndex === i
-                  ? "text-accent transition-colors duration-300"
-                  : "transition-colors duration-300"
+                !reduced && hlLetterIndex === i
+                  ? "text-accent transition-colors duration-500"
+                  : "transition-colors duration-500"
               }
             >
               {entry.char}
@@ -331,32 +374,40 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
         })}
       </p>
 
+      {/* Cinematic image zone */}
       <div
         className="relative mt-6 flex w-full justify-center"
-        style={{ minHeight: "min(70vw, 260px)" }}
+        style={{ minHeight: "min(72vw, 270px)" }}
         aria-hidden
       >
         <AnimatePresence mode="wait">
-          {activeLetter ? (
-            <motion.div
-              key={`${activeLetter.imageSrc}-${activeLetterIndex}`}
-              className="relative overflow-hidden rounded-[2px]"
-              style={{ width: "min(65vw, 220px)", aspectRatio: "4 / 3" }}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, ease: "easeOut" }}
-            >
-              <Image
-                src={activeLetter.imageSrc}
-                alt={activeLetter.imageAlt}
-                fill
-                sizes="300px"
-                className="object-cover"
-              />
-              <div className="pointer-events-none absolute inset-0 bg-black/30" />
-            </motion.div>
-          ) : null}
+          <motion.div
+            key={currentSrc + activeIndex}
+            className="relative overflow-hidden rounded-[3px]"
+            style={{
+              width: "min(78vw, 280px)",
+              aspectRatio: "4 / 3",
+              boxShadow: "0 20px 56px rgba(0,0,0,0.55), 0 4px 14px rgba(0,0,0,0.35)",
+            }}
+            initial={{ opacity: 0, scale: 0.93, rotate: rotation * 0.4, x: offsetX * 0.5 }}
+            animate={{ opacity: 1, scale: 1,    rotate: rotation,        x: offsetX }}
+            exit={{   opacity: 0, scale: 0.96,  rotate: rotation * 1.5,  x: offsetX * 0.7 }}
+            transition={{ duration: 0.55, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <Image
+              src={currentSrc}
+              alt={`Закулисье — кадр ${activeIndex + 1}`}
+              fill
+              sizes="320px"
+              className="object-cover"
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.55) 100%)",
+              }}
+            />
+          </motion.div>
         </AnimatePresence>
       </div>
     </div>

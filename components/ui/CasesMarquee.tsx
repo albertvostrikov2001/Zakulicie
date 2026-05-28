@@ -23,7 +23,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
       href={`/cases/${item.slug}`}
       className={cn(
         "group relative block shrink-0 overflow-hidden",
-        "w-[170px] h-[110px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
+        "w-[230px] h-[150px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
       )}
       style={{ borderRadius: "var(--border-radius-card)" }}
     >
@@ -34,7 +34,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
         fill
         className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
         style={caseImagePosition(item.heroImage)}
-        sizes="(max-width: 640px) 170px, (max-width: 768px) 340px, 380px"
+        sizes="(max-width: 640px) 230px, (max-width: 768px) 340px, 380px"
         placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
         blurDataURL={item.heroImage.blurDataURL}
       />
@@ -155,9 +155,16 @@ export function CasesMarquee({ cases }: CasesMarqueeProps) {
         <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
           <div>
             <p className="caption-text">Проекты</p>
-            <h2 className="mt-3 font-display text-[clamp(28px,3.5vw,48px)] font-bold leading-snug tracking-tight text-text-primary">
-              Кейсы для федеральных брендов и лидеров региона
-            </h2>
+            <div className="mt-3 flex items-baseline gap-3">
+              <h2 className="font-display text-[clamp(28px,3.5vw,48px)] font-bold leading-snug tracking-tight text-text-primary">
+                Кейсы для федеральных брендов и лидеров региона
+              </h2>
+            </div>
+            {/* Mobile counter badge */}
+            <div className="mt-2 flex items-baseline gap-1.5 md:hidden">
+              <span className="font-display text-[22px] font-black text-accent">40+</span>
+              <span className="text-[13px] font-medium text-text-secondary">реализованных проектов</span>
+            </div>
             <h3 className="mt-3 max-w-[52ch] font-body text-[15px] font-medium leading-snug text-text-secondary md:text-[16px]">
               От ритейла и банков до дилерских съездов и корпоративных событий
             </h3>
@@ -189,8 +196,8 @@ export function CasesMarquee({ cases }: CasesMarqueeProps) {
         </div>
       </div>
 
-      {/* Row 2 — right to left */}
-      <div ref={wrapRtlRef} className="mt-4 overflow-hidden">
+      {/* Row 2 — right to left (hidden on mobile) */}
+      <div ref={wrapRtlRef} className="mt-4 hidden overflow-hidden sm:block">
         <div
           ref={rowRtlRef}
           className={cn(

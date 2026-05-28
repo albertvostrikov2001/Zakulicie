@@ -224,7 +224,7 @@ export function TransitionSection() {
           </div>
         </div>
 
-        {/* Scroll indicator */}
+        {/* Scroll indicator — desktop */}
         <div
           ref={scrollRef}
           className="absolute bottom-8 left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-1 md:flex"
@@ -234,6 +234,31 @@ export function TransitionSection() {
             className="h-12 w-px bg-accent opacity-50"
             style={{ animation: "scroll-hint 2.2s ease-in-out 0.8s infinite" }}
           />
+        </div>
+
+        {/* Scroll indicator — mobile */}
+        <div
+          className="absolute bottom-5 left-0 right-0 z-[3] flex justify-center md:hidden"
+          aria-hidden
+        >
+          <div
+            className="flex flex-col items-center gap-1"
+            style={{ animation: "scroll-hint-mobile 2s ease-in-out 1.2s infinite" }}
+          >
+            <span className="text-[8px] font-semibold uppercase tracking-[0.24em] text-white/50">
+              листай
+            </span>
+            <svg width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden>
+              <path
+                d="M1 1.5l4 4 4-4"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="text-white/50"
+              />
+            </svg>
+          </div>
         </div>
       </div>
     </section>
