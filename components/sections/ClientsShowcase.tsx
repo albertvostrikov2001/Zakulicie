@@ -13,22 +13,44 @@ import "swiper/css/pagination";
 
 const MAX_SIMULTANEOUS = 3;
 
-function MobileFlipCard({ data }: { data: ClientData }) {
+/* ─── Mobile flip card ─────────────────────────────────────── */
+function MobileFlipCard({
+  data,
+  hintFlip = false,
+}: {
+  data: ClientData;
+  hintFlip?: boolean;
+}) {
   const [isFlipped, setIsFlipped] = useState(false);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  const handleTap = () => {
-    if (isFlipped) return;
-    setIsFlipped(true);
+  /* Auto-flip hint when parent signals the card to reveal itself */
+  useEffect(() => {
+    if (!hintFlip) return;
     if (timerRef.current) clearTimeout(timerRef.current);
-    timerRef.current = setTimeout(() => setIsFlipped(false), 2000);
-  };
+    setIsFlipped(true);
+    timerRef.current = setTimeout(() => setIsFlipped(false), 2300);
+    return () => {
+      if (timerRef.current) clearTimeout(timerRef.current);
+    };
+  }, [hintFlip]);
 
+  /* Cleanup on unmount */
   useEffect(() => {
     return () => {
       if (timerRef.current) clearTimeout(timerRef.current);
     };
   }, []);
+
+  const handleTap = () => {
+    if (timerRef.current) clearTimeout(timerRef.current);
+    if (isFlipped) {
+      setIsFlipped(false);
+    } else {
+      setIsFlipped(true);
+      timerRef.current = setTimeout(() => setIsFlipped(false), 2000);
+    }
+  };
 
   return (
     <div
@@ -44,7 +66,7 @@ function MobileFlipCard({ data }: { data: ClientData }) {
         }
       }}
       style={{
-        height: "clamp(115px, 38vw, 150px)",
+        height: "clamp(100px, 32vw, 140px)",
         width: "100%",
         touchAction: "manipulation",
         cursor: "pointer",
@@ -54,6 +76,14 @@ function MobileFlipCard({ data }: { data: ClientData }) {
         <div className={`flip-card-inner${isFlipped ? " is-flipped" : ""}`}>
           <div className="flip-card-face">
             <BrandDisplay display={data.display} brandName={data.brandName} />
+            {!isFlipped && (
+              <span
+                className="pointer-events-none absolute bottom-1.5 right-2 text-[9px] font-medium uppercase tracking-[0.12em] text-text-muted/60 select-none"
+                aria-hidden
+              >
+                нажми
+              </span>
+            )}
           </div>
           <div className="flip-card-face flip-card-back-face" aria-live="polite">
             <p className="flip-back-text">{data.backText}</p>
@@ -64,9 +94,45 @@ function MobileFlipCard({ data }: { data: ClientData }) {
   );
 }
 
+/* ─── Main section ─────────────────────────────────────────── */
 export function ClientsShowcase() {
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const flippingCount = useRef(0);
+  const sectionRef = useRef<HTMLElement>(null);
+  const [hintFired, setHintFired] = useState(false);
+  const [showHint, setShowHint] = useState(false);
+
+  /* Hint: flip first card automatically when section scrolls into view */
+  useEffect(() => {
+    if (hintFired) return;
+    const el = sectionRef.current;
+    if (!el) return;
+
+    let delayTimer: ReturnType<typeof setTimeout>;
+    let hideTimer: ReturnType<typeof setTimeout>;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry?.isIntersecting) {
+          setHintFired(true);
+          observer.disconnect();
+          delayTimer = setTimeout(() => {
+            setShowHint(true);
+            hideTimer = setTimeout(() => setShowHint(false), 2400);
+          }, 700);
+        }
+      },
+      { threshold: 0.35 }
+    );
+
+    observer.observe(el);
+
+    return () => {
+      observer.disconnect();
+      clearTimeout(delayTimer);
+      clearTimeout(hideTimer);
+    };
+  }, [hintFired]);
 
   const requestAutoFlip = useCallback((): boolean => {
     if (flippingCount.current >= MAX_SIMULTANEOUS) return false;
@@ -83,6 +149,7 @@ export function ClientsShowcase() {
 
   return (
     <section
+      ref={sectionRef}
       className="bg-[var(--color-surface-elevated)] py-section"
       aria-label="Наши клиенты"
       id="clients"
@@ -106,19 +173,22 @@ export function ClientsShowcase() {
           </div>
         </div>
 
-        {/* Mobile: tap-to-flip Swiper */}
+        {/* Mobile: tap-to-flip Swiper with auto-flip hint on first card */}
         <div className="block md:hidden">
           <Swiper
-            slidesPerView={1.2}
-            spaceBetween={16}
+            slidesPerView={2.2}
+            spaceBetween={12}
             grabCursor
             modules={[Pagination]}
             pagination={{ clickable: true }}
             className="clients-swiper !pb-8"
           >
-            {clients.map((client) => (
+            {clients.map((client, index) => (
               <SwiperSlide key={client.id} style={{ height: "auto" }}>
-                <MobileFlipCard data={client} />
+                <MobileFlipCard
+                  data={client}
+                  hintFlip={index === 0 && showHint}
+                />
               </SwiperSlide>
             ))}
           </Swiper>
