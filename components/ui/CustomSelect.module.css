@@ -9,7 +9,7 @@
 }
 
 .fieldFocused {
-  border-bottom-color: rgba(201, 168, 76, 0.35);
+  border-bottom-color: rgba(181, 97, 28, 0.35);
 }
 
 .fieldInvalid {
@@ -27,7 +27,7 @@
 }
 
 .fieldLabelFocused {
-  color: #c9a84c;
+  color: #B5611C;
 }
 
 .selectWrap {
@@ -87,7 +87,7 @@
   padding: 0;
   list-style: none;
   background: #1c1c1c;
-  border: 1px solid rgba(201, 168, 76, 0.2);
+  border: 1px solid rgba(181, 97, 28, 0.2);
   border-radius: 3px;
   box-shadow: 0 24px 48px rgba(0, 0, 0, 0.6);
   animation: dropdownIn 0.22s ease forwards;
@@ -99,7 +99,7 @@
   background: linear-gradient(
     90deg,
     transparent,
-    rgba(201, 168, 76, 0.5),
+    rgba(181, 97, 28, 0.5),
     transparent
   );
 }
@@ -139,16 +139,16 @@
 }
 
 .option:hover {
-  background: rgba(201, 168, 76, 0.06);
+  background: rgba(181, 97, 28, 0.06);
   color: #f0ede7;
 }
 
 .option:hover .optionDot {
-  background: #c9a84c;
+  background: #B5611C;
 }
 
 .optionSelected {
-  color: #c9a84c;
+  color: #B5611C;
 }
 
 .optionDot {
@@ -156,16 +156,16 @@
   height: 4px;
   flex-shrink: 0;
   border-radius: 50%;
-  background: rgba(201, 168, 76, 0.3);
+  background: rgba(181, 97, 28, 0.3);
   transition: background 0.15s ease;
 }
 
 .optionSelected .optionDot {
-  background: #c9a84c;
+  background: #B5611C;
 }
 
 .optionCheck {
   margin-left: auto;
-  color: #c9a84c;
+  color: #B5611C;
   font-size: 13px;
 }

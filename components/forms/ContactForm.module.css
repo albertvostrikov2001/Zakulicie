@@ -34,7 +34,7 @@
 }
 
 .fieldFocused {
-  border-bottom-color: rgba(201, 168, 76, 0.35);
+  border-bottom-color: rgba(181, 97, 28, 0.35);
 }
 
 .fieldInvalid {
@@ -52,7 +52,7 @@
 }
 
 .fieldLabelFocused {
-  color: #c9a84c;
+  color: #B5611C;
 }
 
 .fieldInput {
@@ -112,8 +112,8 @@
 }
 
 .consentInput:checked + .consentBox {
-  border-color: #c9a84c;
-  background: #c9a84c;
+  border-color: #B5611C;
+  background: #B5611C;
 }
 
 .consentInput:checked + .consentBox::after {
@@ -136,7 +136,7 @@
 }
 
 .consentText a {
-  color: #c9a84c;
+  color: #B5611C;
   text-decoration: none;
 }
 
@@ -154,7 +154,7 @@
   border: 0;
   border-radius: 2px;
   padding: 18px 28px;
-  background: #c9a84c;
+  background: #B5611C;
   cursor: pointer;
   font-family: var(--font-body), "Inter", system-ui, sans-serif;
   font-size: 13px;
@@ -177,7 +177,7 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  box-shadow: 0 16px 44px rgba(201, 168, 76, 0.28);
+  box-shadow: 0 16px 44px rgba(181, 97, 28, 0.28);
   transform: translateY(-2px);
 }
 
@@ -250,7 +250,7 @@
   line-height: 1;
   letter-spacing: -0.04em;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(201, 168, 76, 0.25);
+  -webkit-text-stroke: 1px rgba(181, 97, 28, 0.25);
   opacity: 0;
   transform: scale(0.8);
   animation: okIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s forwards;
@@ -286,7 +286,7 @@
   width: 0;
   height: 1px;
   margin: 20px auto 0;
-  background: #c9a84c;
+  background: #B5611C;
   animation: lineGrow 0.5s ease 0.8s forwards;
 }
 

@@ -2,7 +2,7 @@
 
 .formRoot {
   --bg: #0c0c0c;
-  --accent: #c9a84c;
+  --accent: #B5611C;
   --light: #f0ede7;
   --dim: rgba(240, 237, 231, 0.4);
   --line: rgba(240, 237, 231, 0.1);
@@ -141,12 +141,12 @@
 .step.stepActive .stepDot {
   border-color: var(--accent);
   color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(201, 168, 76, 0.08);
+  box-shadow: 0 0 0 4px rgba(181, 97, 28, 0.08);
 }
 
 .step.stepDone .stepDot {
-  border-color: rgba(201, 168, 76, 0.4);
-  background: rgba(201, 168, 76, 0.08);
+  border-color: rgba(181, 97, 28, 0.4);
+  background: rgba(181, 97, 28, 0.08);
   color: var(--accent);
 }
 
@@ -375,7 +375,7 @@
 }
 
 .submitBtn:hover {
-  box-shadow: 0 16px 48px rgba(201, 168, 76, 0.3);
+  box-shadow: 0 16px 48px rgba(181, 97, 28, 0.3);
   transform: translateY(-2px);
 }
 
@@ -416,7 +416,7 @@
   font-size: clamp(80px, 15vw, 160px);
   font-weight: 900;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(201, 168, 76, 0.3);
+  -webkit-text-stroke: 1px rgba(181, 97, 28, 0.3);
   letter-spacing: -0.04em;
   line-height: 1;
   animation: numIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
