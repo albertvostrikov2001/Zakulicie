@@ -148,6 +148,10 @@
     grid-template-columns: 1fr;
   }
 
+  .headline {
+    font-size: clamp(32px, 8vw, 72px);
+  }
+
   .left {
     min-height: auto;
     padding: 48px 24px 40px;

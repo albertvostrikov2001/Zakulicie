@@ -7,7 +7,9 @@ import type { ClientData } from "@/data/clients";
 import { clients } from "@/data/clients";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
+import "swiper/css/pagination";
 
 const MAX_SIMULTANEOUS = 3;
 
@@ -110,6 +112,9 @@ export function ClientsShowcase() {
             slidesPerView={1.2}
             spaceBetween={16}
             grabCursor
+            modules={[Pagination]}
+            pagination={{ clickable: true }}
+            className="clients-swiper !pb-8"
           >
             {clients.map((client) => (
               <SwiperSlide key={client.id} style={{ height: "auto" }}>
@@ -117,6 +122,9 @@ export function ClientsShowcase() {
               </SwiperSlide>
             ))}
           </Swiper>
+          <p className="mt-1 text-center text-[11px] font-medium uppercase tracking-[0.14em] text-text-muted">
+            Свайпайте для просмотра
+          </p>
         </div>
 
         {/* CTA */}

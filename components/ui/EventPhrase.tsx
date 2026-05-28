@@ -254,7 +254,7 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
 
       <div
         className="relative mt-6 flex w-full justify-center"
-        style={{ minHeight: "min(106vw, 400px)" }}
+        style={{ minHeight: "min(70vw, 260px)" }}
         aria-hidden
       >
         <AnimatePresence mode="wait">
@@ -263,8 +263,8 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
               key={`${activeLetter.imageSrc}-${activeLetterIndex}`}
               className="relative overflow-hidden rounded-[2px]"
               style={{
-                width: "min(80vw, 300px)",
-                aspectRatio: "3 / 4",
+                width: "min(65vw, 220px)",
+                aspectRatio: "4 / 3",
               }}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

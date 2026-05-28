@@ -102,18 +102,12 @@ export function ServicesSection() {
                 <Link
                   href={`/services/${s.slug}`}
                   className={cn(
-                    "group flex min-h-[52px] flex-col gap-3 py-7 transition-[opacity,color] duration-[250ms] ease-out",
+                    "group flex min-h-[52px] flex-col gap-3 py-4 transition-[opacity,color] duration-[250ms] ease-out",
                     "md:flex-row md:items-center md:justify-between md:gap-6 md:py-8",
                     isActive ? "opacity-100" : "opacity-[0.35] hover:opacity-75"
                   )}
                   onMouseEnter={() => { if (!mobile) setHovered(s.slug); }}
                   onFocus={() => setHovered(s.slug)}
-                  onClick={(e) => {
-                    if (mobile && hovered !== s.slug) {
-                      e.preventDefault();
-                      setHovered(s.slug);
-                    }
-                  }}
                 >
                   <div className="flex min-w-0 flex-1 items-baseline gap-6 md:gap-10">
                     {/* Number */}
@@ -165,7 +159,7 @@ export function ServicesSection() {
                   {/* Arrow */}
                   <motion.div
                     className={cn(
-                      "flex h-11 w-11 shrink-0 items-center justify-center self-end transition-colors duration-200 md:self-center",
+                      "flex h-12 w-12 md:h-11 md:w-11 shrink-0 items-center justify-center self-end transition-colors duration-200 md:self-center",
                       isActive ? "text-accent" : "text-text-muted"
                     )}
                     animate={{ x: isActive ? 5 : 0 }}

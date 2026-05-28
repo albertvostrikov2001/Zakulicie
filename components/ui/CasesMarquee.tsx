@@ -23,7 +23,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
       href={`/cases/${item.slug}`}
       className={cn(
         "group relative block shrink-0 overflow-hidden",
-        "w-[300px] h-[200px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
+        "w-[260px] h-[170px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
       )}
       style={{ borderRadius: "var(--border-radius-card)" }}
     >
@@ -164,7 +164,7 @@ export function CasesMarquee({ cases }: CasesMarqueeProps) {
           </div>
           <Link
             href="/cases"
-            className="flex items-center gap-2 text-[13px] font-medium uppercase tracking-[0.08em] text-text-secondary transition-colors hover:text-accent"
+            className="flex items-center gap-2 rounded-sm border border-white/20 px-3 py-1.5 text-[13px] font-medium uppercase tracking-[0.08em] text-text-secondary transition-colors hover:text-accent sm:rounded-none sm:border-0 sm:px-0 sm:py-0"
           >
             Все проекты
             <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>

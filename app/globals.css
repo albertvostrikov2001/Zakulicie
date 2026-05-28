@@ -209,6 +209,22 @@ body {
     animation-play-state: paused;
   }
 
+  /* Swiper pagination — clients showcase */
+  .clients-swiper .swiper-pagination-bullet {
+    background: rgba(255, 255, 255, 0.25);
+    opacity: 1 !important;
+    margin: 0 3px !important;
+    height: 6px;
+    width: 6px;
+    border-radius: 9999px;
+    transition: background-color 0.2s ease, width 0.3s ease;
+  }
+
+  .clients-swiper .swiper-pagination-bullet-active {
+    background: var(--color-accent);
+    width: 20px;
+  }
+
   /* Swiper pagination — editorial */
   .reviews-pagination .swiper-pagination-bullet {
     margin: 0 4px !important;

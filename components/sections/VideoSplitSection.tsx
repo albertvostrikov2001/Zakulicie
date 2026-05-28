@@ -118,7 +118,7 @@ export function VideoSplitSection() {
         <div data-video-reveal className="w-full min-w-0 md:w-[70%] md:max-w-none md:flex-[0.7]">
           <VideoPlaceholder
             autoPlayInView
-            frameClassName="max-h-[min(56vh,450px)] md:max-h-[min(56vh,585px)]"
+            frameClassName="max-h-[min(40vh,380px)] md:max-h-[min(56vh,585px)]"
             imageSizes="(max-width: 768px) 100vw, 70vw"
             src={getShowreelVideoUrl(false)}
             mobileSrc={getShowreelVideoUrl(true)}
@@ -160,8 +160,8 @@ export function VideoSplitSection() {
           <CTALink
             className={
               lightScene
-                ? "mt-9 inline-flex w-fit items-center border-[1.5px] border-[#1a1a1a] bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition-[background-color,color] duration-[250ms] ease-out hover:bg-[#1a1a1a] hover:text-[#f2efe9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
-                : "mt-9 inline-flex w-fit items-center border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+                ? "mt-9 inline-flex w-full md:w-fit items-center justify-center md:justify-start border-[1.5px] border-[#1a1a1a] bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-[#1a1a1a] transition-[background-color,color] duration-[250ms] ease-out hover:bg-[#1a1a1a] hover:text-[#f2efe9] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+                : "mt-9 inline-flex w-full md:w-fit items-center justify-center md:justify-start border-[1.5px] border-accent bg-transparent px-8 py-[14px] text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
             }
           >
             Обсудить проект

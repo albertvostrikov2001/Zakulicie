@@ -156,7 +156,7 @@ export function TransitionSection() {
               data-transition-wordmark
               className="m-0 font-display font-black uppercase leading-[0.9] tracking-[-0.03em]"
               style={{
-                fontSize: "clamp(80px, 14vw, 180px)",
+                fontSize: "clamp(64px, 14vw, 180px)",
                 color: WORD_ON_LIGHT,
               }}
             >
@@ -195,7 +195,7 @@ export function TransitionSection() {
 
                   <CTALink
                     ref={ctaRef}
-                    className="group inline-flex w-fit scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#F2EFE9] hover:bg-[#F2EFE9] hover:text-[#1A1A1A] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
+                    className="group inline-flex w-full justify-center md:w-fit md:justify-start scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#F2EFE9] hover:bg-[#F2EFE9] hover:text-[#1A1A1A] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
                     style={{
                       fontSize: "clamp(15px, 1.6vw, 20px)",
                       letterSpacing: "0.08em",

@@ -30,7 +30,7 @@ export function StatsSection() {
           </h2>
         </RevealOnScroll>
 
-        <div className="mt-8 grid grid-cols-2 items-start gap-x-5 gap-y-10 md:mt-12 md:grid-cols-4 md:gap-x-8 md:gap-y-0 lg:gap-x-12">
+        <div className="mt-8 grid grid-cols-2 items-start gap-x-5 gap-y-8 md:mt-12 md:grid-cols-4 md:gap-x-8 md:gap-y-0 lg:gap-x-12">
           {siteStats.map((s, i) => (
             <motion.div
               key={s.label}
@@ -42,7 +42,7 @@ export function StatsSection() {
             >
               <div className="flex flex-col items-start text-left">
                 {/* Number */}
-                <p className="font-display font-bold tabular-nums leading-[1.0] tracking-tight text-text-primary [font-size:clamp(44px,4.5vw,80px)]">
+                <p className="font-display font-bold tabular-nums leading-[1.0] tracking-tight text-text-primary [font-size:clamp(36px,9vw,80px)]">
                   {reduced ? (
                     <>
                       {s.value.toLocaleString("ru-RU")}

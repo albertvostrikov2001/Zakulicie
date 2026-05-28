@@ -20,11 +20,11 @@ export function CTAStrip({ text = "Готовы обсудить ваш прое
       className="border-y border-[var(--color-border)] bg-[var(--color-surface)]"
     >
       <div className="mx-auto flex max-w-content flex-col items-center justify-between gap-4 px-4 py-7 sm:flex-row md:px-8">
-        <p className="text-[15px] font-medium text-text-secondary sm:text-[16px]">
+        <p className="text-center text-[15px] font-medium text-text-secondary sm:text-left sm:text-[16px]">
           {text}
         </p>
         <CTALink
-          className="inline-flex shrink-0 items-center border-[1.5px] border-accent bg-transparent px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent"
+          className="inline-flex w-full shrink-0 items-center justify-center border-[1.5px] border-accent bg-transparent px-7 py-3.5 text-[12px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-[background-color,color] duration-[250ms] ease-out hover:bg-accent hover:text-[#0A0A0A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[3px] focus-visible:outline-accent sm:w-auto sm:justify-start"
         >
           Обсудить проект
         </CTALink>
