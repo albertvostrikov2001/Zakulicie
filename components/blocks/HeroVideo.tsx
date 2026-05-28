@@ -7,7 +7,7 @@ import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState } from "react";
 import { resolvePublicPath } from "@/lib/publicPath";
 import { getHeroVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
 
@@ -42,10 +42,7 @@ export function HeroVideo() {
   }, [reduced, src]);
 
   return (
-    <section
-      className="relative flex min-h-[100dvh] items-end overflow-hidden pb-16 pt-32 md:items-center md:pb-24"
-      style={{ backgroundColor: "#B5611C", "--color-bg": "#B5611C" } as CSSProperties}
-    >
+    <section className="relative flex min-h-[100dvh] items-end overflow-hidden pb-16 pt-32 md:items-center md:pb-24">
       <div className="absolute inset-0">
         <Image
           src={POSTER}

@@ -11,12 +11,12 @@ import { useRef } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LIGHT        = "#f2efe9";
+const LIGHT        = "#B5611C";
 const DARK         = "#0a0a0a";
-const WORD_ON_LIGHT = "#1a1a1a";
+const WORD_ON_LIGHT = "#F5F5F5";
 const WORD_ON_DARK  = "#f5f5f5";
 /** Descriptor + CTA label: светлая / тёмная фазы hero (≈ rgba(17,17,17,0.88) → rgba(242,239,233,0.82)) */
-const TAG_ON_LIGHT  = "#111111";
+const TAG_ON_LIGHT  = "#ECE8E0";
 const TAG_ON_DARK   = "#ECE8E0";
 
 const WORDMARK = "ЗАКУЛИСЬЕ";
@@ -195,7 +195,7 @@ export function TransitionSection() {
 
                   <CTALink
                     ref={ctaRef}
-                    className="group inline-flex w-fit scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F2EFE9] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
+                    className="group inline-flex w-fit scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#F2EFE9] hover:bg-[#F2EFE9] hover:text-[#1A1A1A] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
                     style={{
                       fontSize: "clamp(15px, 1.6vw, 20px)",
                       letterSpacing: "0.08em",
