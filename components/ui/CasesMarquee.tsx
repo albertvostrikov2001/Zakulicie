@@ -23,7 +23,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
       href={`/cases/${item.slug}`}
       className={cn(
         "group relative block shrink-0 overflow-hidden",
-        "w-[260px] h-[170px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
+        "w-[170px] h-[110px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
       )}
       style={{ borderRadius: "var(--border-radius-card)" }}
     >
@@ -34,7 +34,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
         fill
         className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
         style={caseImagePosition(item.heroImage)}
-        sizes="(max-width: 640px) 300px, (max-width: 768px) 340px, 380px"
+        sizes="(max-width: 640px) 170px, (max-width: 768px) 340px, 380px"
         placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
         blurDataURL={item.heroImage.blurDataURL}
       />
@@ -48,20 +48,20 @@ function CaseCard({ item }: { item: CaseStudy }) {
       />
 
       {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-between p-5">
+      <div className="absolute inset-0 flex flex-col justify-between p-2.5 sm:p-5">
         {/* Top tag */}
         {tag && (
-          <span className="self-start border border-white/20 bg-black/30 px-2.5 py-1 text-[10px] font-medium uppercase tracking-[0.1em] text-white/80 backdrop-blur-sm">
+          <span className="self-start border border-white/20 bg-black/30 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.1em] text-white/80 backdrop-blur-sm sm:px-2.5 sm:py-1 sm:text-[10px]">
             {tag}
           </span>
         )}
 
         {/* Bottom text */}
         <div>
-          <h3 className="text-[15px] font-semibold leading-snug text-white line-clamp-2 md:text-[16px]">
+          <h3 className="text-[11px] font-semibold leading-snug text-white line-clamp-2 sm:text-[15px] md:text-[16px]">
             {item.title}
           </h3>
-          <p className="mt-1.5 text-[12px] leading-snug text-white/55 line-clamp-1">
+          <p className="mt-1 hidden text-[12px] leading-snug text-white/55 line-clamp-1 sm:mt-1.5 sm:block">
             {item.excerpt}
           </p>
 

@@ -150,13 +150,13 @@ export function TransitionSection() {
         <div className="relative z-[3] flex min-h-0 flex-1 flex-col justify-between px-4 pb-12 pt-[clamp(5.5rem,12vh,8rem)] md:px-8 md:pb-14 md:pt-[clamp(6rem,14vh,9rem)]">
 
           {/* Wordmark — dominant, left-anchored */}
-          <div className="pointer-events-none relative w-[min(100%,96vw)] max-w-[1600px]">
+          <div className="pointer-events-none relative w-[min(100%,96vw)] max-w-[1600px] overflow-hidden">
             <p
               ref={wordRef}
               data-transition-wordmark
               className="m-0 font-display font-black uppercase leading-[0.9] tracking-[-0.03em]"
               style={{
-                fontSize: "clamp(64px, 14vw, 180px)",
+                fontSize: "clamp(40px, 10.5vw, 180px)",
                 color: WORD_ON_LIGHT,
               }}
             >
@@ -180,15 +180,22 @@ export function TransitionSection() {
                     data-trans-tag
                     className="m-0 font-display font-black text-[color:inherit]"
                     style={{
-                      fontSize: "clamp(20px, 2.4vw, 32px)",
+                      fontSize: "clamp(14px, 2.4vw, 32px)",
                       lineHeight: 1.15,
                       letterSpacing: "-0.02em",
                       color: TAG_ON_LIGHT,
                     }}
                   >
                     {HERO_HEADLINE_LINES.map((line, i) => (
-                      <span key={line} className={i > 0 ? "block" : undefined}>
-                        {line}
+                      <span
+                        key={line}
+                        className={
+                          i === 0 ? undefined :
+                          i === 1 ? "inline md:block" :
+                          "block"
+                        }
+                      >
+                        {i === 1 ? " " + line : line}
                       </span>
                     ))}
                   </h1>

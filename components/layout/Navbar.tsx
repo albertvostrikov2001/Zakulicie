@@ -201,14 +201,18 @@ export function Navbar() {
           <button
             type="button"
             className={cn(
-              "flex h-12 w-12 shrink-0 items-center justify-center border lg:hidden",
-              lightHero ? "border-text-dark/25 text-text-dark" : "border-[var(--color-border)] text-text-primary"
+              "flex h-11 w-11 shrink-0 items-center justify-center rounded-sm border transition-[border-color,background-color,color] duration-200 lg:hidden",
+              mobileOpen
+                ? "border-accent bg-accent/10 text-accent"
+                : lightHero
+                  ? "border-text-dark/25 text-text-dark hover:border-text-dark/60 hover:bg-black/5"
+                  : "border-white/15 text-text-primary hover:border-accent/60 hover:bg-white/5"
             )}
             aria-label={mobileOpen ? "Закрыть меню" : "Открыть меню"}
             aria-expanded={mobileOpen}
             onClick={() => setMobileOpen((v) => !v)}
           >
-            {mobileOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
       </header>
@@ -216,7 +220,7 @@ export function Navbar() {
       {/* Mobile menu */}
       {mobileOpen && (
         <div
-          className="fixed inset-0 z-[90] flex flex-col bg-[var(--color-bg)] lg:hidden"
+          className="fixed inset-0 z-[110] flex flex-col bg-[var(--color-bg)] lg:hidden"
           role="dialog"
           aria-modal="true"
           aria-label="Меню"
@@ -225,11 +229,11 @@ export function Navbar() {
             <span className="font-display text-2xl font-semibold leading-tight text-text-primary">Меню</span>
             <button
               type="button"
-              className="flex h-12 w-12 items-center justify-center border border-[var(--color-border)]"
+              className="flex h-11 w-11 items-center justify-center rounded-sm border border-accent bg-accent/10 text-accent transition-colors duration-200 hover:bg-accent/20"
               aria-label="Закрыть"
               onClick={() => setMobileOpen(false)}
             >
-              <X className="h-6 w-6" />
+              <X className="h-5 w-5" />
             </button>
           </div>
 
