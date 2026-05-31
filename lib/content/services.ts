@@ -1,22 +1,4 @@
 import type { ServiceLanding, ServiceSlug } from "@/lib/types";
-import blurData from "@/lib/content/blur-data.json";
-
-type BlurEntry = {
-  cover: { src: string; blurDataURL: string; width: number; height: number };
-  gallery: { src: string; blurDataURL: string; width: number; height: number }[];
-};
-
-const bd = blurData as Record<string, BlurEntry>;
-
-function realImg(caseSlug: string, alt: string, galleryIndex?: number) {
-  if (galleryIndex !== undefined) {
-    const g = bd[caseSlug]?.gallery?.[galleryIndex];
-    if (g) return { src: g.src, alt, blurDataURL: g.blurDataURL, width: g.width, height: g.height };
-  }
-  const c = bd[caseSlug]?.cover;
-  if (c) return { src: c.src, alt, blurDataURL: c.blurDataURL, width: c.width, height: c.height };
-  return { src: `/cases/${caseSlug}/cover.webp`, alt };
-}
 
 export const serviceNav: { title: string; slug: ServiceSlug }[] = [
   { title: "Корпоративные мероприятия", slug: "korporativnye-meropriyatiya" },
@@ -33,10 +15,13 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Корпоративные мероприятия в Новосибирске",
     shortDescription:
       "События для компаний, где важны культура, репутация и спокойная управляемость процесса.",
-    heroImage: realImg(
-      "semejnyj-korporativ-varmix-warmax",
-      "Корпоративные мероприятия — event-агентство Закулисье Новосибирск"
-    ),
+    heroImage: {
+      src: "/services/korporativnye-meropriyatiya.webp",
+      alt: "Корпоративные мероприятия — event-агентство Закулисье Новосибирск",
+      blurDataURL: "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoMAAgABABoJagCdADhlAihigAA/vS0inxXU5SCbTTUqMc2I+1Md9fVLnjMeQop85DxDCOi63+0KoLngdemsYoAAAA=",
+      width: 1600,
+      height: 1067,
+    },
     includes: [
       {
         title: "Концепция и сценарий",
@@ -108,10 +93,13 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Тимбилдинг для компаний в Сибири",
     shortDescription:
       "Форматы, которые укрепляют команду без дешёвых клише и давления на участников.",
-    heroImage: realImg(
-      "spartakiada-metall-profil",
-      "Тимбилдинг — event-агентство Закулисье Новосибирск"
-    ),
+    heroImage: {
+      src: "/services/timbilding.webp",
+      alt: "Тимбилдинг — event-агентство Закулисье Новосибирск",
+      blurDataURL: "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoMAAgABABoJZACdAEQeyDq8KAA/rI6/EFBS2fbP0z0FohmRsalMgZOlW/a1KQOu+JJn9kkTmOc1TeHlmkCboSVLrrwePGAAAA=",
+      width: 1600,
+      height: 1067,
+    },
     includes: [
       {
         title: "Выездные тимбилдинги",
@@ -177,10 +165,13 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Деловые мероприятия и конференции в Новосибирске",
     shortDescription:
       "Съезды, форумы, стратегические сессии — где важны тайминг, репутация и отсутствие сбоев.",
-    heroImage: realImg(
-      "syezd-dilerov-metall-profil",
-      "Деловые мероприятия — event-агентство Закулисье Новосибирск"
-    ),
+    heroImage: {
+      src: "/services/delovye-meropriyatiya.webp",
+      alt: "Деловые мероприятия — event-агентство Закулисье Новосибирск",
+      blurDataURL: "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAQCdASoMAAgABABoJZACdADZkRowAP7PdWhNz5E8pZvmP4zusnjh6K6UonLlrIO0nTgvcVCuM5AEfq+4vKx+zuR57JGgAAA=",
+      width: 1600,
+      height: 1067,
+    },
     includes: [
       {
         title: "Конференции и деловые форумы",
@@ -246,10 +237,13 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Рекламные акции и бренд‑активации",
     shortDescription:
       "Площадки с высоким трафиком, регламенты и дисциплина исполнения на каждой смене.",
-    heroImage: realImg(
-      "otkrytie-lerua-merlen-kemerovo",
-      "Рекламные акции и активации — event-агентство Закулисье Новосибирск"
-    ),
+    heroImage: {
+      src: "/services/reklamnye-akcii.webp",
+      alt: "Рекламные акции и активации — event-агентство Закулисье Новосибирск",
+      blurDataURL: "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwAgCdASoMAAgABABoJbACdH8AglCbzG5EZAD+h7SDMH8dIxVNhX/enec6Y5AEZBDlNBk/sgPSthlRSOnPa82G/E8xxZp0llnHmjahUT/OsoGAAAA=",
+      width: 1280,
+      height: 851,
+    },
     includes: [
       {
         title: "Концепция и носители",
@@ -320,10 +314,13 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Аренда реквизита для мероприятий в Новосибирске",
     shortDescription:
       "Собственный парк декораций и конструкций — для event‑команд и организаторов, которым нужна предсказуемость.",
-    heroImage: realImg(
-      "arenda-rekvizita-syomka",
-      "Аренда реквизита — event-агентство Закулисье Новосибирск"
-    ),
+    heroImage: {
+      src: "/services/arenda-rekvizita.webp",
+      alt: "Аренда реквизита — event-агентство Закулисье Новосибирск",
+      blurDataURL: "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoMAAgABABoJbACdAEXZ3X+17AA/uf0F7RFJvEDbUarZWcdvZdExefYtC8JK6Fp1PBB3I3Er/deMIulgAA=",
+      width: 1600,
+      height: 1067,
+    },
     includes: [
       {
         title: "Категории",
@@ -394,10 +391,13 @@ export const staticServices: Record<ServiceSlug, ServiceLanding> = {
     title: "Постановка и режиссура событий",
     shortDescription:
       "Когда сценарий, кадр и ритм должны совпасть — мы держим постановку как единый механизм.",
-    heroImage: realImg(
-      "blagotvoritelnyj-bal-detskaya-ploshchadka",
-      "Постановка и режиссура мероприятий — event-агентство Закулисье Новосибирск"
-    ),
+    heroImage: {
+      src: "/services/rezhissyorskie-meropriyatiya.webp",
+      alt: "Постановка и режиссура мероприятий — event-агентство Закулисье Новосибирск",
+      blurDataURL: "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAQCdASoMAAgABABoJbACdADcf5uxDyAA/uPZ4JxRqjH4nYr3fqj1F7iu98lVW4eY5Q+ENIjltw/kcQurQw24paZQQIG48B/7T36xagAAAA==",
+      width: 1600,
+      height: 1067,
+    },
     includes: [
       {
         title: "Постановочное видение",

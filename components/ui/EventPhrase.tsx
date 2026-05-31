@@ -19,18 +19,17 @@ function isInteractiveChar(char: string): boolean {
 }
 
 const IMAGE_SOURCES: string[] = [
-  "/cases/blagotvoritelnyj-bal-detskaya-ploshchadka/gallery/01.webp",
-  "/cases/semejnyj-korporativ-varmix-warmax/gallery/02.webp",
-  "/cases/syezd-dilerov-metall-profil/gallery/05.webp",
-  "/cases/spartakiada-metall-profil/gallery/03.webp",
-  "/cases/dr-zolotoe-yabloko-master-klassy/gallery/04.webp",
-  "/cases/yubilej-sts-25-let/gallery/02.webp",
-  "/cases/otkrytie-lerua-merlen-kemerovo/gallery/01.webp",
-  "/cases/timbilding-promeko/gallery/06.webp",
-  "/cases/otkrytie-ofisov-alfa-bank/gallery/02.webp",
-  "/cases/den-shahtera-prokopevsk/gallery/04.webp",
-  "/cases/artdom-dizajn-konferenciya/gallery/03.webp",
-  "/cases/korporativ-lyubimaya-kuhnya/gallery/05.webp",
+  "/eventphrase/01.webp",
+  "/eventphrase/02.webp",
+  "/eventphrase/03.webp",
+  "/eventphrase/04.webp",
+  "/eventphrase/05.webp",
+  "/eventphrase/06.webp",
+  "/eventphrase/07.webp",
+  "/eventphrase/08.webp",
+  "/eventphrase/09.webp",
+  "/eventphrase/10.webp",
+  "/eventphrase/11.webp",
 ];
 
 const LETTERS: LetterEntry[] = PHRASE.split("").map((char, i) => ({
