@@ -339,39 +339,46 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
         </div>
       )}
 
-      {/* Phrase text */}
+      {/* Phrase text — two locked lines, no mid-phrase wrapping */}
+      {/*
+        PHRASE = "Творчески. Системно. Про людей"
+        idx 0-19  → "Творчески. Системно."  (line 1)
+        idx 20    → " " (separator, skipped)
+        idx 21-29 → "Про людей"             (line 2)
+      */}
       <p
-        className="m-0 inline-flex max-w-full flex-wrap justify-center font-display font-bold leading-[1.15]"
+        className="m-0 flex max-w-full flex-col items-center font-display font-bold leading-[1.2]"
         style={{
-          fontSize: "clamp(28px, 7vw, 48px)",
+          fontSize: "clamp(15px, 5.8vw, 44px)",
           letterSpacing: "-0.02em",
           color: "var(--color-text-primary)",
         }}
       >
-        {LETTERS.map((entry, i) => {
-          if (entry.char === " ") {
-            return <span key={i} className="inline-block w-[0.25em]" aria-hidden />;
-          }
-          if (!isInteractiveChar(entry.char)) {
+        {/* Line 1 — never breaks internally */}
+        <span className="whitespace-nowrap">
+          {LETTERS.slice(0, 20).map((entry, i) => {
+            if (entry.char === " ") return <span key={i} className="inline-block w-[0.28em]" aria-hidden />;
+            if (!isInteractiveChar(entry.char)) return <span key={i} className="inline-block select-none">{entry.char}</span>;
             return (
-              <span key={i} className="inline-block select-none">
+              <span key={i} className={!reduced && hlLetterIndex === i ? "text-accent transition-colors duration-500" : "transition-colors duration-500"}>
                 {entry.char}
               </span>
             );
-          }
-          return (
-            <span
-              key={i}
-              className={
-                !reduced && hlLetterIndex === i
-                  ? "text-accent transition-colors duration-500"
-                  : "transition-colors duration-500"
-              }
-            >
-              {entry.char}
-            </span>
-          );
-        })}
+          })}
+        </span>
+        {/* Line 2 — never breaks internally */}
+        <span className="whitespace-nowrap">
+          {LETTERS.slice(21).map((entry, i) => {
+            const absIdx = i + 21;
+            if (entry.char === " ") return <span key={absIdx} className="inline-block w-[0.28em]" aria-hidden />;
+            if (!isInteractiveChar(entry.char)) return <span key={absIdx} className="inline-block select-none">{entry.char}</span>;
+            return (
+              <span key={absIdx} className={!reduced && hlLetterIndex === absIdx ? "text-accent transition-colors duration-500" : "transition-colors duration-500"}>
+                {entry.char}
+              </span>
+            );
+          })}
+        </span>
       </p>
 
       {/* Cinematic image zone */}
