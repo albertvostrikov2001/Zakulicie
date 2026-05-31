@@ -7,13 +7,20 @@ import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
 
 export const metadata: Metadata = {
-  title: "Блог — заметки о событиях и организации",
+  title: "Блог об организации мероприятий | Закулисье",
   description:
-    "Материалы «Закулисье» о корпоративных мероприятиях, командной работе и event-инструментах для развития бизнеса.",
+    "Разборы и практические материалы «Закулисье» об организации корпоративных мероприятий, тимбилдингах и деловых форматах для бизнеса в Новосибирске.",
   alternates: { canonical: `${getSiteUrl()}/blog` },
   openGraph: {
     title: `Блог | ${SITE_NAME}`,
+    description: "Практика организации событий — от корпоративов до деловых форумов.",
     url: `${getSiteUrl()}/blog`,
+    images: [
+      {
+        url: "/cases/spartakiada-metall-profil/cover.webp",
+        alt: "Блог об организации мероприятий — Закулисье",
+      },
+    ],
   },
 };
 
@@ -29,7 +36,7 @@ export default async function BlogPage() {
         ]}
       />
       <PageWrapper>
-        <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">Блог</h1>
+        <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">Блог об организации мероприятий</h1>
         <p className="mt-4 max-w-2xl text-text-secondary">
           Разборы и практические заметки о корпоративных событиях, командной работе и том, как event
           помогает бизнесу достигать стратегических целей.

@@ -45,7 +45,7 @@ export function AboutPageContent() {
               lineHeight: 0.92,
             }}
           >
-            О компании
+            О компании «Закулисье»
           </h1>
           <div className="mt-10 h-px w-full bg-white/[0.08]" aria-hidden />
         </header>

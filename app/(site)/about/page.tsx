@@ -5,13 +5,20 @@ import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "О компании — стандарт, опыт и география",
+  title: "О компании — 20 лет в event-индустрии | Закулисье",
   description:
-    "«Закулисье»: 20 лет на рынке event в Новосибирске, 3000+ мероприятий, работа с крупными брендами, собственный реквизит и команда полного цикла.",
+    "«Закулисье» — 20 лет на рынке event в Новосибирске, 3000+ мероприятий, 50+ федеральных брендов. Собственный реквизит, команда полного цикла, работа по Сибири.",
   alternates: { canonical: `${getSiteUrl()}/about` },
   openGraph: {
     title: `О компании | ${SITE_NAME}`,
+    description: "20 лет, 3000+ мероприятий, 50+ федеральных брендов. Новосибирск и Сибирь.",
     url: `${getSiteUrl()}/about`,
+    images: [
+      {
+        url: "/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
+        alt: "О компании Закулисье — event-агентство полного цикла в Новосибирске",
+      },
+    ],
   },
 };
 

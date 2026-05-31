@@ -50,10 +50,11 @@ export function Footer() {
             <p className="caption-text">Разделы</p>
             <ul className="mt-4 space-y-2.5 text-[14px] text-text-secondary">
               {[
-                { href: "/cases",   label: "Кейсы" },
-                { href: "/about",   label: "О нас" },
-                { href: "/clients", label: "Клиенты" },
-                { href: "/blog",    label: "Блог" },
+                { href: "/cases",    label: "Кейсы" },
+                { href: "/about",    label: "О нас" },
+                { href: "/clients",  label: "Клиенты" },
+                { href: "/blog",     label: "Блог" },
+                { href: "/contacts", label: "Контакты" },
               ].map((l) => (
                 <li key={l.href}>
                   <Link href={l.href} className="transition-colors hover:text-text-primary">

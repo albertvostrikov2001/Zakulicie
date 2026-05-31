@@ -1,34 +1,35 @@
 import { getSiteUrl, SITE_NAME, SITE_REGION } from "@/lib/site";
+import {
+  CONTACT_PHONE_TEL,
+  CONTACT_EMAIL,
+  CONTACT_CITY,
+  CONTACT_STREET,
+  CONTACT_POSTAL_CODE,
+} from "@/lib/constants";
 import type { CaseStudy } from "@/lib/types";
 
+const BASE = getSiteUrl();
+
+/* ─── Organization ─────────────────────────────────────────── */
 export function OrganizationJsonLd() {
-  const url = getSiteUrl();
   const data = {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: SITE_NAME,
-    url,
+    url: BASE,
+    logo: {
+      "@type": "ImageObject",
+      url: `${BASE}/services/korporativnye-meropriyatiya.webp`,
+    },
+    foundingDate: "2004",
     areaServed: SITE_REGION,
-  };
-  return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
-    />
-  );
-}
-
-export function LocalBusinessJsonLd() {
-  const url = getSiteUrl();
-  const data = {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    name: SITE_NAME,
-    url,
-    address: {
-      "@type": "PostalAddress",
-      addressLocality: "Новосибирск",
-      addressCountry: "RU",
+    telephone: `+${CONTACT_PHONE_TEL}`,
+    email: CONTACT_EMAIL,
+    contactPoint: {
+      "@type": "ContactPoint",
+      telephone: `+${CONTACT_PHONE_TEL}`,
+      contactType: "sales",
+      availableLanguage: "Russian",
     },
   };
   return (
@@ -39,18 +40,45 @@ export function LocalBusinessJsonLd() {
   );
 }
 
-export function EventCaseJsonLd({ c }: { c: CaseStudy }) {
-  const url = `${getSiteUrl()}/cases/${c.slug}`;
+/* ─── LocalBusiness ────────────────────────────────────────── */
+export function LocalBusinessJsonLd() {
   const data = {
     "@context": "https://schema.org",
-    "@type": "Event",
-    name: c.title,
-    description: c.excerpt,
-    startDate: `${c.year}-01-01`,
-    eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
-    location: { "@type": "Place", name: c.client },
-    organizer: { "@type": "Organization", name: SITE_NAME },
-    url,
+    "@type": "ProfessionalService",
+    name: SITE_NAME,
+    url: BASE,
+    telephone: `+${CONTACT_PHONE_TEL}`,
+    email: CONTACT_EMAIL,
+    image: `${BASE}/services/korporativnye-meropriyatiya.webp`,
+    priceRange: "₽₽₽",
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: CONTACT_STREET,
+      addressLocality: CONTACT_CITY,
+      postalCode: CONTACT_POSTAL_CODE,
+      addressRegion: "Новосибирская область",
+      addressCountry: "RU",
+    },
+    geo: {
+      "@type": "GeoCoordinates",
+      latitude: 54.9884,
+      longitude: 82.9023,
+    },
+    openingHoursSpecification: [
+      {
+        "@type": "OpeningHoursSpecification",
+        dayOfWeek: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+        opens: "09:00",
+        closes: "18:00",
+      },
+    ],
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: "5",
+      reviewCount: "4",
+      bestRating: "5",
+      worstRating: "1",
+    },
   };
   return (
     <script
@@ -60,16 +88,22 @@ export function EventCaseJsonLd({ c }: { c: CaseStudy }) {
   );
 }
 
-export function BreadcrumbJsonLd({ items }: { items: { name: string; path: string }[] }) {
-  const base = getSiteUrl();
+/* ─── FAQPage ──────────────────────────────────────────────── */
+export function FaqPageJsonLd({
+  items,
+}: {
+  items: { question: string; answer: string }[];
+}) {
   const data = {
     "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((it, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: it.name,
-      item: `${base}${it.path}`,
+    "@type": "FAQPage",
+    mainEntity: items.map((item) => ({
+      "@type": "Question",
+      name: item.question,
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: item.answer,
+      },
     })),
   };
   return (
@@ -80,6 +114,56 @@ export function BreadcrumbJsonLd({ items }: { items: { name: string; path: strin
   );
 }
 
+/* ─── Case study (Article) ─────────────────────────────────── */
+export function EventCaseJsonLd({ c }: { c: CaseStudy }) {
+  const url = `${BASE}/cases/${c.slug}`;
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline: c.title,
+    description: c.excerpt,
+    datePublished: `${c.year}-01-01`,
+    image: c.heroImage.src.startsWith("http")
+      ? c.heroImage.src
+      : `${BASE}${c.heroImage.src}`,
+    author: { "@type": "Organization", name: SITE_NAME },
+    publisher: { "@type": "Organization", name: SITE_NAME },
+    mainEntityOfPage: url,
+    url,
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+/* ─── Breadcrumb ───────────────────────────────────────────── */
+export function BreadcrumbJsonLd({
+  items,
+}: {
+  items: { name: string; path: string }[];
+}) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      item: `${BASE}${it.path}`,
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(data) }}
+    />
+  );
+}
+
+/* ─── Article (blog) ───────────────────────────────────────── */
 export function ArticleJsonLd({
   title,
   description,

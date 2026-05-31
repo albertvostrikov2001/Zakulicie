@@ -6,13 +6,20 @@ import type { Metadata } from "next";
 import Image from "@/components/ui/SiteImage";
 
 export const metadata: Metadata = {
-  title: "Клиенты и отрасли",
+  title: "Клиенты event-агентства «Закулисье»",
   description:
-    "Компании и бренды, с которыми работает «Закулисье»: федеральные и сибирские организации, долгосрочные контракты и проекты повышенной ответственности.",
+    "50+ федеральных и региональных брендов доверяют «Закулисье» корпоративные мероприятия, деловые форумы и имиджевые события: от ритейла и банков до промышленных холдингов.",
   alternates: { canonical: `${getSiteUrl()}/clients` },
   openGraph: {
     title: `Клиенты | ${SITE_NAME}`,
+    description: "50+ брендов — федеральные компании и региональные лидеры Сибири.",
     url: `${getSiteUrl()}/clients`,
+    images: [
+      {
+        url: "/cases/syezd-dilerov-metall-profil/gallery/01.webp",
+        alt: "Клиенты event-агентства Закулисье — деловые и корпоративные события",
+      },
+    ],
   },
 };
 
@@ -26,11 +33,12 @@ export default function ClientsPage() {
         ]}
       />
       <PageWrapper>
-        <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">Клиенты</h1>
+        <h1 className="font-display text-4xl font-semibold text-text-primary md:text-5xl">
+          Клиенты event&#8209;агентства «Закулисье»
+        </h1>
         <p className="mt-6 max-w-2xl text-lg text-text-secondary">
-          Мы работаем там, где событие связано с репутацией: корпоративная культура, B2B-коммуникации,
-          открытия, федеральные коммуникации дилерских сетей. Ниже — формат плейсхолдеров до согласования
-          публичного использования логотипов.
+          Работаем там, где событие связано с репутацией: корпоративная культура, B2B&#8209;коммуникации,
+          церемонии открытий, федеральные съезды дилерских сетей.
         </p>
         <div className="mt-12 grid gap-4 md:grid-cols-3">
           {[
@@ -47,8 +55,17 @@ export default function ClientsPage() {
               alt: "Корпоративные форматы — event-агентство Закулисье Новосибирск",
             },
           ].map((ph) => (
-            <div key={ph.src} className="relative aspect-[4/3] overflow-hidden rounded-card border border-border">
-              <Image src={ph.src} alt={ph.alt} fill className="object-cover" sizes="(max-width:768px) 100vw, 33vw" />
+            <div
+              key={ph.src}
+              className="relative aspect-[4/3] overflow-hidden rounded-card border border-border"
+            >
+              <Image
+                src={ph.src}
+                alt={ph.alt}
+                fill
+                className="object-cover"
+                sizes="(max-width:768px) 100vw, 33vw"
+              />
             </div>
           ))}
         </div>

@@ -7,4 +7,4 @@ export function getSiteUrl(): string {
 
 export const SITE_NAME = "Закулисье";
 export const SITE_REGION = "Новосибирск, Сибирь";
-export const DEFAULT_OG_IMAGE = "/og-default.jpg";
+export const DEFAULT_OG_IMAGE = "/services/korporativnye-meropriyatiya.webp";

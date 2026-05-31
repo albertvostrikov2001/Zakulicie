@@ -1,7 +1,7 @@
 import { ContactForm } from "@/components/blocks/ContactForm";
 import { CaseCard } from "@/components/blocks/CaseCard";
 import { PageWrapper } from "@/components/layout/PageWrapper";
-import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbJsonLd, FaqPageJsonLd } from "@/components/seo/JsonLd";
 import { serviceSeoH1 } from "@/data/services";
 import { getServiceSectionTitles } from "@/data/servicePageSections";
 import { getAllServiceSlugs, getCasesByServiceSlug, getService } from "@/lib/data";
@@ -53,6 +53,7 @@ export default async function ServicePage({ params }: Props) {
           { name: serviceSeoH1[s.slug as ServiceSlug] ?? s.title, path: `/services/${s.slug}` },
         ]}
       />
+      {s.faq.length > 0 && <FaqPageJsonLd items={s.faq} />}
       <header className="relative min-h-[70vh]">
         <Image
           src={s.heroImage.src}
