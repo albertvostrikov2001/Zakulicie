@@ -8,7 +8,7 @@ import { VideoSplitSection } from "@/components/sections/VideoSplitSection";
 import { CasesMarquee } from "@/components/ui/CasesMarquee";
 import { CTAStrip } from "@/components/ui/CTAStrip";
 import { EventPhrase } from "@/components/ui/EventPhrase";
-import { getFeaturedCases } from "@/lib/data";
+import { getCasesResolved, getFeaturedCases } from "@/lib/data";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 
@@ -44,12 +44,13 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const featured = await getFeaturedCases();
+  const featured  = await getFeaturedCases();
+  const allCases  = await getCasesResolved();
 
   return (
     <>
       {/* 1 – HERO: oversized wordmark, description, CTA, image-motion */}
-      <TransitionSection cases={featured} />
+      <TransitionSection cases={allCases.slice(0, 11)} />
 
       {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />

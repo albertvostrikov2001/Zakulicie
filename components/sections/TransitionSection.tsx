@@ -134,7 +134,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
     if (!el || cases.length === 0) return;
     const id = requestAnimationFrame(() => {
       const half = (trackRef.current?.scrollWidth ?? 0) / 2;
-      if (half > 0) setAnimDur(Math.max(2, half / 600)); // 600 px/sec
+      if (half > 0) setAnimDur(Math.max(2, half / 900)); // 900 px/sec
     });
     return () => cancelAnimationFrame(id);
   }, [cases.length]);
