@@ -200,7 +200,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
 
           {/* ── Hero cases marquee strip ─────────────────────── */}
           {marqueeItems.length > 0 && (
-            <div className="-mx-4 overflow-hidden md:-mx-8" aria-hidden>
+            <div className="-mx-4 overflow-hidden md:hidden" aria-hidden>
               <div
                 ref={trackRef}
                 className="flex gap-3 md:gap-4"
