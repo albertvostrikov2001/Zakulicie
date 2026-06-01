@@ -23,7 +23,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
       href={`/cases/${item.slug}`}
       className={cn(
         "group relative block shrink-0 overflow-hidden",
-        "w-[230px] h-[150px] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
+        "w-[78vw] h-[52vw] sm:w-[340px] sm:h-[220px] md:w-[380px] md:h-[240px]"
       )}
       style={{ borderRadius: "var(--border-radius-card)" }}
     >
@@ -34,7 +34,7 @@ function CaseCard({ item }: { item: CaseStudy }) {
         fill
         className="object-cover transition-transform duration-700 ease-out will-change-transform group-hover:scale-[1.03]"
         style={caseImagePosition(item.heroImage)}
-        sizes="(max-width: 640px) 230px, (max-width: 768px) 340px, 380px"
+        sizes="(max-width: 640px) 78vw, (max-width: 768px) 340px, 380px"
         placeholder={item.heroImage.blurDataURL ? "blur" : undefined}
         blurDataURL={item.heroImage.blurDataURL}
       />

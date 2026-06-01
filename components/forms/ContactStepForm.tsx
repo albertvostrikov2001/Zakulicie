@@ -188,7 +188,7 @@ export function ContactStepForm() {
   );
 
   return (
-    <div className={styles.formRoot}>
+    <div id="contact-form" className={`${styles.formRoot} scroll-mt-20`}>
       {mounted ? createPortal(progressBar, document.body) : null}
 
       <div className={styles.formWrapper}>

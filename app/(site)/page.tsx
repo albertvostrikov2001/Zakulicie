@@ -49,7 +49,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 1 – HERO: oversized wordmark, description, CTA, image-motion */}
-      <TransitionSection />
+      <TransitionSection cases={featured} />
 
       {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />

@@ -7,7 +7,9 @@ import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CTALink } from "@/components/ui/CTALink";
-import { useRef } from "react";
+import Image from "@/components/ui/SiteImage";
+import type { CaseStudy } from "@/lib/types";
+import { useRef, useState, useEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -29,7 +31,13 @@ const HERO_HEADLINE_LINES = [
   "и деловых событий",
 ] as const;
 
-export function TransitionSection() {
+const SLIDE_DURATION_MS = 3800;
+
+interface TransitionSectionProps {
+  cases?: CaseStudy[];
+}
+
+export function TransitionSection({ cases = [] }: TransitionSectionProps) {
   const sectionRef    = useRef<HTMLElement>(null);
   const bgRef         = useRef<HTMLDivElement>(null);
   const wordRef       = useRef<HTMLParagraphElement>(null);
@@ -39,6 +47,19 @@ export function TransitionSection() {
   const motionDotRef  = useRef<HTMLSpanElement>(null);
   const mobile        = useIsMobile();
   const reducedMotion = usePrefersReducedMotion();
+
+  /* ── Mobile hero slideshow ─────────────────────────────── */
+  const photoSlides = cases.filter((c) => c.heroImage?.src).slice(0, 6);
+  const [slideIdx, setSlideIdx] = useState(0);
+
+  useEffect(() => {
+    if (photoSlides.length < 2) return;
+    const timer = window.setInterval(() => {
+      setSlideIdx((i) => (i + 1) % photoSlides.length);
+    }, SLIDE_DURATION_MS);
+    return () => clearInterval(timer);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [photoSlides.length]);
 
   /* ── Scroll-driven color interpolation ────────────────── */
   useGSAP(
@@ -132,13 +153,37 @@ export function TransitionSection() {
         data-section="hero"
         className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden"
       >
-        {/* Colour interpolation background */}
+        {/* Colour interpolation background (desktop) */}
         <div
           ref={bgRef}
           className="absolute inset-0 z-0"
           style={{ backgroundColor: LIGHT }}
           aria-hidden
         />
+
+        {/* Mobile hero photo slideshow ───────────────────── */}
+        {photoSlides.length > 0 && (
+          <div className="absolute inset-0 z-[1] overflow-hidden md:hidden" aria-hidden>
+            {photoSlides.map((c, i) => (
+              <div
+                key={c.slug}
+                className="absolute inset-0 transition-opacity duration-1000"
+                style={{ opacity: i === slideIdx ? 1 : 0 }}
+              >
+                <Image
+                  src={c.heroImage.src}
+                  alt={c.title}
+                  fill
+                  className="object-cover"
+                  priority={i === 0}
+                  sizes="100vw"
+                />
+              </div>
+            ))}
+            {/* gradient for text readability */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/72" />
+          </div>
+        )}
 
         {/* Motion accent element — pulsing dot */}
         <span
@@ -171,14 +216,16 @@ export function TransitionSection() {
           >
             <div className="flex w-full max-w-[min(540px,94vw)] flex-col items-start md:absolute md:bottom-[52px] md:right-14 md:w-auto">
               <div className="flex w-full gap-4 self-stretch sm:gap-5">
+                {/* Accent bar — desktop only */}
                 <div
-                  className="w-px shrink-0 self-stretch rounded-full bg-accent"
+                  className="hidden w-px shrink-0 self-stretch rounded-full bg-accent md:block"
                   aria-hidden
                 />
                 <div className="flex min-w-0 flex-1 flex-col gap-5">
+                  {/* Headline — desktop only */}
                   <h1
                     data-trans-tag
-                    className="m-0 font-display font-black text-[color:inherit]"
+                    className="m-0 hidden font-display font-black text-[color:inherit] md:block"
                     style={{
                       fontSize: "clamp(14px, 2.4vw, 32px)",
                       lineHeight: 1.15,
@@ -202,9 +249,9 @@ export function TransitionSection() {
 
                   <CTALink
                     ref={ctaRef}
-                    className="group inline-flex w-full justify-center md:w-fit md:justify-start scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-9 py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#F2EFE9] hover:bg-[#F2EFE9] hover:text-[#1A1A1A] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
+                    className="group inline-flex w-full justify-center md:w-fit md:justify-start scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-7 py-3.5 md:px-9 md:py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#F2EFE9] hover:bg-[#F2EFE9] hover:text-[#1A1A1A] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
                     style={{
-                      fontSize: "clamp(15px, 1.6vw, 20px)",
+                      fontSize: "clamp(13px, 1.6vw, 20px)",
                       letterSpacing: "0.08em",
                       ["--hero-cta-fg" as string]: WORD_ON_LIGHT,
                       ["--hero-cta-border" as string]: WORD_ON_LIGHT,
@@ -220,6 +267,34 @@ export function TransitionSection() {
                   </CTALink>
                 </div>
               </div>
+
+              {/* Slideshow dots — mobile only */}
+              {photoSlides.length > 1 && (
+                <div
+                  className="mt-5 flex justify-center gap-1.5 self-center md:hidden"
+                  aria-hidden
+                >
+                  {photoSlides.map((_, i) => (
+                    <button
+                      key={i}
+                      type="button"
+                      onClick={() => setSlideIdx(i)}
+                      className="rounded-full transition-all duration-300"
+                      style={{
+                        height: "3px",
+                        width: i === slideIdx ? "20px" : "6px",
+                        background:
+                          i === slideIdx
+                            ? "var(--color-accent)"
+                            : "rgba(255,255,255,0.38)",
+                        border: "none",
+                        padding: 0,
+                        cursor: "pointer",
+                      }}
+                    />
+                  ))}
+                </div>
+              )}
             </div>
           </div>
         </div>

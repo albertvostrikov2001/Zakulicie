@@ -432,3 +432,14 @@ body {
     transition-delay: 0s;
   }
 }
+
+/* ─── Mobile clients — accent card faces ─────────────────── */
+@media (max-width: 767px) {
+  .clients-swiper .flip-card-face:not(.flip-card-back-face) {
+    background: var(--color-accent);
+    border-color: rgba(255, 190, 120, 0.3);
+    box-shadow:
+      0 4px 20px rgba(181, 97, 28, 0.35),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.08);
+  }
+}
