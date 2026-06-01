@@ -125,20 +125,24 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
     { scope: sectionRef, dependencies: [reducedMotion] }
   );
 
-  /* ── Hero case marquee speed (300 px/sec device-independent) ── */
-  const trackRef      = useRef<HTMLDivElement>(null);
-  const [animDur, setAnimDur] = useState(9); // fallback SSR value
+  /* ── Hero case marquee — скорость 143px/сек, pixel-точное смещение ── */
+  const trackRef = useRef<HTMLDivElement>(null);
+  const [marqueeStyle, setMarqueeStyle] = useState<React.CSSProperties>({
+    animation: "hero-marquee-ltr 9s linear infinite", // SSR fallback
+  });
 
   useEffect(() => {
-    const el = trackRef.current;
-    if (!el || cases.length === 0) return;
+    if (cases.length === 0) return;
     const id = requestAnimationFrame(() => {
       const el = trackRef.current;
       if (!el) return;
-      const half = el.scrollWidth / 2; // real content half-width in px
+      const half = el.scrollWidth / 2;
       if (half > 0) {
-        setAnimDur(Math.max(2, half / 143));          // 143 px/sec (−35% от 220)
-        el.style.setProperty("--marquee-dist", `-${half}px`); // fix translateX
+        const dur = Math.max(2, half / 143); // 143 px/sec
+        setMarqueeStyle({
+          "--marquee-dist": `-${half}px`,
+          animation: `hero-marquee-ltr ${dur.toFixed(1)}s linear infinite`,
+        } as React.CSSProperties);
       }
     });
     return () => cancelAnimationFrame(id);
@@ -200,11 +204,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
               <div
                 ref={trackRef}
                 className="flex gap-3 md:gap-4"
-                style={
-                  reducedMotion
-                    ? { overflowX: "auto", paddingLeft: "1rem" }
-                    : { animation: `hero-marquee-ltr ${animDur.toFixed(1)}s linear infinite` }
-                }
+                style={reducedMotion ? { overflowX: "auto", paddingLeft: "1rem" } : marqueeStyle}
               >
                 {marqueeItems.map((c, i) => (
                   <Link
