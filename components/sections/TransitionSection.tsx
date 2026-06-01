@@ -9,21 +9,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CTALink } from "@/components/ui/CTALink";
 import Image from "@/components/ui/SiteImage";
 import type { CaseStudy } from "@/lib/types";
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
+import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LIGHT        = "#B5611C";
-const DARK         = "#0a0a0a";
+const LIGHT         = "#B5611C";
+const DARK          = "#0a0a0a";
 const WORD_ON_LIGHT = "#F5F5F5";
 const WORD_ON_DARK  = "#f5f5f5";
-/** Descriptor + CTA label: светлая / тёмная фазы hero (≈ rgba(17,17,17,0.88) → rgba(242,239,233,0.82)) */
 const TAG_ON_LIGHT  = "#ECE8E0";
 const TAG_ON_DARK   = "#ECE8E0";
 
 const WORDMARK = "ЗАКУЛИСЬЕ";
 
-/** Hero headline — левый нижний угол (как на референсе) */
 const HERO_HEADLINE_LINES = [
   "Ивент-агентство",
   "полного цикла",
@@ -31,35 +30,20 @@ const HERO_HEADLINE_LINES = [
   "и деловых событий",
 ] as const;
 
-const SLIDE_DURATION_MS = 3800;
-
 interface TransitionSectionProps {
   cases?: CaseStudy[];
 }
 
 export function TransitionSection({ cases = [] }: TransitionSectionProps) {
-  const sectionRef    = useRef<HTMLElement>(null);
-  const bgRef         = useRef<HTMLDivElement>(null);
-  const wordRef       = useRef<HTMLParagraphElement>(null);
-  const tagWrapRef    = useRef<HTMLDivElement>(null);
-  const ctaRef        = useRef<HTMLAnchorElement>(null);
-  const scrollRef     = useRef<HTMLDivElement>(null);
-  const motionDotRef  = useRef<HTMLSpanElement>(null);
-  const mobile        = useIsMobile();
+  const sectionRef   = useRef<HTMLElement>(null);
+  const bgRef        = useRef<HTMLDivElement>(null);
+  const wordRef      = useRef<HTMLParagraphElement>(null);
+  const tagWrapRef   = useRef<HTMLDivElement>(null);
+  const ctaRef       = useRef<HTMLAnchorElement>(null);
+  const scrollRef    = useRef<HTMLDivElement>(null);
+  const motionDotRef = useRef<HTMLSpanElement>(null);
+  const mobile       = useIsMobile();
   const reducedMotion = usePrefersReducedMotion();
-
-  /* ── Mobile hero slideshow ─────────────────────────────── */
-  const photoSlides = cases.filter((c) => c.heroImage?.src).slice(0, 6);
-  const [slideIdx, setSlideIdx] = useState(0);
-
-  useEffect(() => {
-    if (photoSlides.length < 2) return;
-    const timer = window.setInterval(() => {
-      setSlideIdx((i) => (i + 1) % photoSlides.length);
-    }, SLIDE_DURATION_MS);
-    return () => clearInterval(timer);
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [photoSlides.length]);
 
   /* ── Scroll-driven color interpolation ────────────────── */
   useGSAP(
@@ -81,7 +65,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
             document.documentElement.style.setProperty("--scene-bg", interpolateHex(LIGHT, DARK, p));
             document.documentElement.style.setProperty("--page-bg",  interpolateHex(LIGHT, DARK, p));
 
-            if (wordRef.current)  wordRef.current.style.color  = interpolateHex(WORD_ON_LIGHT, WORD_ON_DARK, p);
+            if (wordRef.current) wordRef.current.style.color = interpolateHex(WORD_ON_LIGHT, WORD_ON_DARK, p);
 
             const tagEls = tagWrapRef.current?.querySelectorAll<HTMLElement>("[data-trans-tag]");
             const tw     = interpolateHex(TAG_ON_LIGHT, TAG_ON_DARK, p);
@@ -141,6 +125,11 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
     { scope: sectionRef, dependencies: [reducedMotion] }
   );
 
+  /* ── Hero case marquee data ────────────────────────────── */
+  const marqueeItems = cases.length > 0
+    ? [...cases, ...cases]   // duplicate for seamless loop
+    : [];
+
   return (
     <section
       ref={sectionRef}
@@ -153,37 +142,13 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
         data-section="hero"
         className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden"
       >
-        {/* Colour interpolation background (desktop) */}
+        {/* Colour interpolation background */}
         <div
           ref={bgRef}
           className="absolute inset-0 z-0"
           style={{ backgroundColor: LIGHT }}
           aria-hidden
         />
-
-        {/* Mobile hero photo slideshow ───────────────────── */}
-        {photoSlides.length > 0 && (
-          <div className="absolute inset-0 z-[1] overflow-hidden md:hidden" aria-hidden>
-            {photoSlides.map((c, i) => (
-              <div
-                key={c.slug}
-                className="absolute inset-0 transition-opacity duration-1000"
-                style={{ opacity: i === slideIdx ? 1 : 0 }}
-              >
-                <Image
-                  src={c.heroImage.src}
-                  alt={c.title}
-                  fill
-                  className="object-cover"
-                  priority={i === 0}
-                  sizes="100vw"
-                />
-              </div>
-            ))}
-            {/* gradient for text readability */}
-            <div className="absolute inset-0 bg-gradient-to-b from-black/55 via-black/20 to-black/72" />
-          </div>
-        )}
 
         {/* Motion accent element — pulsing dot */}
         <span
@@ -192,6 +157,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
           aria-hidden
         />
 
+        {/* ── Main content layout ───────────────────────────── */}
         <div className="relative z-[3] flex min-h-0 flex-1 flex-col justify-between px-4 pb-12 pt-[clamp(5.5rem,12vh,8rem)] md:px-8 md:pb-14 md:pt-[clamp(6rem,14vh,9rem)]">
 
           {/* Wordmark — dominant, left-anchored */}
@@ -209,10 +175,58 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
             </p>
           </div>
 
-          {/* Bottom-right: headline + CTA */}
+          {/* ── Hero cases marquee strip ─────────────────────── */}
+          {marqueeItems.length > 0 && (
+            <div className="-mx-4 overflow-hidden md:-mx-8" aria-hidden>
+              <div
+                className="flex gap-3 md:gap-4"
+                style={
+                  reducedMotion
+                    ? { overflowX: "auto", paddingLeft: "1rem" }
+                    : { animation: "hero-marquee-ltr 34s linear infinite" }
+                }
+              >
+                {marqueeItems.map((c, i) => (
+                  <Link
+                    key={`hm-${c.slug}-${i}`}
+                    href={`/cases/${c.slug}`}
+                    tabIndex={-1}
+                    className="relative block shrink-0 overflow-hidden"
+                    style={{
+                      width:  "clamp(170px, 42vw, 290px)",
+                      height: "clamp(112px, 27.5vw, 190px)",
+                      borderRadius: "var(--border-radius-card)",
+                    }}
+                  >
+                    <Image
+                      src={c.heroImage.src}
+                      alt={c.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out"
+                      sizes="(max-width: 640px) 42vw, 290px"
+                    />
+                    {/* Dark gradient overlay */}
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(to top, rgba(10,10,10,0.72) 0%, transparent 55%)",
+                      }}
+                    />
+                    {/* Title */}
+                    <p className="absolute bottom-2 left-2.5 right-2.5 m-0 line-clamp-2 text-[10px] font-semibold leading-snug text-white/90 md:bottom-3 md:left-3 md:right-3 md:text-[11px]">
+                      {c.title}
+                    </p>
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* ── Bottom-right: headline + CTA ─────────────────── */}
           <div
             ref={tagWrapRef}
-            className="relative z-[3] mt-auto flex w-full justify-center px-5 pb-11 pt-1 md:static md:mt-0 md:justify-end md:px-0 md:pb-0 md:pt-0"
+            className="relative z-[3] flex w-full justify-center pt-1 md:static md:justify-end md:pt-0"
           >
             <div className="flex w-full max-w-[min(540px,94vw)] flex-col items-start md:absolute md:bottom-[52px] md:right-14 md:w-auto">
               <div className="flex w-full gap-4 self-stretch sm:gap-5">
@@ -267,34 +281,6 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
                   </CTALink>
                 </div>
               </div>
-
-              {/* Slideshow dots — mobile only */}
-              {photoSlides.length > 1 && (
-                <div
-                  className="mt-5 flex justify-center gap-1.5 self-center md:hidden"
-                  aria-hidden
-                >
-                  {photoSlides.map((_, i) => (
-                    <button
-                      key={i}
-                      type="button"
-                      onClick={() => setSlideIdx(i)}
-                      className="rounded-full transition-all duration-300"
-                      style={{
-                        height: "3px",
-                        width: i === slideIdx ? "20px" : "6px",
-                        background:
-                          i === slideIdx
-                            ? "var(--color-accent)"
-                            : "rgba(255,255,255,0.38)",
-                        border: "none",
-                        padding: 0,
-                        cursor: "pointer",
-                      }}
-                    />
-                  ))}
-                </div>
-              )}
             </div>
           </div>
         </div>

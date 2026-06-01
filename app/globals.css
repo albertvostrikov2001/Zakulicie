@@ -158,6 +158,12 @@ body {
   100% { transform: translateX(0); }
 }
 
+/* Hero case strip marquee */
+@keyframes hero-marquee-ltr {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 @keyframes shimmer-pulse {
   0%, 100% { opacity: 0.4; }
   50%       { opacity: 0.9; }
