@@ -50,7 +50,7 @@ export default async function HomePage() {
   return (
     <>
       {/* 1 – HERO: oversized wordmark, description, CTA, image-motion */}
-      <TransitionSection cases={allCases.slice(0, 11)} />
+      <TransitionSection cases={allCases.slice(0, 7)} />
 
       {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />

@@ -158,10 +158,10 @@ body {
   100% { transform: translateX(0); }
 }
 
-/* Hero case strip marquee */
+/* Hero case strip marquee — uses --marquee-dist set via JS (pixel value) */
 @keyframes hero-marquee-ltr {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  from { transform: translateX(0); }
+  to   { transform: translateX(var(--marquee-dist, -2656px)); }
 }
 
 @keyframes shimmer-pulse {

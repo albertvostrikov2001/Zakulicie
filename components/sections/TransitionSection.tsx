@@ -133,8 +133,13 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
     const el = trackRef.current;
     if (!el || cases.length === 0) return;
     const id = requestAnimationFrame(() => {
-      const half = (trackRef.current?.scrollWidth ?? 0) / 2;
-      if (half > 0) setAnimDur(Math.max(2, half / 900)); // 900 px/sec
+      const el = trackRef.current;
+      if (!el) return;
+      const half = el.scrollWidth / 2; // real content half-width in px
+      if (half > 0) {
+        setAnimDur(Math.max(2, half / 900));          // 900 px/sec
+        el.style.setProperty("--marquee-dist", `-${half}px`); // fix translateX
+      }
     });
     return () => cancelAnimationFrame(id);
   }, [cases.length]);
