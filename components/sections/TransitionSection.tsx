@@ -137,7 +137,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
       if (!el) return;
       const half = el.scrollWidth / 2; // real content half-width in px
       if (half > 0) {
-        setAnimDur(Math.max(2, half / 220));          // 220 px/sec (−30% от 315)
+        setAnimDur(Math.max(2, half / 143));          // 143 px/sec (−35% от 220)
         el.style.setProperty("--marquee-dist", `-${half}px`); // fix translateX
       }
     });
