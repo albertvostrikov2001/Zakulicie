@@ -183,7 +183,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
                 style={
                   reducedMotion
                     ? { overflowX: "auto", paddingLeft: "1rem" }
-                    : { animation: "hero-marquee-ltr 34s linear infinite" }
+                    : { animation: "hero-marquee-ltr 8.5s linear infinite" }
                 }
               >
                 {marqueeItems.map((c, i) => (
@@ -193,8 +193,8 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
                     tabIndex={-1}
                     className="relative block shrink-0 overflow-hidden"
                     style={{
-                      width:  "clamp(170px, 42vw, 290px)",
-                      height: "clamp(112px, 27.5vw, 190px)",
+                      width:  "clamp(320px, 82vw, 560px)",
+                      height: "clamp(210px, 53vw, 365px)",
                       borderRadius: "var(--border-radius-card)",
                     }}
                   >
