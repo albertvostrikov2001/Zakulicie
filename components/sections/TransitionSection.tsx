@@ -9,7 +9,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CTALink } from "@/components/ui/CTALink";
 import Image from "@/components/ui/SiteImage";
 import type { CaseStudy } from "@/lib/types";
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -125,6 +125,20 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
     { scope: sectionRef, dependencies: [reducedMotion] }
   );
 
+  /* ── Hero case marquee speed (300 px/sec device-independent) ── */
+  const trackRef      = useRef<HTMLDivElement>(null);
+  const [animDur, setAnimDur] = useState(9); // fallback SSR value
+
+  useEffect(() => {
+    const el = trackRef.current;
+    if (!el || cases.length === 0) return;
+    const id = requestAnimationFrame(() => {
+      const half = (trackRef.current?.scrollWidth ?? 0) / 2;
+      if (half > 0) setAnimDur(Math.max(4, half / 300)); // 300 px/sec
+    });
+    return () => cancelAnimationFrame(id);
+  }, [cases.length]);
+
   /* ── Hero case marquee data ────────────────────────────── */
   const marqueeItems = cases.length > 0
     ? [...cases, ...cases]   // duplicate for seamless loop
@@ -179,11 +193,12 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
           {marqueeItems.length > 0 && (
             <div className="-mx-4 overflow-hidden md:-mx-8" aria-hidden>
               <div
+                ref={trackRef}
                 className="flex gap-3 md:gap-4"
                 style={
                   reducedMotion
                     ? { overflowX: "auto", paddingLeft: "1rem" }
-                    : { animation: "hero-marquee-ltr 15s linear infinite" }
+                    : { animation: `hero-marquee-ltr ${animDur.toFixed(1)}s linear infinite` }
                 }
               >
                 {marqueeItems.map((c, i) => (
