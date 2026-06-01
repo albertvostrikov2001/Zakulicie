@@ -183,7 +183,7 @@ export function TransitionSection({ cases = [] }: TransitionSectionProps) {
                 style={
                   reducedMotion
                     ? { overflowX: "auto", paddingLeft: "1rem" }
-                    : { animation: "hero-marquee-ltr 8.5s linear infinite" }
+                    : { animation: "hero-marquee-ltr 15s linear infinite" }
                 }
               >
                 {marqueeItems.map((c, i) => (
