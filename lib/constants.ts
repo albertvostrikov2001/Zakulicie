@@ -1,10 +1,10 @@
 /** Публичные контакты агентства */
-export const CONTACT_PHONE     = "+7 (383) 209-44-90";
-export const CONTACT_PHONE_TEL = "+73832094490";
-export const CONTACT_EMAIL     = "hello@zakulicie.ru";
+export const CONTACT_PHONE     = "+7 (923) 246-05-05";
+export const CONTACT_PHONE_TEL = "+79232460505";
+export const CONTACT_EMAIL     = "zakulisie54@gmail.com";
 
 /** Дополнительный мобильный (директор) — используется в реквизитах */
-export const CONTACT_PHONE_MOBILE     = "+7 923 246-05-05";
+export const CONTACT_PHONE_MOBILE     = "+7 (923) 246-05-05";
 export const CONTACT_PHONE_MOBILE_TEL = "+79232460505";
 
 /** Юридический адрес (из реквизитов) */
