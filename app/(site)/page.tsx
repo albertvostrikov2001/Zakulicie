@@ -47,10 +47,16 @@ export default async function HomePage() {
   const featured  = await getFeaturedCases();
   const allCases  = await getCasesResolved();
 
+  // Hero marquee: только кейсы, которых НЕТ в CasesMarquee (без дублирования)
+  const featuredSlugs = new Set(featured.map((c) => c.slug));
+  const heroMarqueeCases = allCases
+    .filter((c) => !featuredSlugs.has(c.slug))
+    .slice(0, 7);
+
   return (
     <>
       {/* 1 – HERO: oversized wordmark, description, CTA, image-motion */}
-      <TransitionSection cases={allCases.slice(0, 7)} />
+      <TransitionSection cases={heroMarqueeCases} />
 
       {/* 2 – SHOWREEL / after-hero storytelling */}
       <VideoSplitSection />
