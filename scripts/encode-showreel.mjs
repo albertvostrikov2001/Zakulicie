@@ -32,64 +32,67 @@ function run(args) {
 console.log("Source:", src);
 console.log("Size MB:", (fs.statSync(src).size / 1024 / 1024).toFixed(1));
 
-/** Desktop: up to 1920w, H.264, web-optimized */
+/** Desktop MP4: up to 1280w, H.264 CRF 28, no audio (plays muted) */
 run([
-  "-y",
-  "-i",
-  src,
-  "-c:v",
-  "libx264",
-  "-preset",
-  "slow",
-  "-crf",
-  "22",
-  "-profile:v",
-  "high",
-  "-level",
-  "4.1",
-  "-pix_fmt",
-  "yuv420p",
-  "-vf",
-  "scale='min(1920,iw)':-2",
-  "-movflags",
-  "+faststart",
-  "-c:a",
-  "aac",
-  "-b:a",
-  "128k",
-  "-ac",
-  "2",
+  "-y", "-i", src,
+  "-c:v", "libx264",
+  "-preset", "slow",
+  "-crf", "28",
+  "-profile:v", "high",
+  "-level", "4.1",
+  "-pix_fmt", "yuv420p",
+  "-vf", "scale='min(1280,iw)':-2",
+  "-movflags", "+faststart",
+  "-an",
   desktopOut,
 ]);
 
-/** Mobile: 720w, slightly higher CRF */
+/** Desktop WebM (VP9): up to 1280w, ~40% smaller than MP4 */
+const desktopWebm = path.join(OUT_DIR, "showreel.webm");
 run([
-  "-y",
-  "-i",
-  src,
-  "-c:v",
-  "libx264",
-  "-preset",
-  "slow",
-  "-crf",
-  "24",
-  "-profile:v",
-  "main",
-  "-level",
-  "3.1",
-  "-pix_fmt",
-  "yuv420p",
-  "-vf",
-  "scale='min(720,iw)':-2",
-  "-movflags",
-  "+faststart",
-  "-c:a",
-  "aac",
-  "-b:a",
-  "96k",
-  "-ac",
-  "2",
+  "-y", "-i", src,
+  "-c:v", "libvpx-vp9",
+  "-crf", "35",
+  "-b:v", "0",
+  "-deadline", "good",
+  "-cpu-used", "2",
+  "-row-mt", "1",
+  "-tile-columns", "2",
+  "-pix_fmt", "yuv420p",
+  "-vf", "scale='min(1280,iw)':-2",
+  "-an",
+  desktopWebm,
+]);
+
+/** Mobile MP4: 640w, CRF 30, no audio */
+run([
+  "-y", "-i", src,
+  "-c:v", "libx264",
+  "-preset", "slow",
+  "-crf", "30",
+  "-profile:v", "main",
+  "-level", "3.1",
+  "-pix_fmt", "yuv420p",
+  "-vf", "scale='min(640,iw)':-2",
+  "-movflags", "+faststart",
+  "-an",
   mobileOut,
+]);
+
+/** Mobile WebM (VP9): 640w */
+const mobileWebm = path.join(OUT_DIR, "showreel-mobile.webm");
+run([
+  "-y", "-i", src,
+  "-c:v", "libvpx-vp9",
+  "-crf", "40",
+  "-b:v", "0",
+  "-deadline", "good",
+  "-cpu-used", "3",
+  "-row-mt", "1",
+  "-pix_fmt", "yuv420p",
+  "-vf", "scale='min(640,iw)':-2",
+  "-an",
+  mobileWebm,
 ]);
 
 /** Poster frame */
@@ -102,7 +105,7 @@ await sharp(posterJpg)
 
 fs.unlinkSync(posterJpg);
 
-for (const f of [desktopOut, mobileOut, posterWebp]) {
+for (const f of [desktopOut, desktopWebm, mobileOut, mobileWebm, posterWebp]) {
   const s = fs.statSync(f);
   console.log(`${path.basename(f)}: ${(s.size / 1024 / 1024).toFixed(2)} MB`);
 }

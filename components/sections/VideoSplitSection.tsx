@@ -3,7 +3,7 @@
 import { VideoPlaceholder } from "@/components/ui/VideoPlaceholder";
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { getShowreelVideoUrl, SHOWREEL_POSTER } from "@/lib/video";
+import { getShowreelVideoUrl, getShowreelWebmUrl, SHOWREEL_POSTER } from "@/lib/video";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -122,6 +122,8 @@ export function VideoSplitSection() {
             imageSizes="(max-width: 768px) 100vw, 70vw"
             src={getShowreelVideoUrl(false)}
             mobileSrc={getShowreelVideoUrl(true)}
+            webmSrc={getShowreelWebmUrl(false)}
+            mobileWebmSrc={getShowreelWebmUrl(true)}
             posterSrc={SHOWREEL_POSTER}
             caption="SHOWREEL"
             description="Фрагменты постановок, сцен и продакшна для брендов, которые задают планку на уровне страны."

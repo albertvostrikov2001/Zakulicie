@@ -12,6 +12,10 @@ export type VideoPlaceholderProps = {
   src?: string;
   /** Lighter variant for mobile; falls back to src */
   mobileSrc?: string;
+  /** WebM (VP9) desktop variant — smaller, preferred by modern browsers */
+  webmSrc?: string;
+  /** WebM (VP9) mobile variant */
+  mobileWebmSrc?: string;
   posterSrc?: string;
   caption?: string;
   description?: string;
@@ -29,6 +33,8 @@ export type VideoPlaceholderProps = {
 export function VideoPlaceholder({
   src,
   mobileSrc,
+  webmSrc,
+  mobileWebmSrc,
   posterSrc,
   caption,
   description,
@@ -45,9 +51,11 @@ export function VideoPlaceholder({
   const reduced = usePrefersReducedMotion();
 
   const mobile = useIsMobile();
-  const picked = (mobile && mobileSrc ? mobileSrc : src) || mobileSrc || src;
-  const resolvedSrc = picked ? resolvePublicPath(picked) : undefined;
-  const resolvedPoster = posterSrc ? resolvePublicPath(posterSrc) : undefined;
+  const picked    = (mobile && mobileSrc    ? mobileSrc    : src)    || mobileSrc    || src;
+  const pickedWebm = (mobile && mobileWebmSrc ? mobileWebmSrc : webmSrc) || mobileWebmSrc || webmSrc;
+  const resolvedSrc    = picked     ? resolvePublicPath(picked)     : undefined;
+  const resolvedWebm   = pickedWebm ? resolvePublicPath(pickedWebm) : undefined;
+  const resolvedPoster = posterSrc  ? resolvePublicPath(posterSrc)  : undefined;
   const showVideo = Boolean(resolvedSrc && playing);
 
   const onPlay = () => {
@@ -77,11 +85,11 @@ export function VideoPlaceholder({
     const el = videoRef.current;
     if (!el) return;
     setVideoReady(false);
-    el.src = resolvedSrc;
+    // Sources are set via <source> children; reload picks the best one
     if (autoPlayInView) el.muted = true;
     el.load();
     void el.play().catch(() => setPlaying(false));
-  }, [showVideo, resolvedSrc, autoPlayInView]);
+  }, [showVideo, resolvedSrc, resolvedWebm, autoPlayInView]);
 
   return (
     <div className={cn("flex w-full flex-col gap-5", className)}>
@@ -119,11 +127,15 @@ export function VideoPlaceholder({
             controls={!autoPlayInView}
             playsInline
             muted={autoPlayInView || undefined}
-            preload="metadata"
+            preload="none"
             poster={resolvedPoster}
             onLoadedData={() => setVideoReady(true)}
             aria-label="Showreel агентства Закулисье"
-          />
+          >
+            {/* WebM (VP9) first — ~40% smaller; MP4 fallback for Safari */}
+            {resolvedWebm && <source src={resolvedWebm} type="video/webm" />}
+            <source src={resolvedSrc} type="video/mp4" />
+          </video>
         ) : null}
 
         {!showVideo ? (
