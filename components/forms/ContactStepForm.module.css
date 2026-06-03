@@ -390,165 +390,78 @@
   z-index: 100;
 }
 
-.successOverlay {
+.successNotification {
   position: fixed;
-  inset: 0;
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 24px;
-  z-index: 200;
-  animation: overlayIn 0.4s ease both;
-}
-
-@keyframes overlayIn {
-  from { opacity: 0; }
-  to   { opacity: 1; }
-}
-
-.successCard {
-  position: relative;
+  top: 24px;
+  right: 24px;
+  width: 360px;
+  max-width: calc(100vw - 48px);
   background: #111111;
-  border: 1px solid rgba(240, 237, 231, 0.08);
+  border: 1px solid rgba(240, 237, 231, 0.12);
+  border-left: 3px solid var(--accent);
   border-radius: 4px;
-  padding: 56px 48px 48px;
-  max-width: 480px;
-  width: 100%;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+  padding: 20px 20px 24px 24px;
+  z-index: 9999;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.5);
+  animation: notifIn 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
 }
 
-@keyframes cardIn {
-  from { opacity: 0; transform: translateY(24px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0) scale(1); }
+@keyframes notifIn {
+  from { opacity: 0; transform: translateX(24px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
 
 .successCloseBtn {
   position: absolute;
-  top: 16px;
-  right: 20px;
-  background: transparent;
-  border: none;
-  color: rgba(240, 237, 231, 0.35);
-  font-size: 24px;
+  top: 12px;
+  right: 12px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(240, 237, 231, 0.08);
+  border: 1px solid rgba(240, 237, 231, 0.18);
+  border-radius: 4px;
+  color: rgba(240, 237, 231, 0.75);
+  font-size: 22px;
   line-height: 1;
   cursor: pointer;
-  padding: 4px 8px;
-  transition: color 0.2s;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
 }
 
 .successCloseBtn:hover {
+  background: rgba(240, 237, 231, 0.16);
   color: var(--light);
+  border-color: rgba(240, 237, 231, 0.35);
 }
 
-@media (max-width: 480px) {
-  .successCard {
-    padding: 48px 24px 36px;
-  }
-}
-
-.successNum {
-  font-family: var(--font-d);
-  font-size: clamp(64px, 12vw, 120px);
-  font-weight: 900;
+.successCheck {
+  font-size: 26px;
   color: var(--accent);
-  letter-spacing: -0.04em;
   line-height: 1;
-  animation: numIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
-}
-
-@keyframes numIn {
-  from {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+  margin-bottom: 8px;
 }
 
 .successTitle {
   font-family: var(--font-d);
-  font-size: clamp(24px, 4vw, 40px);
+  font-size: 18px;
   font-weight: 700;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.01em;
   color: var(--light);
-  margin-top: -20px;
-  margin-bottom: 20px;
-  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.45s both;
+  margin-bottom: 8px;
+  padding-right: 32px;
 }
 
 .successText {
-  font-size: 15px;
+  font-size: 13px;
   color: var(--dim);
-  line-height: 1.6;
-  max-width: 380px;
-  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.6s both;
-}
-
-.accentLine {
-  width: 40px;
-  height: 1px;
-  background: var(--accent);
-  margin: 24px auto 0;
-  animation: lineGrow 0.5s ease 0.9s both;
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes lineGrow {
-  from {
-    width: 0;
-  }
-  to {
-    width: 40px;
-  }
+  line-height: 1.55;
 }
 
 .finalStepDot {
   border-color: var(--accent) !important;
   color: var(--accent) !important;
-}
-
-.successClose {
-  margin-top: 28px;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-b);
-  font-size: 10px;
-  font-weight: 600;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(240, 237, 231, 0.45);
-  background: transparent;
-  border: 1px solid rgba(240, 237, 231, 0.12);
-  padding: 12px 28px;
-  cursor: pointer;
-  border-radius: 2px;
-  transition: color 0.2s, border-color 0.2s;
-  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both;
-}
-
-.successClose:hover {
-  color: var(--light);
-  border-color: rgba(240, 237, 231, 0.3);
 }
 
 .submitError {

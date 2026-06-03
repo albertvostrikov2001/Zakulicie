@@ -353,42 +353,25 @@ export function ContactStepForm() {
       {mounted && successVisible
         ? createPortal(
             <div
-              className={styles.successOverlay}
-              id="successOverlay"
-              aria-live="polite"
-              role="dialog"
-              aria-modal="true"
+              className={styles.successNotification}
+              role="status"
               aria-label="Заявка принята"
-              onClick={closeSuccess}
             >
-              <div
-                className={styles.successCard}
-                onClick={(e) => e.stopPropagation()}
+              <button
+                type="button"
+                className={styles.successCloseBtn}
+                onClick={closeSuccess}
+                aria-label="Закрыть"
               >
-                <button
-                  type="button"
-                  className={styles.successCloseBtn}
-                  onClick={closeSuccess}
-                  aria-label="Закрыть"
-                >
-                  ×
-                </button>
-                <div className={styles.successNum}>✓</div>
-                <div className={styles.successTitle}>Заявка принята</div>
-                <p className={styles.successText}>
-                  Свяжемся с вами в ближайшее рабочее время.
-                  <br />
-                  Спасибо, что выбираете Закулисье.
-                </p>
-                <div className={styles.accentLine} />
-                <button
-                  type="button"
-                  className={styles.successClose}
-                  onClick={closeSuccess}
-                >
-                  Вернуться на сайт
-                </button>
-              </div>
+                ×
+              </button>
+              <div className={styles.successCheck}>✓</div>
+              <div className={styles.successTitle}>Заявка принята</div>
+              <p className={styles.successText}>
+                Свяжемся с вами в ближайшее рабочее время.
+                <br />
+                Спасибо, что выбираете Закулисье.
+              </p>
             </div>,
             document.body
           )
