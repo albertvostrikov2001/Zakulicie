@@ -393,16 +393,16 @@
 .successOverlay {
   position: fixed;
   inset: 0;
-  background: var(--bg);
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  text-align: center;
-  padding: 40px;
+  padding: 24px;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 0.7s ease;
+  transition: opacity 0.4s ease;
   z-index: 200;
 }
 
@@ -411,15 +411,58 @@
   pointer-events: auto;
 }
 
+.successCard {
+  position: relative;
+  background: #111111;
+  border: 1px solid rgba(240, 237, 231, 0.08);
+  border-radius: 4px;
+  padding: 56px 48px 48px;
+  max-width: 480px;
+  width: 100%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: cardIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.successCloseBtn {
+  position: absolute;
+  top: 16px;
+  right: 20px;
+  background: transparent;
+  border: none;
+  color: rgba(240, 237, 231, 0.35);
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 4px 8px;
+  transition: color 0.2s;
+}
+
+.successCloseBtn:hover {
+  color: var(--light);
+}
+
+@media (max-width: 480px) {
+  .successCard {
+    padding: 48px 24px 36px;
+  }
+}
+
 .successNum {
   font-family: var(--font-d);
-  font-size: clamp(80px, 15vw, 160px);
+  font-size: clamp(64px, 12vw, 120px);
   font-weight: 900;
-  color: transparent;
-  -webkit-text-stroke: 1px rgba(181, 97, 28, 0.3);
+  color: var(--accent);
   letter-spacing: -0.04em;
   line-height: 1;
-  animation: numIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.2s both;
+  animation: numIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
 }
 
 @keyframes numIn {
@@ -483,4 +526,46 @@
 .finalStepDot {
   border-color: var(--accent) !important;
   color: var(--accent) !important;
+}
+
+.successClose {
+  margin-top: 28px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-b);
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(240, 237, 231, 0.45);
+  background: transparent;
+  border: 1px solid rgba(240, 237, 231, 0.12);
+  padding: 12px 28px;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: color 0.2s, border-color 0.2s;
+  animation: slideUp 0.7s cubic-bezier(0.16, 1, 0.3, 1) 0.85s both;
+}
+
+.successClose:hover {
+  color: var(--light);
+  border-color: rgba(240, 237, 231, 0.3);
+}
+
+.submitError {
+  margin-top: 16px;
+  font-size: 12px;
+  color: #e07070;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.submitError a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.submitError a:hover {
+  text-decoration: underline;
 }

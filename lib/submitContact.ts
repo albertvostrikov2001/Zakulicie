@@ -19,11 +19,12 @@ async function submitViaWeb3Forms(
     headers: { "Content-Type": "application/json", Accept: "application/json" },
     body: JSON.stringify({
       access_key: accessKey,
-      subject: `Заявка Закулисье: ${data.name}`,
-      from_name: data.name,
-      phone: data.phone,
-      event_type: eventLabel,
-      timeline: data.dates?.trim() || "не указаны",
+      subject: `Новая заявка: ${data.name} — ${data.phone}`,
+      from_name: "Сайт Закулисье",
+      "Имя":        data.name,
+      "Телефон":    data.phone,
+      "Мероприятие": eventLabel,
+      "Сроки":      data.dates?.trim() || "не указаны",
     }),
   });
   const json = (await res.json()) as { success?: boolean };

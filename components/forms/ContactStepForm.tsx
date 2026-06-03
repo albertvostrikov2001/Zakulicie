@@ -47,6 +47,7 @@ export function ContactStepForm() {
   const [showFinal, setShowFinal] = useState(false);
   const [successVisible, setSuccessVisible] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState(false);
 
   const progressRef = useRef<HTMLDivElement | null>(null);
   const input1 = useRef<HTMLInputElement | null>(null);
@@ -83,6 +84,10 @@ export function ContactStepForm() {
   const setProgressPct = (pct: number) => {
     if (progressRef.current) progressRef.current.style.width = `${pct}%`;
   };
+
+  const closeSuccess = useCallback(() => {
+    setSuccessVisible(false);
+  }, []);
 
   const nextStep = useCallback((stepNum: number) => {
     const input = getInput(stepNum);
@@ -122,6 +127,10 @@ export function ContactStepForm() {
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && successVisible) {
+        closeSuccess();
+        return;
+      }
       if (e.key !== "Enter" || successVisible) return;
       if (currentStep > TOTAL_STEPS) return;
       if (done[currentStep]) return;
@@ -130,7 +139,7 @@ export function ContactStepForm() {
     };
     document.addEventListener("keydown", onKey);
     return () => document.removeEventListener("keydown", onKey);
-  }, [currentStep, done, nextStep, successVisible]);
+  }, [currentStep, done, nextStep, successVisible, closeSuccess]);
 
   const submitForm = useCallback(async () => {
     if (!consentBox.current?.checked) {
@@ -158,9 +167,13 @@ export function ContactStepForm() {
     if (!parsed.success) return;
 
     setSubmitting(true);
+    setSubmitError(false);
     const { ok } = await submitContactPayload(parsed.data);
     setSubmitting(false);
-    if (!ok) return;
+    if (!ok) {
+      setSubmitError(true);
+      return;
+    }
 
     trackContactFormSubmit();
     setProgressPct(100);
@@ -325,8 +338,14 @@ export function ContactStepForm() {
               disabled={submitting}
               onClick={() => void submitForm()}
             >
-              Отправить заявку
+              {submitting ? "Отправляем…" : "Отправить заявку"}
             </button>
+            {submitError && (
+              <p className={styles.submitError}>
+                Не удалось отправить. Позвоните нам:{" "}
+                <a href="tel:+79232460505">+7 (923) 246-05-05</a>
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -337,15 +356,39 @@ export function ContactStepForm() {
               className={`${styles.successOverlay} ${successVisible ? styles.successOverlayVisible : ""}`}
               id="successOverlay"
               aria-live="polite"
+              role="dialog"
+              aria-modal="true"
+              aria-label="Заявка принята"
+              onClick={closeSuccess}
             >
-              <div className={styles.successNum}>03</div>
-              <div className={styles.successTitle}>Заявка принята</div>
-              <p className={styles.successText}>
-                Свяжемся с вами в ближайшее рабочее время.
-                <br />
-                Спасибо, что выбираете Закулисье.
-              </p>
-              <div className={styles.accentLine} />
+              <div
+                className={styles.successCard}
+                onClick={(e) => e.stopPropagation()}
+              >
+                <button
+                  type="button"
+                  className={styles.successCloseBtn}
+                  onClick={closeSuccess}
+                  aria-label="Закрыть"
+                >
+                  ×
+                </button>
+                <div className={styles.successNum}>✓</div>
+                <div className={styles.successTitle}>Заявка принята</div>
+                <p className={styles.successText}>
+                  Свяжемся с вами в ближайшее рабочее время.
+                  <br />
+                  Спасибо, что выбираете Закулисье.
+                </p>
+                <div className={styles.accentLine} />
+                <button
+                  type="button"
+                  className={styles.successClose}
+                  onClick={closeSuccess}
+                >
+                  Вернуться на сайт
+                </button>
+              </div>
             </div>,
             document.body
           )
