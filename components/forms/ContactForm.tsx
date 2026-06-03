@@ -31,6 +31,7 @@ export function ContactForm() {
   const [consent, setConsent] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+  const closeSuccess = useCallback(() => setShowSuccess(false), []);
   const [selectOpen, setSelectOpen] = useState(false);
   const [focusField, setFocusField] = useState<FocusField>(null);
   const [nameInvalid, setNameInvalid] = useState(false);
@@ -45,6 +46,13 @@ export function ContactForm() {
   useEffect(() => {
     setMounted(true);
   }, []);
+
+  useEffect(() => {
+    if (!showSuccess) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeSuccess(); };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
+  }, [showSuccess, closeSuccess]);
 
   const onPhoneChange = (value: string) => {
     setPhone(formatPhone(value));
@@ -237,19 +245,22 @@ export function ContactForm() {
         <p className={styles.formNote}>Ответим в рабочее время · Данные защищены</p>
       </div>
 
-      {mounted
+      {mounted && showSuccess
         ? createPortal(
-            <div
-              className={[styles.successOverlay, showSuccess ? styles.successOverlayShow : ""].filter(Boolean).join(" ")}
-              aria-live="polite"
-              role="status"
-            >
-              <div className={styles.successOk}>OK</div>
+            <div className={styles.successNotification} role="status" aria-live="polite">
+              <button
+                type="button"
+                className={styles.successCloseBtn}
+                onClick={closeSuccess}
+                aria-label="Закрыть"
+              >
+                ×
+              </button>
+              <div className={styles.successCheck}>✓</div>
               <h4 className={styles.successTitle}>Заявка принята</h4>
               <p className={styles.successText}>
                 Свяжемся в течение нескольких часов. Команда Закулисья уже готовится к диалогу.
               </p>
-              <div className={styles.successLine} aria-hidden />
             </div>,
             document.body
           )
