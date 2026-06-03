@@ -350,10 +350,10 @@ export function ContactStepForm() {
         </div>
       </div>
 
-      {mounted
+      {mounted && successVisible
         ? createPortal(
             <div
-              className={`${styles.successOverlay} ${successVisible ? styles.successOverlayVisible : ""}`}
+              className={styles.successOverlay}
               id="successOverlay"
               aria-live="polite"
               role="dialog"

@@ -1,3 +1,6 @@
+/** Отображаемый URL сайта (для текстов и политики конфиденциальности) */
+export const SITE_DISPLAY_URL = "https://закулисье-54.рф";
+
 /** Публичные контакты агентства */
 export const CONTACT_PHONE     = "+7 (923) 246-05-05";
 export const CONTACT_PHONE_TEL = "+79232460505";

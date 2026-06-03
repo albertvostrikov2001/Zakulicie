@@ -1,5 +1,6 @@
 import { PageWrapper } from "@/components/layout/PageWrapper";
 import { PrivacyPolicyContent } from "@/components/sections/legal/PrivacyPolicyContent";
+import { SITE_DISPLAY_URL } from "@/lib/constants";
 import { getSiteUrl } from "@/lib/site";
 import type { Metadata } from "next";
 
@@ -17,7 +18,7 @@ export default function PrivacyPage() {
       <h1 className="font-display text-3xl font-semibold text-text-primary md:text-4xl">
         Политика конфиденциальности
       </h1>
-      <PrivacyPolicyContent siteUrl={getSiteUrl()} />
+      <PrivacyPolicyContent siteUrl={SITE_DISPLAY_URL} />
     </PageWrapper>
   );
 }
