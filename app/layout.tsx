@@ -1,4 +1,5 @@
 import { Analytics } from "@/components/Analytics";
+import { CookieBanner } from "@/components/CookieBanner";
 import { ContactModalProvider } from "@/components/providers/ContactModalProvider";
 import { SmoothScrollProvider } from "@/components/providers/SmoothScrollProvider";
 import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd";
@@ -65,6 +66,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <ContactModalProvider>{children}</ContactModalProvider>
         </SmoothScrollProvider>
         <Analytics />
+        <CookieBanner />
       </body>
     </html>
   );
