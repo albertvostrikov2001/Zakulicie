@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     url: homeUrl,
     images: [
       {
-        url: "/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
-        width: 1920,
-        height: 1080,
+        url: "/site-preview.jpg",
+        width: 1376,
+        height: 768,
         alt: "Event-агентство Закулисье — организация мероприятий в Новосибирске",
       },
     ],
