@@ -7,6 +7,7 @@ import {
   CONTACT_EMAIL,
   CONTACT_CITY,
   CONTACT_STREET,
+  SOCIAL_VK,
 } from "@/lib/constants";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
@@ -91,6 +92,22 @@ export default function ContactsPage() {
               </div>
               <div>
                 <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
+                  ВКонтакте
+                </dt>
+                <dd className="mt-1">
+                  <a
+                    href={SOCIAL_VK}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-accent"
+                    data-analytics="vk"
+                  >
+                    vk.ru/zakulisie54
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
                   Город
                 </dt>
                 <dd className="mt-1 text-text-primary">{CONTACT_CITY}</dd>
@@ -122,8 +139,7 @@ export default function ContactsPage() {
               Обсудить проект
             </h2>
             <p className="mt-3 text-sm leading-relaxed text-text-secondary">
-              Расскажите о задаче — предложим формат и таймлайн без шаблонных коммерческих
-              предложений.
+              Расскажите о задаче — предложим формат и концепцию для её решения.
             </p>
             <CTALink className="mt-6 inline-flex self-start border border-accent px-8 py-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-colors hover:bg-accent hover:text-[#0A0A0A]">
               Написать нам
@@ -137,6 +153,26 @@ export default function ContactsPage() {
             </p>
           </section>
         </div>
+
+        {/* Map */}
+        <section aria-labelledby="contact-map" className="mt-16 border-t border-border pt-16">
+          <h2
+            id="contact-map"
+            className="font-display text-2xl font-semibold text-text-primary"
+          >
+            Как нас найти
+          </h2>
+          <div className="mt-8 overflow-hidden border border-border" style={{ borderRadius: "var(--border-radius-card)" }}>
+            <iframe
+              src={`https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(`${CONTACT_CITY}, ${CONTACT_STREET}`)}&z=16`}
+              width="100%"
+              height="420"
+              loading="lazy"
+              title={`Закулисье на карте — ${CONTACT_STREET}, ${CONTACT_CITY}`}
+              style={{ border: 0, display: "block" }}
+            />
+          </div>
+        </section>
       </PageWrapper>
     </>
   );

@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/cases/semejnyj-korporativ-varmix-warmax/cover.webp",
-        alt: "О компании Закулисье — event-агентство полного цикла в Новосибирске",
+        alt: "О компании Закулисье — event-агентство в Новосибирске",
       },
     ],
   },

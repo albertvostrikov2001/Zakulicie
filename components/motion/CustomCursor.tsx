@@ -2,7 +2,7 @@
 
 import { useIsMobile } from "@/hooks/useIsMobile";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { motion, useMotionValue } from "framer-motion";
 import { useEffect, useState } from "react";
 
 type CursorState = "default" | "case" | "link";
@@ -12,8 +12,6 @@ export function CustomCursor() {
   const reduced = usePrefersReducedMotion();
   const x = useMotionValue(-200);
   const y = useMotionValue(-200);
-  const sx = useSpring(x, { stiffness: 300, damping: 28 });
-  const sy = useSpring(y, { stiffness: 300, damping: 28 });
   const [state, setState] = useState<CursorState>("default");
 
   useEffect(() => {
@@ -54,7 +52,7 @@ export function CustomCursor() {
   return (
     <motion.div
       className="pointer-events-none fixed left-0 top-0 z-[200] flex items-center justify-center"
-      style={{ x: sx, y: sy, translateX: "-50%", translateY: "-50%" }}
+      style={{ x, y, translateX: "-50%", translateY: "-50%" }}
       aria-hidden
     >
       <motion.div

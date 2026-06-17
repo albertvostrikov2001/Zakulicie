@@ -1,5 +1,5 @@
 import { CTALink } from "@/components/ui/CTALink";
-import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL } from "@/lib/constants";
+import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL, SOCIAL_VK } from "@/lib/constants";
 import { serviceNav } from "@/lib/content/services";
 import Link from "next/link";
 
@@ -99,6 +99,17 @@ export function Footer() {
                   data-analytics="email"
                 >
                   {CONTACT_EMAIL}
+                </a>
+              </li>
+              <li>
+                <a
+                  href={SOCIAL_VK}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-text-secondary transition-colors hover:text-text-primary"
+                  data-analytics="vk"
+                >
+                  ВКонтакте
                 </a>
               </li>
             </ul>

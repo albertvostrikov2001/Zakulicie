@@ -13,7 +13,7 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 /** Текст бренда в левой части хедера (ссылка на главную) */
-const BRAND_LABEL = "Ивент-агентство полного цикла";
+const BRAND_LABEL = "Ивент-агентство";
 
 /** ~×1.5 к прежним 13px — навигация, телефон, выпадающий список */
 const NAV_TEXT = "text-[19px] leading-snug tracking-[0.03em]";
@@ -109,7 +109,7 @@ export function Navbar() {
           {/* Бренд / home — крупнее навигации, без подчёркивания */}
           <Link
             href="/"
-            aria-label="На главную — Ивент-агентство полного цикла"
+            aria-label="На главную — Ивент-агентство"
             className={cn(
               brandLinkClass(),
               "max-w-[min(12rem,46vw)] shrink-0 sm:max-w-[12.5rem] lg:max-w-[13.5rem] xl:max-w-[15rem] 2xl:max-w-none 2xl:whitespace-nowrap"
@@ -172,6 +172,10 @@ export function Navbar() {
 
             <Link href="/blog" className={cn(navLinkClass(lightHero), isActive("/blog") && activeClass)}>
               Блог
+            </Link>
+
+            <Link href="/contacts" className={cn(navLinkClass(lightHero), isActive("/contacts") && activeClass)}>
+              Контакты
             </Link>
 
             <a
@@ -268,6 +272,13 @@ export function Navbar() {
               onClick={() => setMobileOpen(false)}
             >
               Блог
+            </Link>
+            <Link
+              href="/contacts"
+              className="py-3.5 text-[27px] font-medium leading-snug text-text-primary"
+              onClick={() => setMobileOpen(false)}
+            >
+              Контакты
             </Link>
             <a
               href={`tel:${CONTACT_PHONE_TEL}`}

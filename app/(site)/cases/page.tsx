@@ -76,7 +76,7 @@ export default async function CasesPage() {
             Обсудить похожий проект
           </h2>
           <p className="mt-3 max-w-xl text-sm text-text-secondary">
-            Расскажите о задаче — предложим формат и таймлайн без шаблонных коммерческих.
+            Расскажите о задаче — предложим формат и концепцию для её решения.
           </p>
           <CTALink
             className="mt-6 inline-flex border border-accent px-8 py-3 text-[13px] font-semibold uppercase tracking-[0.12em] text-text-primary transition-colors hover:bg-accent hover:text-[#0A0A0A]"

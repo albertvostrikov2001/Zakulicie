@@ -19,12 +19,12 @@ const LIST_H2: Record<ServiceSlug, string> = {
 export const metadata: Metadata = {
   title: "Услуги event-агентства «Закулисье»",
   description:
-    "Корпоративные и деловые мероприятия, тимбилдинг, промо-акции и режиссёрские форматы. Агентство полного цикла в Новосибирске — 20 лет опыта, 3000+ событий.",
+    "Корпоративные и деловые мероприятия, тимбилдинг, промо-акции и режиссёрские форматы. Агентство в Новосибирске — 20 лет опыта, 3000+ событий.",
   alternates: { canonical: `${getSiteUrl()}/services` },
   openGraph: {
     title: `Услуги | ${SITE_NAME}`,
     description:
-      "Шесть направлений — от корпоративной повестки до режиссёрских форматов. Агентство полного цикла, Новосибирск.",
+      "Шесть направлений — от корпоративной повестки до режиссёрских форматов. Агентство, Новосибирск.",
     url: `${getSiteUrl()}/services`,
     images: [
       {
@@ -76,7 +76,7 @@ export default function ServicesIndexPage() {
 
         <section className="mt-20 border-t border-border pt-16" aria-labelledby="why-full-cycle">
           <h2 id="why-full-cycle" className="font-display text-2xl font-semibold text-text-primary md:text-3xl">
-            Почему бизнес выбирает агентство полного цикла
+            Почему бизнес выбирает агентство
           </h2>
           <p className="mt-4 max-w-2xl text-text-secondary leading-relaxed">
             Одна команда закрывает концепцию, продакшн и площадку — без размывания ответственности между подрядчиками.
