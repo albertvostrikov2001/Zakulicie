@@ -2985,6 +2985,12 @@
     ]
   },
   "yubilej-30-let-metall-profil": {
+    "cover": {
+      "src": "/cases/yubilej-30-let-metall-profil/cover.webp",
+      "blurDataURL": "data:image/webp;base64,UklGRmIAAABXRUJQVlA4IFYAAAAQAgCdASoMAAgABABoJYgCdAYt9t0tXVtwAP7xs2r8pP45syHCR7MGQj8b7tFupPO5r2Ro3EPvuAtE/SRlRWLR8mSBgb1AocTKxgRx/WEqBf8lxzNAAA==",
+      "width": 1200,
+      "height": 800
+    },
     "gallery": [
       {
         "src": "/cases/yubilej-30-let-metall-profil/gallery/01.webp",
@@ -3121,6 +3127,12 @@
     ]
   },
   "otkrytie-stroitelnogo-sezona-lerua": {
+    "cover": {
+      "src": "/cases/otkrytie-stroitelnogo-sezona-lerua/cover.webp",
+      "blurDataURL": "data:image/webp;base64,UklGRmQAAABXRUJQVlA4IFgAAAAQAgCdASoMAAgABABoJZgCdEf/gY8b85kAAP7I9ylkvkk16bYL8c5Dt89cNsT//nUhC7JdVoMpP2Ew9tEPMWqtdQXzC+XKh+Sriaz88NryFw9INXhIwAAA",
+      "width": 1200,
+      "height": 800
+    },
     "gallery": [
       {
         "src": "/cases/otkrytie-stroitelnogo-sezona-lerua/gallery/01.webp",

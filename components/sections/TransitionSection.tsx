@@ -17,7 +17,7 @@ interface TransitionSectionProps {
   cases?: CaseStudy[];
 }
 
-export function TransitionSection({ cases: _ = [] }: TransitionSectionProps) {
+export function TransitionSection({}: TransitionSectionProps) {
   const sectionRef    = useRef<HTMLElement>(null);
   const contentRef    = useRef<HTMLDivElement>(null);
   const fadeOverlayRef = useRef<HTMLDivElement>(null);
