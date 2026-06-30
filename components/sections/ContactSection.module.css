@@ -127,13 +127,8 @@
   font-family: var(--font-display), "Unbounded", sans-serif;
   font-size: 17px;
   font-weight: 700;
-  color: #f0ede7;
+  color: var(--light);
   text-decoration: none;
-  transition: color 0.2s ease;
-}
-
-.contactPhone:hover {
-  color: #B5611C;
 }
 
 .right {

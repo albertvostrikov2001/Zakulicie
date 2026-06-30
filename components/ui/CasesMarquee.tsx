@@ -47,31 +47,18 @@ function CaseCard({ item }: { item: CaseStudy }) {
         aria-hidden
       />
 
-      {/* Content */}
-      <div className="absolute inset-0 flex flex-col justify-between p-2.5 sm:p-5">
-        {/* Top tag */}
-        {tag && (
-          <span className="self-start border border-white/20 bg-black/30 px-1.5 py-0.5 text-[9px] font-medium uppercase tracking-[0.1em] text-white/80 backdrop-blur-sm sm:px-2.5 sm:py-1 sm:text-[10px]">
-            {tag}
-          </span>
-        )}
+      {/* Content — короткое название + hover CTA */}
+      <div className="absolute inset-0 flex flex-col justify-end p-2.5 sm:p-5">
+        <h3 className="text-[11px] font-semibold leading-snug text-white line-clamp-2 sm:text-[15px] md:text-[16px]">
+          {item.title}
+        </h3>
 
-        {/* Bottom text */}
-        <div>
-          <h3 className="text-[11px] font-semibold leading-snug text-white line-clamp-2 sm:text-[15px] md:text-[16px]">
-            {item.title}
-          </h3>
-          <p className="mt-1 hidden text-[12px] leading-snug text-white/55 line-clamp-1 sm:mt-1.5 sm:block">
-            {item.excerpt}
-          </p>
-
-          {/* Hover reveal arrow */}
-          <div className="mt-3 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.1em] text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-            Смотреть
-            <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden>
-              <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </div>
+        {/* Hover reveal arrow */}
+        <div className="mt-1.5 flex items-center gap-1.5 text-[10px] font-semibold uppercase tracking-[0.1em] text-accent opacity-0 transition-opacity duration-300 group-hover:opacity-100 sm:mt-3 sm:text-[11px]">
+          Смотреть
+          <svg width="12" height="12" viewBox="0 0 16 16" fill="none" aria-hidden>
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
         </div>
       </div>
     </Link>
@@ -157,7 +144,7 @@ export function CasesMarquee({ cases }: CasesMarqueeProps) {
             <p className="caption-text">Проекты</p>
             <div className="mt-3 flex items-baseline gap-3">
               <h2 className="font-display text-[clamp(28px,3.5vw,48px)] font-bold leading-snug tracking-tight text-text-primary">
-                Кейсы для федеральных брендов и лидеров региона
+                Кейсы говорят сами за себя
               </h2>
             </div>
             {/* Mobile counter badge */}

@@ -11,6 +11,7 @@ type Slide = {
   photo: string;
   photoAlt: string;
   photoLogo?: boolean;
+  photoContain?: boolean;
   quote: string;
   name: string;
   pos: string;
@@ -53,8 +54,9 @@ const DATA: Slide[] = [
   },
   {
     tag: "Корпоративный формат",
-    photo: asset("/cases/korporativ-lyubimaya-kuhnya/cover.webp"),
-    photoAlt: "Корпоративное мероприятие — event-агентство Закулисье",
+    photo: asset("/testimonials/irina-smirnova.jpg"),
+    photoAlt: "Ирина Смирнова — отзыв о работе event-агентства Закулисье",
+    photoContain: true,
     quote:
       "Очень креативные ребята, с интересными идеями, всегда на позитиве. Всю работу сделали очень качественно, вовремя. Мне нравится, что они всегда пойдут на встречу, решат любой форс-мажор и предложат варианты. Настоящие профессионалы. Рекомендую.",
     name: "Ирина Смирнова",
@@ -65,8 +67,9 @@ const DATA: Slide[] = [
   },
   {
     tag: "Корпоративный праздник",
-    photo: asset("/cases/novogodnij-korporativ-alfa-dengi/cover.webp"),
-    photoAlt: "Корпоративное мероприятие — event-агентство Закулисье",
+    photo: asset("/testimonials/marina.jpg"),
+    photoAlt: "Марина — отзыв о работе event-агентства Закулисье",
+    photoContain: true,
     quote:
       "Добрый день. Выражаем огромную благодарность команде ивент-агентства \"Закулисье\" за индивидуальный подход и профессионализм при подготовке корпоративного праздника. Детали продуманы, работа слажена, результат отличный. Специалисты, которым можно доверять, которые знают и любят своё дело! Спасибо!",
     name: "Марина",
@@ -75,10 +78,35 @@ const DATA: Slide[] = [
     company: "—",
     source: "2gis",
   },
+  {
+    tag: "30-летие Металл Профиль",
+    photo: asset("/testimonials/olga-metall-profil.jpg"),
+    photoAlt: "Ольга, Металл Профиль — отзыв о работе event-агентства Закулисье",
+    photoContain: true,
+    quote:
+      "Катюша, спасибо тебе большое. Ты просто мой герой. Мероприятие получилось очень крутым. Твоя идея с Востоком мега крутая — всем очень понравилось мероприятие. От фильма все просто в восторге. Без тебя и твоей команды вечер бы не состоялся ❤️",
+    name: "Ольга",
+    pos: "Металл Профиль",
+    initials: "О",
+    company: "Металл Профиль",
+    source: "site",
+  },
+  {
+    tag: "Корпоратив ОверМобайл",
+    photo: asset("/testimonials/alina-overmobile.jpg"),
+    photoAlt: "Алина, ОверМобайл — отзыв о работе event-агентства Закулисье",
+    photoContain: true,
+    quote:
+      "Спасибо за то, что уже три года помогаете нам организовывать корпоративные мероприятия. Прошлый зимний корпоратив был просто разрывной — и концепция, и организация, и взаимодействие с подрядчиками, всё было на высшем уровне. Поработав с тобой, я поняла, как должен работать настоящий профессиональный организатор. Все дальнейшие мероприятия будем организовывать вместе.",
+    name: "Алина",
+    pos: "ОверМобайл",
+    initials: "А",
+    company: "ОверМобайл",
+    source: "site",
+  },
 ];
 
 const MS = 5500;
-const paused = false;
 
 function pad(n: number): string {
   return String(n + 1).padStart(2, "0");
@@ -92,6 +120,8 @@ export function TestimonialsSpotlight() {
   const startTRef = useRef(0);
   const progressFillRef = useRef<HTMLDivElement | null>(null);
   const timeoutIdsRef = useRef<number[]>([]);
+  const pausedRef = useRef(false);
+  const pausedPctRef = useRef(0);
 
   const d0 = DATA[0]!;
   const [photoSrc, setPhotoSrc] = useState(d0.photo);
@@ -99,6 +129,7 @@ export function TestimonialsSpotlight() {
   const [photoCaseText, setPhotoCaseText] = useState(d0.company);
   const [photoSwitching, setPhotoSwitching] = useState(false);
   const [photoLogo, setPhotoLogo] = useState(Boolean(d0.photoLogo));
+  const [photoContain, setPhotoContain] = useState(Boolean(d0.photoContain));
   const [featTag, setFeatTag] = useState(d0.tag);
   const [featQuoteText, setFeatQuoteText] = useState(d0.quote);
   const [featAvatar, setFeatAvatar] = useState(d0.initials);
@@ -133,6 +164,7 @@ export function TestimonialsSpotlight() {
         setPhotoAlt(d.photoAlt);
         setPhotoCaseText(d.company);
         setPhotoLogo(Boolean(d.photoLogo));
+        setPhotoContain(Boolean(d.photoContain));
         setPhotoSwitching(false);
       }, 300);
 
@@ -167,12 +199,13 @@ export function TestimonialsSpotlight() {
     cancelAnimationFrame(rafIdRef.current);
 
     const animProgress = () => {
-      if (paused) {
+      if (pausedRef.current) {
         rafIdRef.current = requestAnimationFrame(animProgress);
         return;
       }
       const el = progressFillRef.current;
       const pct = Math.min(((performance.now() - startTRef.current) / MS) * 100, 100);
+      pausedPctRef.current = pct;
       if (el) el.style.width = `${pct}%`;
       if (pct >= 100) {
         goToRef.current((curRef.current + 1) % DATA.length);
@@ -233,8 +266,13 @@ export function TestimonialsSpotlight() {
           ref={mainRevealRef}
           className={`${styles.main} ${styles.reveal}`}
           style={{ transitionDelay: "0.15s" }}
-          onTouchStart={(e) => { touchStartX.current = e.touches[0]?.clientX ?? 0; }}
+          onTouchStart={(e) => {
+            touchStartX.current = e.touches[0]?.clientX ?? 0;
+            pausedRef.current = true;
+          }}
           onTouchEnd={(e) => {
+            pausedRef.current = false;
+            startTRef.current = performance.now() - (pausedPctRef.current / 100) * MS;
             const dx = (e.changedTouches[0]?.clientX ?? 0) - touchStartX.current;
             if (Math.abs(dx) < 45) return;
             if (dx < 0) { goToRef.current((curRef.current + 1) % DATA.length); stopAuto(); startAuto(); }
@@ -243,7 +281,7 @@ export function TestimonialsSpotlight() {
         >
           <div
             id="photoPanel"
-            className={`${styles.photoPanel} ${photoSwitching ? styles.photoPanelSwitching : ""} ${photoLogo ? styles.photoPanelLogo : ""}`}
+            className={`${styles.photoPanel} ${photoSwitching ? styles.photoPanelSwitching : ""} ${photoLogo ? styles.photoPanelLogo : ""} ${photoContain ? styles.photoPanelContain : ""}`}
           >
             <img id="featPhoto" src={photoSrc} alt={photoAlt} />
             <div className={styles.photoOverlay} />

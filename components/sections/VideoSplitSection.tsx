@@ -38,8 +38,6 @@ function parseSceneBgLuminance(): number | null {
   return null;
 }
 
-const OFFER = ["АГЕНТСТВО ПОЛНОГО ЦИКЛА", "ДЛЯ КОМПАНИЙ, КОТОРЫЕ", "НЕ ИДУТ НА КОМПРОМИСС"] as const;
-
 export function VideoSplitSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
@@ -146,18 +144,17 @@ export function VideoSplitSection() {
                 : "font-display text-[clamp(1.25rem,2.1vw,2.5rem)] font-black leading-[1.12] tracking-tight text-text-primary"
             }
           >
-            Организация мероприятий полного цикла
+            Что вы получите?
           </h2>
           <p
             className={
               lightScene
-                ? "mt-5 text-sm leading-relaxed text-[rgba(26,26,26,0.72)] md:text-base"
-                : "mt-5 text-sm leading-relaxed text-text-secondary md:text-base"
+                ? "mt-5 text-sm leading-relaxed text-[rgba(26,26,26,0.72)] [text-wrap:balance] md:text-base"
+                : "mt-5 text-sm leading-relaxed text-text-secondary [text-wrap:balance] md:text-base"
             }
           >
-            Двадцать лет в индустрии и свыше трёх тысяч реализованных форматов — от корпоративной повестки до
-            федеральных сборов. База в Новосибирске, стандарты и команда — как у столичных лидеров: смета,
-            сроки и смысл остаются под контролем на каждом этапе.
+            Комплексную организацию мероприятия, которое решает ваши бизнес-задачи. Разработка
+            идеи, проектирование проекта, точные сметы и сроки. Полная уверенность в желаемом результате.
           </p>
           <CTALink
             className={
@@ -168,23 +165,6 @@ export function VideoSplitSection() {
           >
             Обсудить проект
           </CTALink>
-
-          <div
-            className={
-              lightScene
-                ? "mt-10 hidden max-w-[300px] text-right md:mt-14 md:block [&_p]:text-[rgba(26,26,26,0.45)]"
-                : "mt-10 hidden max-w-[300px] text-right md:mt-14 md:block"
-            }
-          >
-            {OFFER.map((line) => (
-              <p
-                key={line}
-                className="font-body text-[10px] font-semibold uppercase leading-relaxed tracking-[0.2em] text-text-muted"
-              >
-                {line}
-              </p>
-            ))}
-          </div>
         </div>
       </div>
     </section>

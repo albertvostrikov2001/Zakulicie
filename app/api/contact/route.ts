@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
     `Имя: ${name}`,
     `Телефон: ${normalized}`,
     `Тип: ${eventLabel}`,
-    `Сроки: ${dates}`,
+    `Дата: ${dates}`,
   ];
   const plain = plainLines.join("\n");
 
@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
 <b>Имя:</b> ${escapeHtml(name)}
 <b>Телефон:</b> ${escapeHtml(normalized)}
 <b>Тип:</b> ${escapeHtml(eventLabel)}
-<b>Сроки:</b> ${escapeHtml(dates)}`;
+<b>Дата:</b> ${escapeHtml(dates)}`;
 
   const token = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;

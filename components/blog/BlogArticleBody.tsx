@@ -21,6 +21,22 @@ export function BlogArticleBody({ blocks }: { blocks: BlogBlock[] }) {
                 {block.text}
               </h3>
             );
+          case "ul":
+            return (
+              <ul key={idx} className="space-y-2 pl-5 font-body text-[15px] leading-[1.65] text-text-secondary">
+                {block.items.map((item, i) => (
+                  <li key={i} className="relative before:absolute before:-left-4 before:content-['—']">{item}</li>
+                ))}
+              </ul>
+            );
+          case "ol":
+            return (
+              <ol key={idx} className="list-decimal space-y-2 pl-5 font-body text-[15px] leading-[1.65] text-text-secondary">
+                {block.items.map((item, i) => (
+                  <li key={i}>{item}</li>
+                ))}
+              </ol>
+            );
           case "img":
             return (
               <figure key={idx} className="relative my-8 aspect-[16/9] overflow-hidden rounded-card">

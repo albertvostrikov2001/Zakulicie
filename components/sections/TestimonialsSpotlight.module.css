@@ -168,6 +168,12 @@
   background: #111;
 }
 
+.photoPanelContain img {
+  object-fit: contain;
+  object-position: center center;
+  background: #0a0a0a;
+}
+
 .featNum {
   font-family: var(--font-d);
   font-size: clamp(80px, 12vw, 160px);

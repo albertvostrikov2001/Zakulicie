@@ -38,7 +38,7 @@ export function ContactSection() {
           </div>
           <div className={styles.contactBlock}>
             <p className={styles.contactLabel}>Или напишите напрямую</p>
-            <a href={`tel:${CONTACT_PHONE_TEL}`} className={styles.contactPhone} data-analytics="phone">
+            <a href={`tel:${CONTACT_PHONE_TEL}`} style={{ color: '#f0ede7', textDecoration: 'none', fontFamily: 'var(--font-display, Unbounded, sans-serif)', fontSize: '17px', fontWeight: 700 }} data-analytics="phone">
               {CONTACT_PHONE}
             </a>
           </div>

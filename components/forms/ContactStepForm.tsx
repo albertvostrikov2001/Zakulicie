@@ -265,14 +265,14 @@ export function ContactStepForm() {
           <div className={stepClass(3)} data-step="3">
             <div className={styles.stepDot}>03</div>
             <div className={styles.stepContent}>
-              <div className={styles.stepQuestion}>Примерные сроки?</div>
+              <div className={styles.stepQuestion}>Примерная дата?</div>
               <div className={styles.stepAnswer}>{answers[3] ?? ""}</div>
               <div className={styles.stepInputArea}>
                 <input
                   ref={input3}
                   id="s3"
                   type="text"
-                  placeholder="Например: декабрь 2025"
+                  placeholder="Например: декабрь 2026"
                   autoComplete="off"
                 />
                 <div className={styles.stepHint}>Точная дата или месяц — достаточно</div>
@@ -343,7 +343,7 @@ export function ContactStepForm() {
             {submitError && (
               <p className={styles.submitError}>
                 Не удалось отправить. Позвоните нам:{" "}
-                <a href="tel:+79232460505">+7 (923) 246-05-05</a>
+                <a href="tel:+79232460505" className="text-white">+7 (923) 246-05-05</a>
               </p>
             )}
           </div>

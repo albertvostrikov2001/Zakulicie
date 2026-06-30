@@ -8,23 +8,22 @@ import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 
 const LIST_H2: Record<ServiceSlug, string> = {
-  "korporativnye-meropriyatiya": "Организация корпоративных мероприятий",
-  timbilding: "Тимбилдинг и командные события",
-  "delovye-meropriyatiya": "Организация деловых мероприятий",
-  "reklamnye-akcii": "Рекламные и имиджевые мероприятия",
-  "rezhissyorskie-meropriyatiya": "Режиссёрские event-форматы",
+  "korporativnye-meropriyatiya": "Корпоративные события для сотрудников и партнёров",
+  timbilding: "Тимбилдинги и командные форматы",
+  "delovye-meropriyatiya": "Деловые и образовательные мероприятия",
+  "reklamnye-akcii": "Рекламные акции и промо-мероприятия",
   "arenda-rekvizita": "Аренда реквизита и event-оборудования",
 };
 
 export const metadata: Metadata = {
   title: "Услуги event-агентства «Закулисье»",
   description:
-    "Корпоративные и деловые мероприятия, тимбилдинг, промо-акции и режиссёрские форматы. Агентство в Новосибирске — 20 лет опыта, 3000+ событий.",
+    "Корпоративные и деловые мероприятия, тимбилдинг, промо-акции и аренда реквизита. Агентство в Новосибирске — 20 лет опыта, 3000+ событий.",
   alternates: { canonical: `${getSiteUrl()}/services` },
   openGraph: {
     title: `Услуги | ${SITE_NAME}`,
     description:
-      "Шесть направлений — от корпоративной повестки до режиссёрских форматов. Агентство, Новосибирск.",
+      "Пять направлений — от корпоративной повестки до промо-акций и аренды реквизита. Агентство, Новосибирск.",
     url: `${getSiteUrl()}/services`,
     images: [
       {
@@ -51,7 +50,7 @@ export default function ServicesIndexPage() {
             Услуги event-агентства «Закулисье»
           </h1>
           <p className="mt-5 text-lg text-text-secondary">
-            Направления работы — от корпоративной повестки до федеральных сборов и режиссёрских форматов.
+            Направления работы — от корпоративной повестки до промо-акций и аренды реквизита.
           </p>
         </header>
 

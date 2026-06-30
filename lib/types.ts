@@ -3,8 +3,7 @@ export type ServiceSlug =
   | "timbilding"
   | "delovye-meropriyatiya"
   | "reklamnye-akcii"
-  | "arenda-rekvizita"
-  | "rezhissyorskie-meropriyatiya";
+  | "arenda-rekvizita";
 
 export type SiteImage = {
   src: string;
@@ -78,7 +77,9 @@ export type BlogBlock =
   | { type: "p"; text: string }
   | { type: "h2"; text: string }
   | { type: "h3"; text: string }
-  | { type: "img"; src: string; alt: string };
+  | { type: "img"; src: string; alt: string }
+  | { type: "ul"; items: string[] }
+  | { type: "ol"; items: string[] };
 
 export type BlogPost = {
   title: string;

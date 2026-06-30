@@ -4,10 +4,15 @@ import { BreadcrumbJsonLd } from "@/components/seo/JsonLd";
 import {
   CONTACT_PHONE,
   CONTACT_PHONE_TEL,
-  CONTACT_EMAIL,
   CONTACT_CITY,
   CONTACT_STREET,
+  CONTACT_TELEGRAM,
   SOCIAL_VK,
+  SOCIAL_INSTAGRAM,
+  SOCIAL_WHATSAPP,
+  SOCIAL_2GIS,
+  SOCIAL_YANDEX_MAPS,
+  SOCIAL_MAX,
 } from "@/lib/constants";
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
@@ -69,7 +74,7 @@ export default function ContactsPage() {
                 <dd className="mt-1">
                   <a
                     href={`tel:${CONTACT_PHONE_TEL}`}
-                    className="text-text-primary transition-colors hover:text-accent"
+                    style={{ color: '#ffffff', textDecoration: 'none' }}
                     data-analytics="phone"
                   >
                     {CONTACT_PHONE}
@@ -78,23 +83,73 @@ export default function ContactsPage() {
               </div>
               <div>
                 <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
-                  Email
+                  Написать
                 </dt>
-                <dd className="mt-1">
+                <dd className="mt-1 flex flex-col gap-1.5">
                   <a
-                    href={`mailto:${CONTACT_EMAIL}`}
+                    href={SOCIAL_WHATSAPP}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="text-text-primary transition-colors hover:text-accent"
-                    data-analytics="email"
+                    data-analytics="whatsapp"
                   >
-                    {CONTACT_EMAIL}
+                    WhatsApp
+                  </a>
+                  <a
+                    href={CONTACT_TELEGRAM}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-accent"
+                    data-analytics="telegram"
+                  >
+                    Telegram — @Katya_Elgina
                   </a>
                 </dd>
               </div>
               <div>
                 <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
-                  ВКонтакте
+                  Адрес
                 </dt>
-                <dd className="mt-1">
+                <dd className="mt-1 flex flex-col gap-1.5">
+                  <span className="text-text-primary">{CONTACT_STREET}, {CONTACT_CITY}</span>
+                  <a
+                    href={SOCIAL_2GIS}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-accent"
+                  >
+                    Открыть в 2ГИС
+                  </a>
+                  <a
+                    href={SOCIAL_YANDEX_MAPS}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-accent"
+                  >
+                    Открыть в Яндекс Картах
+                  </a>
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
+                  Режим работы
+                </dt>
+                <dd className="mt-1 text-text-primary">Пн–Пт, 11:00–19:00</dd>
+              </div>
+              <div>
+                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
+                  Соцсети
+                </dt>
+                <dd className="mt-1 flex flex-col gap-1.5">
+                  <a
+                    href={SOCIAL_INSTAGRAM}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-accent"
+                    data-analytics="instagram"
+                  >
+                    Instagram — @katya__elgina
+                  </a>
                   <a
                     href={SOCIAL_VK}
                     target="_blank"
@@ -102,27 +157,18 @@ export default function ContactsPage() {
                     className="text-text-primary transition-colors hover:text-accent"
                     data-analytics="vk"
                   >
-                    vk.ru/zakulisie54
+                    ВКонтакте — vk.ru/zakulisie54
+                  </a>
+                  <a
+                    href={SOCIAL_MAX}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-text-primary transition-colors hover:text-accent"
+                    data-analytics="max"
+                  >
+                    Max
                   </a>
                 </dd>
-              </div>
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
-                  Город
-                </dt>
-                <dd className="mt-1 text-text-primary">{CONTACT_CITY}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
-                  Адрес
-                </dt>
-                <dd className="mt-1 text-text-primary">{CONTACT_STREET}, {CONTACT_CITY}</dd>
-              </div>
-              <div>
-                <dt className="text-[11px] font-semibold uppercase tracking-[0.12em] text-text-muted">
-                  Режим работы
-                </dt>
-                <dd className="mt-1 text-text-primary">Пн–Пт, 09:00–18:00</dd>
               </div>
             </dl>
           </section>
@@ -164,7 +210,7 @@ export default function ContactsPage() {
           </h2>
           <div className="mt-8 overflow-hidden border border-border" style={{ borderRadius: "var(--border-radius-card)" }}>
             <iframe
-              src={`https://yandex.ru/map-widget/v1/?text=${encodeURIComponent(`${CONTACT_CITY}, ${CONTACT_STREET}`)}&z=16`}
+              src="https://yandex.ru/map-widget/v1/?org_id=42212525268&z=16"
               width="100%"
               height="420"
               loading="lazy"

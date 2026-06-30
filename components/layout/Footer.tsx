@@ -86,7 +86,7 @@ export function Footer() {
               <li>
                 <a
                   href={`tel:${CONTACT_PHONE_TEL}`}
-                  className="text-text-secondary transition-colors hover:text-text-primary"
+                  style={{ color: '#ffffff', textDecoration: 'none' }}
                   data-analytics="phone"
                 >
                   {CONTACT_PHONE}

@@ -182,13 +182,13 @@ export function ContactForm() {
 
           <div className={fieldClass("dates", false)}>
             <label className={labelClass("dates")} htmlFor="contact-dates">
-              Сроки
+              Дата
             </label>
             <input
               id="contact-dates"
               type="text"
               autoComplete="off"
-              placeholder="Примерно когда"
+              placeholder="когда планируется"
               className={styles.fieldInput}
               value={dates}
               onChange={(e) => setDates(e.target.value)}

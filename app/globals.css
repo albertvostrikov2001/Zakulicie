@@ -18,8 +18,8 @@
 
   /* Legacy aliases for compatibility */
   --color-bg-light:         #f2efe9;
-  --page-bg:                #f2efe9;
-  --scene-bg:               #f2efe9;
+  --page-bg:                #0a0a0a;
+  --scene-bg:               #0a0a0a;
 
   /* ─── Typography system ────────────────────────────────── */
   --font-display: "Unbounded", system-ui, sans-serif;

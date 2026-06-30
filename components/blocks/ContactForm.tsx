@@ -107,9 +107,9 @@ export function ContactForm({ idPrefix = "cf", className }: Props) {
         </div>
         <div className="sm:col-span-2">
           <label htmlFor={`${idPrefix}-dates`} className="mb-1 block text-xs text-text-secondary">
-            Ориентировочные сроки
+            Ориентировочная дата
           </label>
-          <Input id={`${idPrefix}-dates`} placeholder="Например: май 2026" {...register("dates")} />
+          <Input id={`${idPrefix}-dates`} placeholder="Например: декабрь 2026" {...register("dates")} />
           {errors.dates && (
             <p className="mt-1 text-xs text-red-400" role="alert">
               {errors.dates.message}

@@ -24,7 +24,7 @@ async function submitViaWeb3Forms(
       "Имя":        data.name,
       "Телефон":    data.phone,
       "Мероприятие": eventLabel,
-      "Сроки":      data.dates?.trim() || "не указаны",
+      "Дата":       data.dates?.trim() || "не указаны",
     }),
   });
   const json = (await res.json()) as { success?: boolean };

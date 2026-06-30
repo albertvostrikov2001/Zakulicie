@@ -1,344 +1,151 @@
 "use client";
 
-import { useIsMobile } from "@/hooks/useIsMobile";
-import { interpolateHex } from "@/hooks/useColorInterpolation";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
 import { useGSAP } from "@gsap/react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { CTALink } from "@/components/ui/CTALink";
 import Image from "@/components/ui/SiteImage";
+import { useRef } from "react";
 import type { CaseStudy } from "@/lib/types";
-import { useRef, useState, useEffect } from "react";
-import Link from "next/link";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const LIGHT         = "#B5611C";
-const DARK          = "#0a0a0a";
-const WORD_ON_LIGHT = "#F5F5F5";
-const WORD_ON_DARK  = "#f5f5f5";
-const TAG_ON_LIGHT  = "#ECE8E0";
-const TAG_ON_DARK   = "#ECE8E0";
-
-const WORDMARK = "ЗАКУЛИСЬЕ";
-
-const HERO_HEADLINE_LINES = [
-  "Ивент-агентство",
-  "полного цикла",
-  "для корпоративных",
-  "и деловых событий",
-] as const;
+const DARK = "#0a0a0a";
 
 interface TransitionSectionProps {
   cases?: CaseStudy[];
 }
 
-export function TransitionSection({ cases = [] }: TransitionSectionProps) {
-  const sectionRef   = useRef<HTMLElement>(null);
-  const bgRef        = useRef<HTMLDivElement>(null);
-  const wordRef      = useRef<HTMLParagraphElement>(null);
-  const tagWrapRef   = useRef<HTMLDivElement>(null);
-  const ctaRef       = useRef<HTMLAnchorElement>(null);
-  const scrollRef    = useRef<HTMLDivElement>(null);
-  const motionDotRef = useRef<HTMLSpanElement>(null);
-  const mobile       = useIsMobile();
-  const reducedMotion = usePrefersReducedMotion();
+export function TransitionSection({ cases: _ = [] }: TransitionSectionProps) {
+  const sectionRef    = useRef<HTMLElement>(null);
+  const contentRef    = useRef<HTMLDivElement>(null);
+  const fadeOverlayRef = useRef<HTMLDivElement>(null);
+  const reducedMotion  = usePrefersReducedMotion();
 
-  /* ── Scroll-driven color interpolation ────────────────── */
+  /* ── Entrance animation ─────────────────────────────────── */
+  useGSAP(
+    () => {
+      const content = contentRef.current;
+      if (!content) return;
+      const ctx = gsap.context(() => {
+        const els = content.querySelectorAll<HTMLElement>("[data-hero-el]");
+        gsap.from(els, {
+          opacity: 0,
+          y: reducedMotion ? 0 : 28,
+          duration: reducedMotion ? 0.3 : 0.85,
+          stagger: reducedMotion ? 0.04 : 0.14,
+          ease: "power3.out",
+          delay: 0.2,
+        });
+      });
+      return () => ctx.revert();
+    },
+    { scope: sectionRef, dependencies: [reducedMotion] }
+  );
+
+  /* ── Scroll-driven photo → black fade ───────────────────── */
   useGSAP(
     () => {
       const section = sectionRef.current;
-      const bg      = bgRef.current;
-      if (!section || !bg) return;
+      const overlay = fadeOverlayRef.current;
+      if (!section || !overlay) return;
 
       const ctx = gsap.context(() => {
         ScrollTrigger.create({
           trigger: section,
           start: "top top",
-          end:   "bottom bottom",
-          scrub: mobile ? 1 : 0.8,
+          end: "bottom bottom",
+          scrub: reducedMotion ? 0 : 0.8,
           onUpdate: (self) => {
             const p = self.progress;
-
-            bg.style.backgroundColor = interpolateHex(LIGHT, DARK, p);
-            document.documentElement.style.setProperty("--scene-bg", interpolateHex(LIGHT, DARK, p));
-            document.documentElement.style.setProperty("--page-bg",  interpolateHex(LIGHT, DARK, p));
-
-            if (wordRef.current) wordRef.current.style.color = interpolateHex(WORD_ON_LIGHT, WORD_ON_DARK, p);
-
-            const tagEls = tagWrapRef.current?.querySelectorAll<HTMLElement>("[data-trans-tag]");
-            const tw     = interpolateHex(TAG_ON_LIGHT, TAG_ON_DARK, p);
-            tagEls?.forEach((el) => { el.style.color = tw; });
-
-            const ctaFg = interpolateHex(WORD_ON_LIGHT, WORD_ON_DARK, p);
-            if (ctaRef.current) {
-              ctaRef.current.style.setProperty("--hero-cta-fg", ctaFg);
-              ctaRef.current.style.setProperty("--hero-cta-border", ctaFg);
-            }
-
-            const fadeStart = 0.80;
-            const opacity   = p < fadeStart ? 1 : Math.max(0, 1 - (p - fadeStart) / (1 - fadeStart));
-            if (wordRef.current)    wordRef.current.style.opacity    = String(opacity);
-            if (tagWrapRef.current) tagWrapRef.current.style.opacity = String(opacity);
+            overlay.style.opacity = String(p);
+            document.documentElement.style.setProperty("--scene-bg", DARK);
+            document.documentElement.style.setProperty("--page-bg",  DARK);
           },
         });
       }, section);
 
       return () => ctx.revert();
     },
-    { scope: sectionRef, dependencies: [mobile] }
-  );
-
-  /* ── Stagger entrance animation ───────────────────────── */
-  useGSAP(
-    () => {
-      const word   = wordRef.current;
-      const tags   = tagWrapRef.current;
-      const cta    = ctaRef.current;
-      const scroll = scrollRef.current;
-      if (!word || !tags || !cta) return;
-
-      const ctx = gsap.context(() => {
-        const tagEls = Array.from(tags.querySelectorAll<HTMLElement>("[data-trans-tag]"));
-
-        if (reducedMotion) {
-          gsap.from([word, ...tagEls, cta], {
-            opacity: 0,
-            duration: 0.45,
-            stagger: 0.08,
-            ease: "power2.out",
-            delay: 0.12,
-          });
-          return;
-        }
-
-        const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-        tl.from(word,   { opacity: 0, y: 28, duration: 0.8  }, 0.25)
-          .from(tagEls, { opacity: 0, y: 16, duration: 0.6,  stagger: 0.08 }, 0.50)
-          .from(cta,    { opacity: 0, scale: 0.97, duration: 0.5 }, 0.58)
-          .from(scroll, { opacity: 0, scaleY: 0, duration: 0.8, transformOrigin: "top center" }, 0.90);
-      });
-
-      return () => ctx.revert();
-    },
     { scope: sectionRef, dependencies: [reducedMotion] }
   );
-
-  /* ── Hero case marquee — скорость 143px/сек, pixel-точное смещение ── */
-  const trackRef = useRef<HTMLDivElement>(null);
-  const [marqueeStyle, setMarqueeStyle] = useState<React.CSSProperties>({
-    animation: "hero-marquee-ltr 9s linear infinite", // SSR fallback
-  });
-
-  useEffect(() => {
-    if (cases.length === 0) return;
-    const id = requestAnimationFrame(() => {
-      const el = trackRef.current;
-      if (!el) return;
-      const half = el.scrollWidth / 2;
-      if (half > 0) {
-        const dur = Math.max(2, half / 143); // 143 px/sec
-        setMarqueeStyle({
-          "--marquee-dist": `-${half}px`,
-          animation: `hero-marquee-ltr ${dur.toFixed(1)}s linear infinite`,
-        } as React.CSSProperties);
-      }
-    });
-    return () => cancelAnimationFrame(id);
-  }, [cases.length]);
-
-  /* ── Hero case marquee data ────────────────────────────── */
-  const marqueeItems = cases.length > 0
-    ? [...cases, ...cases]   // duplicate for seamless loop
-    : [];
 
   return (
     <section
       ref={sectionRef}
       data-transition
       data-transition-section
-      className="relative z-10 min-h-[116vh] scroll-mt-0"
-      aria-label="Закулисье — Агентство событий"
+      aria-label="Закулисье — Архитектура безупречных событий"
+      className="relative z-10 min-h-[140vh]"
     >
-      <div
-        data-section="hero"
-        className="sticky top-0 flex h-[100dvh] w-full flex-col overflow-hidden"
-      >
-        {/* Colour interpolation background */}
+      {/* Sticky viewport — остаётся на экране пока родитель скроллится */}
+      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden">
+
+        {/* Background photo */}
+        <Image
+          src="/SiteView.jpg"
+          alt=""
+          fill
+          priority
+          className="object-cover object-center"
+          sizes="100vw"
+          quality={90}
+        />
+
+        {/* Static semi-transparent overlay для читаемости текста */}
         <div
-          ref={bgRef}
-          className="absolute inset-0 z-0"
-          style={{ backgroundColor: LIGHT }}
+          className="absolute inset-0"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(0,0,0,0.42) 0%, rgba(0,0,0,0.28) 60%, rgba(0,0,0,0.55) 100%)",
+          }}
           aria-hidden
         />
 
-        {/* Motion accent element — pulsing dot */}
-        <span
-          ref={motionDotRef}
-          className="absolute right-6 top-[38%] z-[2] h-1.5 w-1.5 rounded-full bg-accent shimmer-pulse md:right-12"
+        {/* Scroll-driven black fade overlay */}
+        <div
+          ref={fadeOverlayRef}
+          className="absolute inset-0"
+          style={{ backgroundColor: DARK, opacity: 0 }}
           aria-hidden
         />
 
-        {/* ── Main content layout ───────────────────────────── */}
-        <div className="relative z-[3] flex min-h-0 flex-1 flex-col justify-between px-4 pb-12 pt-[clamp(5.5rem,12vh,8rem)] md:px-8 md:pb-14 md:pt-[clamp(6rem,14vh,9rem)]">
+        {/* Hero content — по центру */}
+        <div
+          ref={contentRef}
+          className="relative z-10 flex h-full flex-col items-center justify-center px-5 text-center"
+        >
+          {/* Headline */}
+          <h1
+            data-hero-el
+            className="m-0 font-display font-black uppercase leading-[0.92] tracking-[-0.02em] text-white"
+            style={{ fontSize: "clamp(36px, 7vw, 108px)" }}
+          >
+            Архитектура
+            <br />
+            безупречных событий
+          </h1>
 
-          {/* Wordmark — dominant, left-anchored */}
-          <div className="pointer-events-none relative w-[min(100%,96vw)] max-w-[1600px] overflow-hidden">
-            <p
-              ref={wordRef}
-              data-transition-wordmark
-              className="m-0 font-display font-black uppercase leading-[0.9] tracking-[-0.03em]"
-              style={{
-                fontSize: "clamp(40px, 10.5vw, 180px)",
-                color: WORD_ON_LIGHT,
-              }}
+          {/* Subtitle */}
+          <p
+            data-hero-el
+            className="mt-[clamp(18px,3vh,32px)] max-w-[min(1300px,92vw)] font-semibold text-white"
+            style={{ fontSize: "clamp(20px,2.5vw,32px)", lineHeight: 1.55 }}
+          >
+            ЗАКУЛИСЬЕ: Проектирование, менеджмент, реализация ваших идей.
+            <br />
+            Полный контроль от концепции до финальных аккордов.
+          </p>
+
+          {/* CTA */}
+          <div data-hero-el className="mt-[clamp(24px,4vh,40px)]">
+            <CTALink
+              className="inline-flex items-center gap-3 border border-white bg-transparent px-[clamp(28px,4vw,52px)] py-[clamp(12px,1.6vh,20px)] font-semibold uppercase tracking-[0.14em] text-white transition-[background-color,color,border-color] duration-[240ms] ease-out hover:border-white hover:bg-white hover:text-[#1A1A1A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+              style={{ fontSize: "clamp(12px,1.1vw,16px)" }}
             >
-              {WORDMARK}
-            </p>
-          </div>
-
-          {/* ── Hero cases marquee strip ─────────────────────── */}
-          {marqueeItems.length > 0 && (
-            <div className="-mx-4 overflow-hidden md:hidden" aria-hidden>
-              <div
-                ref={trackRef}
-                className="flex gap-3 md:gap-4"
-                style={reducedMotion ? { overflowX: "auto", paddingLeft: "1rem" } : marqueeStyle}
-              >
-                {marqueeItems.map((c, i) => (
-                  <Link
-                    key={`hm-${c.slug}-${i}`}
-                    href={`/cases/${c.slug}`}
-                    tabIndex={-1}
-                    className="relative block shrink-0 overflow-hidden"
-                    style={{
-                      width:  "clamp(320px, 82vw, 560px)",
-                      height: "clamp(210px, 53vw, 365px)",
-                      borderRadius: "var(--border-radius-card)",
-                    }}
-                  >
-                    <Image
-                      src={c.heroImage.src}
-                      alt={c.title}
-                      fill
-                      className="object-cover transition-transform duration-700 ease-out"
-                      sizes="(max-width: 640px) 42vw, 290px"
-                    />
-                    {/* Dark gradient overlay */}
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background:
-                          "linear-gradient(to top, rgba(10,10,10,0.72) 0%, transparent 55%)",
-                      }}
-                    />
-                    {/* Title */}
-                    <p className="absolute bottom-2 left-2.5 right-2.5 m-0 line-clamp-2 text-[10px] font-semibold leading-snug text-white/90 md:bottom-3 md:left-3 md:right-3 md:text-[11px]">
-                      {c.title}
-                    </p>
-                  </Link>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* ── Bottom-right: headline + CTA ─────────────────── */}
-          <div
-            ref={tagWrapRef}
-            className="relative z-[3] flex w-full justify-center pt-1 md:static md:justify-end md:pt-0"
-          >
-            <div className="flex w-full max-w-[min(540px,94vw)] flex-col items-start md:absolute md:bottom-[52px] md:right-14 md:w-auto">
-              <div className="flex w-full gap-4 self-stretch sm:gap-5">
-                {/* Accent bar — desktop only */}
-                <div
-                  className="hidden w-px shrink-0 self-stretch rounded-full bg-accent md:block"
-                  aria-hidden
-                />
-                <div className="flex min-w-0 flex-1 flex-col gap-5">
-                  {/* Headline — desktop only */}
-                  <h1
-                    data-trans-tag
-                    className="m-0 hidden font-display font-black text-[color:inherit] md:block"
-                    style={{
-                      fontSize: "clamp(14px, 2.4vw, 32px)",
-                      lineHeight: 1.15,
-                      letterSpacing: "-0.02em",
-                      color: TAG_ON_LIGHT,
-                    }}
-                  >
-                    {HERO_HEADLINE_LINES.map((line, i) => (
-                      <span
-                        key={line}
-                        className={
-                          i === 0 ? undefined :
-                          i === 1 ? "inline md:block" :
-                          "block"
-                        }
-                      >
-                        {i === 1 ? " " + line : line}
-                      </span>
-                    ))}
-                  </h1>
-
-                  <CTALink
-                    ref={ctaRef}
-                    className="group inline-flex w-full justify-center md:w-fit md:justify-start scroll-mt-28 cursor-pointer items-center gap-[10px] border-[1.5px] border-solid border-[color:var(--hero-cta-border)] bg-transparent px-7 py-3.5 md:px-9 md:py-4 font-medium uppercase text-[color:var(--hero-cta-fg)] no-underline transition-[background-color,color,border-color,transform,box-shadow] duration-[250ms] ease-out hover:border-[#F2EFE9] hover:bg-[#F2EFE9] hover:text-[#1A1A1A] hover:shadow-xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent md:hover:shadow-2xl"
-                    style={{
-                      fontSize: "clamp(13px, 1.6vw, 20px)",
-                      letterSpacing: "0.08em",
-                      ["--hero-cta-fg" as string]: WORD_ON_LIGHT,
-                      ["--hero-cta-border" as string]: WORD_ON_LIGHT,
-                    }}
-                  >
-                    <span>Обсудить проект</span>
-                    <span
-                      className="inline-block transition-transform duration-[250ms] ease-out group-hover:translate-x-[6px]"
-                      aria-hidden
-                    >
-                      →
-                    </span>
-                  </CTALink>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* Scroll indicator — desktop */}
-        <div
-          ref={scrollRef}
-          className="absolute bottom-8 left-1/2 z-[3] hidden -translate-x-1/2 flex-col items-center gap-1 md:flex"
-          aria-hidden
-        >
-          <div
-            className="h-12 w-px bg-accent opacity-50"
-            style={{ animation: "scroll-hint 2.2s ease-in-out 0.8s infinite" }}
-          />
-        </div>
-
-        {/* Scroll indicator — mobile */}
-        <div
-          className="absolute bottom-5 left-0 right-0 z-[3] flex justify-center md:hidden"
-          aria-hidden
-        >
-          <div
-            className="flex flex-col items-center gap-1"
-            style={{ animation: "scroll-hint-mobile 2s ease-in-out 1.2s infinite" }}
-          >
-            <span className="text-[8px] font-semibold uppercase tracking-[0.24em] text-white/50">
-              листай
-            </span>
-            <svg width="10" height="7" viewBox="0 0 10 7" fill="none" aria-hidden>
-              <path
-                d="M1 1.5l4 4 4-4"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="text-white/50"
-              />
-            </svg>
+              Обсудить проект
+            </CTALink>
           </div>
         </div>
       </div>

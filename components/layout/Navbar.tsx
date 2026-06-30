@@ -13,13 +13,13 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 
 /** Текст бренда в левой части хедера (ссылка на главную) */
-const BRAND_LABEL = "Ивент-агентство";
+const BRAND_LABEL = "Ивент-агентство Закулисье";
 
-/** ~×1.5 к прежним 13px — навигация, телефон, выпадающий список */
-const NAV_TEXT = "text-[19px] leading-snug tracking-[0.03em]";
+/** Навигация, телефон, выпадающий список — плавный рост размера со viewport, без скачков на брейкпоинтах */
+const NAV_TEXT = "text-[clamp(14px,1.15vw,17px)] leading-snug tracking-[0.03em] whitespace-nowrap";
 
-/** Бренд в хедере: на 1 шаг крупнее навигации, без подчёркивания */
-const BRAND_TEXT = "text-[12px] sm:text-[17px] lg:text-[20px] leading-snug tracking-[0.03em]";
+/** Бренд в хедере: на 1 шаг крупнее навигации, без подчёркивания. Ceiling достигается ~1500px — дальше хедер упирается в max-w-content и не растёт. */
+const BRAND_TEXT = "text-[13px] sm:text-[clamp(15px,1.5vw,22px)] leading-snug tracking-[0.03em]";
 
 const navLinkClass = (light: boolean) =>
   cn(
@@ -46,7 +46,7 @@ export function Navbar() {
   const headerRef = useRef<HTMLElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = usePrefersReducedMotion();
-  const lightHero = pathname === "/" && !scrolled;
+  const lightHero = false;
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -109,10 +109,10 @@ export function Navbar() {
           {/* Бренд / home — крупнее навигации, без подчёркивания */}
           <Link
             href="/"
-            aria-label="На главную — Ивент-агентство"
+            aria-label="На главную — Ивент-агентство Закулисье"
             className={cn(
               brandLinkClass(),
-              "max-w-[min(12rem,46vw)] shrink-0 sm:max-w-[12.5rem] lg:max-w-[13.5rem] xl:max-w-[15rem] 2xl:max-w-none 2xl:whitespace-nowrap"
+              "max-w-[min(14rem,48vw)] shrink-0 sm:max-w-[16rem] lg:max-w-[19rem] xl:max-w-[22rem] 2xl:max-w-[27rem]"
             )}
           >
             {BRAND_LABEL}
@@ -120,7 +120,7 @@ export function Navbar() {
 
           {/* Desktop nav */}
           <nav
-            className="hidden min-w-0 flex-1 items-center justify-end gap-5 lg:flex lg:gap-6 xl:gap-8 2xl:gap-9"
+            className="hidden min-w-0 flex-1 items-center justify-end gap-4 lg:flex lg:gap-5 xl:gap-6 2xl:gap-7"
             aria-label="Основная навигация"
           >
             <Link href="/cases" className={cn(navLinkClass(lightHero), isActive("/cases") && activeClass)}>
@@ -177,15 +177,17 @@ export function Navbar() {
             <Link href="/contacts" className={cn(navLinkClass(lightHero), isActive("/contacts") && activeClass)}>
               Контакты
             </Link>
-
-            <a
-              href={`tel:${CONTACT_PHONE_TEL}`}
-              className={cn(navLinkClass(lightHero), "hidden xl:inline-flex")}
-              data-analytics="phone-nav"
-            >
-              {CONTACT_PHONE}
-            </a>
           </nav>
+
+          {/* Телефон */}
+          <a
+            href={`tel:${CONTACT_PHONE_TEL}`}
+            className="hidden shrink-0 xl:block"
+            style={{ color: lightHero ? '#1A1A1A' : '#ffffff', textDecoration: 'none', fontSize: '15px', fontWeight: 500, letterSpacing: '0.03em', whiteSpace: 'nowrap' }}
+            data-analytics="phone-nav"
+          >
+            {CONTACT_PHONE}
+          </a>
 
           {/* CTA button — always visible */}
           <CTALink
@@ -282,7 +284,7 @@ export function Navbar() {
             </Link>
             <a
               href={`tel:${CONTACT_PHONE_TEL}`}
-              className="mt-5 py-2.5 text-[22px] leading-snug text-text-secondary"
+              style={{ color: '#ffffff', textDecoration: 'none', fontSize: '22px', fontWeight: 500, lineHeight: '1.4', marginTop: '20px', display: 'block', paddingTop: '10px', paddingBottom: '10px' }}
               onClick={() => setMobileOpen(false)}
             >
               {CONTACT_PHONE}

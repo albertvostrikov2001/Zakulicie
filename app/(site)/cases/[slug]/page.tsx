@@ -181,32 +181,6 @@ export default async function CasePage({ params }: Props) {
             </section>
           ) : null}
 
-          <section
-            className="mt-20 rounded-card border border-accent/25 bg-surface/80 p-8 md:p-12"
-            aria-labelledby="res-heading"
-          >
-            <h2 id="res-heading" className="font-display text-2xl text-text-primary">
-              Результат
-            </h2>
-            <ul className="mt-6 max-w-3xl space-y-4 text-text-secondary">
-              {c.result.map((para, idx) => (
-                <li key={idx} className="leading-relaxed">
-                  {para}
-                </li>
-              ))}
-            </ul>
-            {c.resultNumbers && c.resultNumbers.length > 0 ? (
-              <dl className="mt-10 grid grid-cols-2 gap-8 md:grid-cols-3">
-                {c.resultNumbers.map((r) => (
-                  <div key={r.label}>
-                    <dt className="text-xs uppercase tracking-wider text-text-muted">{r.label}</dt>
-                    <dd className="mt-2 font-display text-3xl text-accent">{r.value}</dd>
-                  </div>
-                ))}
-              </dl>
-            ) : null}
-          </section>
-
           {c.clientQuote ? (
             <figure className="mt-20 border-l-2 border-accent pl-8">
               <blockquote className="font-display text-xl leading-snug text-text-primary md:text-2xl">

@@ -16,10 +16,10 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const SERVICE_PRIMARY_HEADINGS: Partial<Record<ServiceSlug, string>> = {
-  "korporativnye-meropriyatiya":
-    "Корпоративные события для сотрудников, партнёров и клиентских сообществ",
-  "delovye-meropriyatiya": "Деловые мероприятия с чёткой бизнес-задачей",
-  timbilding: "Тимбилдинг и командные форматы",
+  "korporativnye-meropriyatiya": "Корпоративные события для сотрудников и партнёров",
+  "delovye-meropriyatiya": "Деловые и образовательные мероприятия",
+  timbilding: "Тимбилдинги и командные форматы",
+  "reklamnye-akcii": "Рекламные акции и промо-мероприятия",
 };
 
 export function ServicesSection() {

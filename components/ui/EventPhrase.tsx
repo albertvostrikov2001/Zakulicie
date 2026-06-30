@@ -12,7 +12,7 @@ interface LetterEntry {
   imageAlt: string;
 }
 
-const PHRASE = "Творчески. Системно. Про людей";
+const PHRASE = "Проекты со смыслом";
 
 function isInteractiveChar(char: string): boolean {
   return char !== " " && char !== ".";
@@ -35,7 +35,7 @@ const IMAGE_SOURCES: string[] = [
 const LETTERS: LetterEntry[] = PHRASE.split("").map((char, i) => ({
   char,
   imageSrc: IMAGE_SOURCES[i % IMAGE_SOURCES.length] ?? "",
-  imageAlt: `Творчески. Системно. Про людей — кадр ${i + 1}`,
+  imageAlt: `${PHRASE} — кадр ${i + 1}`,
 }));
 
 const INTERACTIVE_INDICES = LETTERS.map((_, i) => i).filter((i) =>
@@ -99,11 +99,11 @@ function DesktopImageLayer({
               position: "absolute",
               left: 0,
               top: 0,
-              width: "200px",
-              height: "260px",
+              width: "280px",
+              height: "187px",
               opacity: 0,
               visibility: "hidden",
-              transform: "scale(0.88) translateY(28px) rotate(0deg)",
+              transform: "scale(0.88) translateY(20px) rotate(0deg)",
               willChange: "transform, opacity",
               boxShadow: "0 24px 64px rgba(0,0,0,0.55), 0 4px 18px rgba(0,0,0,0.35)",
             }}
@@ -112,7 +112,8 @@ function DesktopImageLayer({
               src={entry.imageSrc}
               alt={entry.imageAlt}
               fill
-              sizes="260px"
+              sizes="(min-resolution: 2dppx) 680px, 340px"
+              quality={95}
               className="object-cover"
             />
             <div className="pointer-events-none absolute inset-0 bg-black/20" />
@@ -169,8 +170,8 @@ function DesktopLetterRow({
     const sR = section.getBoundingClientRect();
     const lR = letter.getBoundingClientRect();
 
-    const imgW  = Math.min(Math.max(lR.width * 3.5, 160), 260);
-    const imgH  = imgW * 1.3;
+    const imgW  = Math.min(Math.max(lR.width * 3.5, 220), 340);
+    const imgH  = Math.round(imgW * 0.667);
     const safeM = 16;
 
     /* ── chaotic position jitter ── */
@@ -242,7 +243,7 @@ function DesktopLetterRow({
 
   return (
     <p
-      className="relative z-[10] m-0 inline-flex max-w-full flex-wrap justify-center font-display font-bold leading-[1.15]"
+      className="relative z-[10] m-0 inline-flex max-w-full flex-wrap justify-center font-display font-bold uppercase leading-[1.15]"
       style={{
         fontSize: "clamp(20px, 2.8vw, 44px)",
         letterSpacing: "-0.02em",
@@ -338,41 +339,21 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
         </div>
       )}
 
-      {/* Phrase text — two locked lines, no mid-phrase wrapping */}
-      {/*
-        PHRASE = "Творчески. Системно. Про людей"
-        idx 0-19  → "Творчески. Системно."  (line 1)
-        idx 20    → " " (separator, skipped)
-        idx 21-29 → "Про людей"             (line 2)
-      */}
+      {/* Phrase text — single line, no mid-phrase wrapping */}
       <p
-        className="m-0 flex max-w-full flex-col items-center font-display font-bold leading-[1.2]"
+        className="m-0 flex max-w-full flex-col items-center font-display font-bold uppercase leading-[1.2]"
         style={{
           fontSize: "clamp(15px, 5.8vw, 44px)",
           letterSpacing: "-0.02em",
           color: "var(--color-text-primary)",
         }}
       >
-        {/* Line 1 — never breaks internally */}
         <span className="whitespace-nowrap">
-          {LETTERS.slice(0, 20).map((entry, i) => {
+          {LETTERS.map((entry, i) => {
             if (entry.char === " ") return <span key={i} className="inline-block w-[0.28em]" aria-hidden />;
             if (!isInteractiveChar(entry.char)) return <span key={i} className="inline-block select-none">{entry.char}</span>;
             return (
               <span key={i} className={!reduced && hlLetterIndex === i ? "text-accent transition-colors duration-500" : "transition-colors duration-500"}>
-                {entry.char}
-              </span>
-            );
-          })}
-        </span>
-        {/* Line 2 — never breaks internally */}
-        <span className="whitespace-nowrap">
-          {LETTERS.slice(21).map((entry, i) => {
-            const absIdx = i + 21;
-            if (entry.char === " ") return <span key={absIdx} className="inline-block w-[0.28em]" aria-hidden />;
-            if (!isInteractiveChar(entry.char)) return <span key={absIdx} className="inline-block select-none">{entry.char}</span>;
-            return (
-              <span key={absIdx} className={!reduced && hlLetterIndex === absIdx ? "text-accent transition-colors duration-500" : "transition-colors duration-500"}>
                 {entry.char}
               </span>
             );
@@ -404,7 +385,8 @@ function TouchPhrase({ reduced }: { reduced: boolean }) {
               src={currentSrc}
               alt={`Закулисье — кадр ${activeIndex + 1}`}
               fill
-              sizes="320px"
+              sizes="(min-resolution: 2dppx) 560px, 320px"
+              quality={90}
               className="object-cover"
             />
             <div
@@ -433,7 +415,7 @@ export function EventPhrase() {
     <section
       ref={sectionRef}
       className="relative overflow-hidden bg-[var(--color-bg)] py-section"
-      aria-label="Творчески. Системно. Про людей"
+      aria-label="Проекты со смыслом"
     >
       {!coarsePointer ? (
         <DesktopImageLayer imageRefs={imageRefs} />

@@ -11,7 +11,6 @@ const SERVICE_SLUGS: ServiceSlug[] = [
   "delovye-meropriyatiya",
   "reklamnye-akcii",
   "arenda-rekvizita",
-  "rezhissyorskie-meropriyatiya",
 ];
 
 function asServiceSlug(v: string | null | undefined): ServiceSlug {

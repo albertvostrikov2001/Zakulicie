@@ -1,10 +1,8 @@
 "use client";
 
-import { Badge } from "@/components/ui/Badge";
 import type { CaseStudy } from "@/lib/types";
 import { serviceNav } from "@/lib/content/services";
 import { caseImagePosition, CASE_CARD_OVERLAY } from "@/lib/caseImage";
-import { cn } from "@/lib/cn";
 import { motion } from "framer-motion";
 import Image from "@/components/ui/SiteImage";
 import Link from "next/link";
@@ -13,18 +11,6 @@ type Props = { item: CaseStudy; className?: string; priority?: boolean; index?: 
 
 export function CaseCard({ item, className, priority, index = 0 }: Props) {
   const tag = serviceNav.find((s) => s.slug === item.serviceTypeSlug)?.title ?? "";
-
-  // Always show 1–2 accent metrics: prefer explicit resultNumbers, fall back to
-  // participantsCount + year so every card has a consistent yellow stats block.
-  const displayStats: { value: string; label: string }[] =
-    item.resultNumbers && item.resultNumbers.length > 0
-      ? item.resultNumbers.slice(0, 2)
-      : item.participantsCount
-      ? [
-          { value: item.participantsCount.toLocaleString("ru-RU"), label: "участников" },
-          { value: String(item.year), label: "год" },
-        ]
-      : [{ value: String(item.year), label: "год" }];
 
   return (
     <motion.div
@@ -67,49 +53,20 @@ export function CaseCard({ item, className, priority, index = 0 }: Props) {
           {/* Hover оверлей */}
           <div className="case-overlay absolute inset-0 bg-accent/10 backdrop-blur-[1px]" aria-hidden />
 
-          {/* Номер кейса */}
-          {typeof index === "number" && (
-            <span className="absolute right-4 top-4 font-display text-5xl font-bold leading-none text-white/10 select-none">
-              {String(index + 1).padStart(2, "0")}
-            </span>
-          )}
-
-          {/* Контент */}
+          {/* Контент — короткое название + hover CTA */}
           <div className="absolute inset-0 flex flex-col justify-end p-5 md:p-6">
-            <Badge className="mb-2.5 w-fit border-white/15 text-[10px] text-text-secondary">
-              {tag}
-            </Badge>
-
-            {/* Заголовок: 3 строки на мобильном (tall 4:5), 2 на десктопе (wide 3:2) */}
-            <h3 className="line-clamp-3 font-display text-xl font-semibold leading-snug text-text-primary md:line-clamp-2 md:text-2xl xl:text-xl min-[1536px]:text-2xl">
+            <h3 className="font-display text-lg font-semibold leading-snug text-text-primary md:text-base xl:text-sm min-[1536px]:text-base">
               {item.title}
             </h3>
 
-            {item.client && (
-              <p className="mt-1.5 text-sm text-text-secondary">{item.client}</p>
-            )}
-
-            {/* Excerpt: только мобильный (4:5 tall) — на 3:2 не помещается */}
-            <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-text-secondary/80 md:hidden">
-              {item.excerpt}
+            {/* Год + масштаб */}
+            <p className="mt-1.5 text-[13px] font-medium tracking-wide text-white/55">
+              {item.year}
+              {item.scaleLabel ? ` · ${item.scaleLabel}` : item.participantsCount ? ` · ${item.participantsCount}+ участников` : ""}
             </p>
 
-            {/* Метрики — всегда одинаковый стиль для всех кейсов */}
-            <div className="mt-4 flex gap-5 border-t border-border/40 pt-3">
-              {displayStats.map((r) => (
-                <div key={r.label}>
-                  <p className="font-display text-lg font-bold text-accent">{r.value}</p>
-                  <p className="text-[10px] text-text-muted">{r.label}</p>
-                </div>
-              ))}
-            </div>
-
             {/* CTA — absolute, не влияет на высоту flow, появляется при hover */}
-            <span className={cn(
-              "absolute bottom-5 right-5 md:bottom-6 md:right-6",
-              "inline-flex items-center gap-1.5 text-[11px] font-medium uppercase tracking-widest text-accent",
-              "translate-y-2 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100"
-            )}>
+            <span className="absolute bottom-5 right-5 inline-flex translate-y-2 items-center gap-1.5 text-[11px] font-medium uppercase tracking-widest text-accent opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 md:bottom-6 md:right-6">
               Смотреть кейс
               <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
                 <path d="M2 7h10M7.5 3l4 4-4 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

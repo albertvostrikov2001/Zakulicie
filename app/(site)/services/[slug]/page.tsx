@@ -111,9 +111,9 @@ export default async function ServicePage({ params }: Props) {
             {titles.whyH2}
           </h2>
           <ul className="mt-8 space-y-8">
-            {s.whyUs.map((w) => (
-              <li key={w.title} className="max-w-3xl border-l border-accent/40 pl-6">
-                <h3 className="font-display text-lg text-text-primary">{w.title}</h3>
+            {s.whyUs.map((w, i) => (
+              <li key={w.title || i} className="max-w-3xl border-l border-accent/40 pl-6">
+                {w.title ? <h3 className="font-display text-lg text-text-primary">{w.title}</h3> : null}
                 <p className="mt-2 text-sm leading-relaxed text-text-secondary">{w.description}</p>
               </li>
             ))}
