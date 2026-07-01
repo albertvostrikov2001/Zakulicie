@@ -67,6 +67,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </SmoothScrollProvider>
         <Analytics />
         <CookieBanner />
+        <script src="//cdn.callibri.ru/callibri.js" type="text/javascript" charSet="utf-8" defer></script>
       </body>
     </html>
   );
