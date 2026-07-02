@@ -6,6 +6,7 @@ import { LocalBusinessJsonLd, OrganizationJsonLd } from "@/components/seo/JsonLd
 import { getSiteUrl, SITE_NAME } from "@/lib/site";
 import type { Metadata } from "next";
 import { Inter, Unbounded } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 
 const display = Unbounded({
@@ -67,7 +68,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         </SmoothScrollProvider>
         <Analytics />
         <CookieBanner />
-        <script src="//cdn.callibri.ru/callibri.js" type="text/javascript" charSet="utf-8" defer></script>
+        <Script src="//cdn.callibri.ru/callibri.js" strategy="afterInteractive" />
       </body>
     </html>
   );
