@@ -1,0 +1,65 @@
+{
+  "services": [
+    {
+      "slug": "korporativnye-meropriyatiya",
+      "src": "/services/korporativnye-meropriyatiya.webp",
+      "alt": "Корпоративные мероприятия — event-агентство Закулисье Новосибирск",
+      "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAADwAQCdASoMAAgABABoJagCdADhlAihigAA/vS0inxXU5SCbTTUqMc2I+1Md9fVLnjMeQop85DxDCOi63+0KoLngdemsYoAAAA=",
+      "width": 1600,
+      "height": 1067
+    },
+    {
+      "slug": "timbilding",
+      "src": "/services/timbilding.webp",
+      "alt": "Тимбилдинг — event-агентство Закулисье Новосибирск",
+      "blur": "data:image/webp;base64,UklGRloAAABXRUJQVlA4IE4AAADwAQCdASoMAAgABABoJZACdAEQeyDq8KAA/rI6/EFBS2fbP0z0FohmRsalMgZOlW/a1KQOu+JJn9kkTmOc1TeHlmkCboSVLrrwePGAAAA=",
+      "width": 1600,
+      "height": 1067
+    },
+    {
+      "slug": "delovye-meropriyatiya",
+      "src": "/services/delovye-meropriyatiya.webp",
+      "alt": "Деловые мероприятия — event-агентство Закулисье Новосибирск",
+      "blur": "data:image/webp;base64,UklGRlQAAABXRUJQVlA4IEgAAACwAQCdASoMAAgABABoJZACdADZkRowAP7PdWhNz5E8pZvmP4zusnjh6K6UonLlrIO0nTgvcVCuM5AEfq+4vKx+zuR57JGgAAA=",
+      "width": 1600,
+      "height": 1067
+    },
+    {
+      "slug": "reklamnye-akcii",
+      "src": "/services/reklamnye-akcii.webp",
+      "alt": "Рекламные акции и активации — event-агентство Закулисье Новосибирск",
+      "blur": "data:image/webp;base64,UklGRmAAAABXRUJQVlA4IFQAAAAwAgCdASoMAAgABABoJbACdH8AglCbzG5EZAD+h7SDMH8dIxVNhX/enec6Y5AEZBDlNBk/sgPSthlRSOnPa82G/E8xxZp0llnHmjahUT/OsoGAAAA=",
+      "width": 1280,
+      "height": 851
+    },
+    {
+      "slug": "arenda-rekvizita",
+      "src": "/services/arenda-rekvizita.webp",
+      "alt": "Аренда реквизита — event-агентство Закулисье Новосибирск",
+      "blur": "data:image/webp;base64,UklGRk4AAABXRUJQVlA4IEIAAADwAQCdASoMAAgABABoJbACdAEXZ3X+17AA/uf0F7RFJvEDbUarZWcdvZdExefYtC8JK6Fp1PBB3I3Er/deMIulgAA=",
+      "width": 1600,
+      "height": 1067
+    },
+    {
+      "slug": "rezhissyorskie-meropriyatiya",
+      "src": "/services/rezhissyorskie-meropriyatiya.webp",
+      "alt": "Постановка и режиссура мероприятий — event-агентство Закулисье Новосибирск",
+      "blur": "data:image/webp;base64,UklGRlwAAABXRUJQVlA4IFAAAADwAQCdASoMAAgABABoJbACdADcf5uxDyAA/uPZ4JxRqjH4nYr3fqj1F7iu98lVW4eY5Q+ENIjltw/kcQurQw24paZQQIG48B/7T36xagAAAA==",
+      "width": 1600,
+      "height": 1067
+    }
+  ],
+  "eventphrase": [
+    "/eventphrase/01.webp",
+    "/eventphrase/02.webp",
+    "/eventphrase/03.webp",
+    "/eventphrase/04.webp",
+    "/eventphrase/05.webp",
+    "/eventphrase/06.webp",
+    "/eventphrase/07.webp",
+    "/eventphrase/08.webp",
+    "/eventphrase/09.webp",
+    "/eventphrase/10.webp",
+    "/eventphrase/11.webp"
+  ]
+}

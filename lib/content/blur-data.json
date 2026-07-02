@@ -1063,7 +1063,7 @@
   },
   "opening-holiley-classic": {
     "cover": {
-      "src": "/cases/opening-holiley-classic/cover.jpg",
+      "src": "/cases/opening-holiley-classic/cover.webp",
       "blurDataURL": "data:image/webp;base64,UklGRpoAAABXRUJQVlA4II4AAABQBACdASoUAAwAPzmEuVOvKKWisAgB4CcJbACdL144AB9TSrmT2YqSJL3QAP4G8RtXNxHr12MuPeEBNXpdBubBA3IIQTYLIrDvkabqFPb0blEVt5L0+MsI4zFSpSP2FK8b4qPGqNJf+X+Ql96AfQmhooT5UgUaufnC5hu/vkIhGS+QUC7ciE7dbnXSAAAA",
       "width": 1280,
       "height": 853

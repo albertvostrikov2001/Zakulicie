@@ -29,7 +29,7 @@ function asset(path: string): string {
 const DATA: Slide[] = [
   {
     tag: "День комплекса",
-    photo: asset("/testimonials/chkalovskie-dachi.jpg"),
+    photo: asset("/testimonials/chkalovskie-dachi.webp"),
     photoAlt:
       "Живой концерт на сцене в парке отдыха «Чкаловские дачи» — организация event-агентства Закулисье",
     quote:
@@ -54,7 +54,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Корпоративный формат",
-    photo: asset("/testimonials/irina-smirnova.jpg"),
+    photo: asset("/testimonials/irina-smirnova.webp"),
     photoAlt: "Ирина Смирнова — отзыв о работе event-агентства Закулисье",
     photoContain: true,
     quote:
@@ -67,7 +67,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Корпоративный праздник",
-    photo: asset("/testimonials/marina.jpg"),
+    photo: asset("/testimonials/marina.webp"),
     photoAlt: "Марина — отзыв о работе event-агентства Закулисье",
     photoContain: true,
     quote:
@@ -80,7 +80,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "30-летие Металл Профиль",
-    photo: asset("/testimonials/olga-metall-profil.jpg"),
+    photo: asset("/testimonials/olga-metall-profil.webp"),
     photoAlt: "Ольга, Металл Профиль — отзыв о работе event-агентства Закулисье",
     photoContain: true,
     quote:
@@ -93,7 +93,7 @@ const DATA: Slide[] = [
   },
   {
     tag: "Корпоратив ОверМобайл",
-    photo: asset("/testimonials/alina-overmobile.jpg"),
+    photo: asset("/testimonials/alina-overmobile.webp"),
     photoAlt: "Алина, ОверМобайл — отзыв о работе event-агентства Закулисье",
     photoContain: true,
     quote:

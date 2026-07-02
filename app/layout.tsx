@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     url: siteUrl,
     images: [
       {
-        url: "/site-preview.jpg",
+        url: "/site-preview.webp",
         width: 1376,
         height: 768,
         alt: "Event-агентство Закулисье — организация мероприятий в Новосибирске",

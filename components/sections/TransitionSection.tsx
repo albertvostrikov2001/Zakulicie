@@ -84,7 +84,7 @@ export function TransitionSection({}: TransitionSectionProps) {
 
         {/* Background photo */}
         <Image
-          src="/SiteView.jpg"
+          src="/SiteView.webp"
           alt=""
           fill
           priority

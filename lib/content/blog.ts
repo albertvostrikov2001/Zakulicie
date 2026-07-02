@@ -130,7 +130,7 @@ export const staticBlogPosts: BlogPost[] = [
     category: "Организация мероприятий",
     readTime: "7 мин",
     coverImage: {
-      src: "/blog/podbor-podryadchikov-dlya-meropriyatiya.jpg",
+      src: "/blog/podbor-podryadchikov-dlya-meropriyatiya.webp",
       alt: "Подрядчики для мероприятия — ивент-агентство Закулисье",
     },
     seoTitle: "Как правильно подобрать подрядчиков для мероприятия | Закулисье",
@@ -243,7 +243,7 @@ export const staticBlogPosts: BlogPost[] = [
     category: "Режиссура мероприятий",
     readTime: "4 мин",
     coverImage: {
-      src: "/blog/iskusstvo-sozdavat-nezabyvaemye-sobytiya.jpg",
+      src: "/blog/iskusstvo-sozdavat-nezabyvaemye-sobytiya.webp",
       alt: "Режиссура мероприятий — ивент-агентство Закулисье",
     },
     seoTitle: "Искусство создавать незабываемые события — режиссура мероприятий | Закулисье",

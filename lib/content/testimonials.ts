@@ -8,7 +8,7 @@ export const staticTestimonials: Testimonial[] = [
     position: "Представитель площадки",
     company: "Экопарк «Чкаловские дачи»",
     logoUrl: "/logos/chkalovskie-dachi.svg",
-    caseCover: "/testimonials/chkalovskie-dachi.jpg",
+    caseCover: "/testimonials/chkalovskie-dachi.webp",
     source: "2gis",
   },
   {
