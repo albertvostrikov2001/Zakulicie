@@ -146,6 +146,7 @@ export default async function CasePage({ params }: Props) {
                         alt={`${c.title} — ${tag.toLowerCase()}, организация мероприятий Закулисье`}
                         fill
                         className="object-cover"
+                        style={img.objectPosition ? { objectPosition: img.objectPosition } : undefined}
                         sizes="(max-width: 768px) 100vw, 50vw"
                         placeholder={img.blurDataURL ? "blur" : undefined}
                         blurDataURL={img.blurDataURL}
