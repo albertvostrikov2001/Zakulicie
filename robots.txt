@@ -1,0 +1,5 @@
+User-Agent: *
+Allow: /
+Disallow: /studio
+
+Sitemap: https://albertvostrikov2001.github.io/Zakulicie/sitemap.xml

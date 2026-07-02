@@ -1,0 +1,5 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 64" role="img" aria-label="WARMEX">
+  <polygon points="32,4 58,4 58,60 32,60 18,32" fill="#E85D04"/>
+  <polygon points="58,4 84,32 58,60 58,4" fill="#DC2F02"/>
+  <text x="98" y="42" fill="#F2EFE9" font-family="Arial, sans-serif" font-size="28" font-weight="700" letter-spacing="0.08em">WARMEX</text>
+</svg>
