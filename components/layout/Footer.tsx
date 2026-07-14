@@ -2,6 +2,7 @@ import { CTALink } from "@/components/ui/CTALink";
 import { CONTACT_EMAIL, CONTACT_PHONE, CONTACT_PHONE_TEL, SOCIAL_VK } from "@/lib/constants";
 import { serviceNav } from "@/lib/content/services";
 import Link from "next/link";
+import { DevCard } from "./DevCard";
 
 const legal = [
   { href: "/privacy-policy", label: "Политика конфиденциальности" },
@@ -127,7 +128,10 @@ export function Footer() {
               </li>
             ))}
           </ul>
-          <p className="text-[12px] text-text-muted">© {new Date().getFullYear()} Закулисье</p>
+          <div className="flex items-center gap-4">
+            <DevCard />
+            <p className="text-[12px] text-text-muted">© {new Date().getFullYear()} Закулисье</p>
+          </div>
         </div>
       </div>
     </footer>

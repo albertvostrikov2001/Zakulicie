@@ -76,7 +76,7 @@ export function TransitionSection({}: TransitionSectionProps) {
       ref={sectionRef}
       data-transition
       data-transition-section
-      aria-label="Закулисье — Архитектура безупречных событий"
+      aria-label="Закулисье — Организация мероприятий для бизнеса"
       className="relative z-10 min-h-[140vh]"
     >
       {/* Sticky viewport — остаётся на экране пока родитель скроллится */}
@@ -120,22 +120,18 @@ export function TransitionSection({}: TransitionSectionProps) {
           <h1
             data-hero-el
             className="m-0 font-display font-black uppercase leading-[0.92] tracking-[-0.02em] text-white"
-            style={{ fontSize: "clamp(36px, 7vw, 108px)" }}
+            style={{ fontSize: "clamp(34px, 6.5vw, 96px)" }}
           >
-            Архитектура
-            <br />
-            безупречных событий
+            Организация мероприятий для бизнеса
           </h1>
 
           {/* Subtitle */}
           <p
             data-hero-el
-            className="mt-[clamp(18px,3vh,32px)] max-w-[min(1300px,92vw)] font-semibold text-white"
-            style={{ fontSize: "clamp(20px,2.5vw,32px)", lineHeight: 1.55 }}
+            className="mt-[clamp(20px,3vh,36px)] max-w-[min(1400px,92vw)] font-bold text-white"
+            style={{ fontSize: "clamp(20px, 3vw, 46px)", lineHeight: 1.4 }}
           >
-            ЗАКУЛИСЬЕ: Проектирование, менеджмент, реализация ваших идей.
-            <br />
-            Полный контроль от концепции до финальных аккордов.
+            Углублённая консультация по мероприятию без оплаты.<br />Смета в день обращения.
           </p>
 
           {/* CTA */}

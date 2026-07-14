@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import { RevealOnScroll } from "@/components/motion/RevealOnScroll";
 import { usePrefersReducedMotion } from "@/hooks/usePrefersReducedMotion";
@@ -41,7 +41,7 @@ function DifferentiatorCard({ label, Icon, index }: { label: string; Icon: Lucid
         className="pointer-events-none absolute inset-0 opacity-0 transition-opacity duration-300 group-hover/card:opacity-100"
         style={{
           background:
-            "radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(181,97,28,0.16), transparent 70%)",
+            "radial-gradient(220px circle at var(--mx,50%) var(--my,50%), rgba(181, 97, 28,0.16), transparent 70%)",
         }}
         aria-hidden
       />
@@ -49,7 +49,7 @@ function DifferentiatorCard({ label, Icon, index }: { label: string; Icon: Lucid
       {!reduced && (
         <motion.div
           className="pointer-events-none absolute -right-10 -top-10 hidden h-32 w-32 rounded-full md:block"
-          style={{ background: "radial-gradient(circle, rgba(181,97,28,0.14), transparent 70%)" }}
+          style={{ background: "radial-gradient(circle, rgba(181, 97, 28,0.14), transparent 70%)" }}
           animate={{ opacity: [0.3, 0.8, 0.3] }}
           transition={{ duration: 4.5, repeat: Infinity, ease: "easeInOut", delay: index * 0.6 }}
           aria-hidden
@@ -74,7 +74,7 @@ function DifferentiatorCard({ label, Icon, index }: { label: string; Icon: Lucid
           className="hidden h-9 w-9 items-center justify-center rounded-full border border-[var(--color-border)] text-accent md:flex"
           variants={{
             rest: { rotate: 0, scale: 1, borderColor: "var(--color-border)" },
-            hover: { rotate: -8, scale: 1.08, borderColor: "rgba(181,97,28,0.5)" },
+            hover: { rotate: -8, scale: 1.08, borderColor: "rgba(181, 97, 28,0.5)" },
           }}
           initial="rest"
           transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
