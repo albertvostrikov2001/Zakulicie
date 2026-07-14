@@ -120,9 +120,9 @@ export function TransitionSection({}: TransitionSectionProps) {
           <h1
             data-hero-el
             className="m-0 font-display font-black uppercase leading-[0.92] tracking-[-0.02em] text-white"
-            style={{ fontSize: "clamp(34px, 6.5vw, 96px)" }}
+            style={{ fontSize: "clamp(28px, 4.6vw, 66px)" }}
           >
-            Организация мероприятий для бизнеса
+            Организация мероприятий<br />для бизнеса
           </h1>
 
           {/* Subtitle */}
