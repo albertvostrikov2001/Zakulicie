@@ -92,6 +92,15 @@ export function TransitionSection({}: TransitionSectionProps) {
   const [activeIndex, setActiveIndex] = useState(0);
   const [direction, setDirection] = useState(1);
   const [paused, setPaused] = useState(false);
+  const [showDesktopPreviews, setShowDesktopPreviews] = useState(false);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const update = () => setShowDesktopPreviews(media.matches);
+    update();
+    media.addEventListener("change", update);
+    return () => media.removeEventListener("change", update);
+  }, []);
 
   const selectSlide = useCallback(
     (index: number, nextDirection?: number) => {
@@ -195,26 +204,32 @@ export function TransitionSection({}: TransitionSectionProps) {
       }}
     >
       <div className="sticky top-0 h-[100dvh] min-h-[620px] w-full overflow-hidden bg-[#06101a]">
-        <div className="absolute inset-y-0 left-0 w-[8vw] overflow-hidden md:w-[7vw]" aria-hidden>
-          <Image
-            src={slides[previousIndex].thumb}
-            alt=""
-            fill
-            className="scale-110 object-cover opacity-55 blur-[1px]"
-            sizes="8vw"
-          />
-        </div>
-        <div className="absolute inset-y-0 right-0 w-[8vw] overflow-hidden md:w-[7vw]" aria-hidden>
-          <Image
-            src={slides[nextIndex].thumb}
-            alt=""
-            fill
-            className="scale-110 object-cover opacity-55 blur-[1px]"
-            sizes="8vw"
-          />
-        </div>
+        {showDesktopPreviews && (
+          <>
+            <div className="absolute inset-y-0 left-0 w-[5vw] overflow-hidden" aria-hidden>
+              <Image
+                src={slides[previousIndex].desktop}
+                alt=""
+                fill
+                quality={85}
+                className="object-cover opacity-70"
+                sizes="5vw"
+              />
+            </div>
+            <div className="absolute inset-y-0 right-0 w-[5vw] overflow-hidden" aria-hidden>
+              <Image
+                src={slides[nextIndex].desktop}
+                alt=""
+                fill
+                quality={85}
+                className="object-cover opacity-70"
+                sizes="5vw"
+              />
+            </div>
+          </>
+        )}
 
-        <div className="absolute inset-y-0 left-[4vw] right-[4vw] overflow-hidden border-x border-white/20 bg-black md:left-[4.5vw] md:right-[4.5vw]">
+        <div className="absolute inset-0 overflow-hidden bg-black md:left-[2.75vw] md:right-[2.75vw] md:border-x md:border-white/20">
           <AnimatePresence initial={false} custom={direction} mode="popLayout">
             <motion.div
               key={activeIndex}
@@ -290,7 +305,7 @@ export function TransitionSection({}: TransitionSectionProps) {
         >
           <h1
             data-hero-el
-            className="m-0 max-w-[1450px] font-display text-[clamp(26px,7.2vw,46px)] font-black uppercase leading-[0.96] tracking-[-0.035em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,.65)] md:text-[clamp(38px,4.2vw,72px)] md:leading-[0.95]"
+            className="m-0 max-w-[1450px] font-display text-[clamp(26px,7.2vw,46px)] font-black uppercase leading-[0.96] tracking-[-0.035em] text-white drop-shadow-[0_4px_18px_rgba(0,0,0,.65)] md:text-[clamp(30px,3.5vw,60px)] md:leading-[0.96]"
           >
             <span className="md:hidden">
               Организация
@@ -301,9 +316,9 @@ export function TransitionSection({}: TransitionSectionProps) {
               <br />в Новосибирске
             </span>
             <span className="hidden md:inline">
-              Организация корпоративных и
-              <br />
-              бизнес-мероприятий в Новосибирске
+              <span className="block whitespace-nowrap">Организация корпоративных</span>
+              <span className="block whitespace-nowrap">и бизнес-мероприятий</span>
+              <span className="block whitespace-nowrap">в Новосибирске</span>
             </span>
           </h1>
 
