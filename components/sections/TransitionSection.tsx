@@ -131,7 +131,7 @@ export function TransitionSection({}: TransitionSectionProps) {
             className="mt-[clamp(20px,3vh,36px)] max-w-[min(1400px,92vw)] font-bold text-white"
             style={{ fontSize: "clamp(20px, 3vw, 46px)", lineHeight: 1.4 }}
           >
-            Углублённая консультация по мероприятию без оплаты.<br />Смета в день обращения.
+            Углублённая консультация по мероприятию без оплаты<br />Смета в день обращения
           </p>
 
           {/* CTA */}
