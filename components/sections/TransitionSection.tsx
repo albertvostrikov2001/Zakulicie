@@ -310,9 +310,11 @@ export function TransitionSection({}: TransitionSectionProps) {
             <span className="md:hidden">
               Организация
               <br />
-              корпоративных и
+              корпоративных
               <br />
-              бизнес-мероприятий
+              и бизнес-
+              <br />
+              мероприятий
               <br />в Новосибирске
             </span>
             <span className="hidden md:inline">
